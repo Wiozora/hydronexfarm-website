@@ -1,26 +1,166 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: #1d232c;
+  --color-primary-dark: #11161d;
+  --color-primary-light: #314052;
+  --color-sky: #cbe67b;
+  --color-sky-light: #e8f1bf;
+  --color-green: #cbe67b;
+  --color-green-dark: #b9d762;
+  --color-dark: #0f141b;
+  --color-navy: #1d232c;
+  --color-bg-light: #f4f6ef;
+  --color-bg-green: #edf1e3;
+  --color-white: #ffffff;
+  --color-text-dark: #161b20;
+  --color-text-muted: #6e757c;
+  --color-border: #d7ddd1;
+  --font-heading: var(--font-outfit), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    @apply bg-bg-light font-body text-text-dark;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply font-heading;
+  }
+
+  section[id] {
+    scroll-margin-top: 6rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-full bg-green px-6 py-3 font-semibold text-primary transition-all duration-300 hover:bg-green-dark;
+  }
+
+  .btn-green {
+    @apply inline-flex items-center gap-2 rounded-full bg-green px-6 py-3 font-semibold text-primary transition-all duration-300 hover:bg-green-dark;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 rounded-full border-2 border-green px-6 py-3 font-semibold text-green transition-all duration-300 hover:bg-green hover:text-primary;
+  }
+
+  .section-label {
+    @apply mb-2 border-l-4 border-green pl-3 text-xs font-semibold uppercase tracking-[0.24em] text-green sm:text-sm sm:tracking-widest;
+  }
+
+  .section-title {
+    @apply text-3xl font-heading font-black leading-tight text-primary sm:text-4xl lg:text-5xl;
+  }
+
+  .product-card {
+    @apply overflow-hidden rounded-3xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
+  }
+}
+
+.hex-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5L55 20V40L30 55L5 40V20Z' fill='none' stroke='%23CBE67B' stroke-width='0.5' opacity='0.15'/%3E%3C/svg%3E");
+}
+
+@keyframes floatLogo {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-float {
+  animation: floatLogo 4s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(203, 230, 123, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(203, 230, 123, 0.3), 0 0 60px rgba(203, 230, 123, 0.14);
+  }
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+.ripple-surface {
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+.animate-sway {
+  animation: sway 3.8s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(0px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(14px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 0.6;
+  }
+}
+
+.animate-drop {
+  animation: drop 2.6s ease-in-out infinite;
+}
+
+.swiper-pagination-bullet {
+  background: rgba(203, 230, 123, 0.35) !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #cbe67b !important;
+}
+
+.services-overview-pagination {
+  position: static !important;
+}
+
+.services-overview-pagination .swiper-pagination-bullet {
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+  margin: 0 !important;
+  border-radius: 9999px !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 1px rgba(16, 23, 18, 0.08) !important;
+  opacity: 1 !important;
+}
+
+.services-overview-pagination .swiper-pagination-bullet-active {
+  background: #7fe64c !important;
+  box-shadow: 0 0 0 6px rgba(126, 240, 77, 0.18) !important;
 }

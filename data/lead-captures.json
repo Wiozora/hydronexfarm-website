@@ -1,0 +1,30 @@
+[
+  {
+    "source": "inquiry-basket",
+    "summary": "Hi! I want to request a quote.\n\nName: Muhammad Abdullah Mubin\nPhone / WhatsApp: 03272591778\nEmail: abdullah1aa3063358@gmail.com\nCity: 700\n\nQuote items:\n1. Hydroponics Nutrient Program - Nutrient A x 1\n\nPlease confirm pricing, availability, and next steps.",
+    "customer": {
+      "name": "Muhammad Abdullah Mubin",
+      "phone": "03272591778",
+      "email": "abdullah1aa3063358@gmail.com",
+      "city": "700",
+      "notes": ""
+    },
+    "items": [
+      {
+        "product": "Hydroponics Nutrient Program",
+        "variant": "Nutrient A",
+        "quantity": 1,
+        "mode": "quote",
+        "href": "/shop/nutrients/hydroponics-nutrient-program"
+      }
+    ],
+    "metadata": {
+      "page": "/inquiry",
+      "subtotalPkr": 0,
+      "cartItems": 0,
+      "quoteItems": 1
+    },
+    "id": "9c850616-c589-446e-9f8b-c27cccaadef1",
+    "submittedAt": "2026-03-27T21:03:09.709Z"
+  }
+]
