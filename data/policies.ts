@@ -16,7 +16,7 @@ export const privacyPolicy: PolicyDocument = {
   eyebrow: "Legal",
   title: "Privacy Policy",
   description:
-    "How inquiry details, quote requests, and website activity are handled across the HydroNexfarm storefront.",
+    "How inquiry details, quote requests, and website activity are handled across the I CAN ENERGIES storefront.",
   updatedLabel: "Updated March 27, 2026",
   sections: [
     {
@@ -151,3 +151,4 @@ export const refundPolicy: PolicyDocument = {
     },
   ],
 };
+

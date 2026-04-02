@@ -31,7 +31,7 @@ const schema = {
   "@type": "Store",
   name: siteConfig.storeName,
   description:
-    "Hydroponics systems, plant nutrients, aluminum accessories and battery enclosures",
+    "Hydroponics plantation towers, pumps and nutrient inputs, aluminum V/T slots, battery racks, and custom sheet metal products",
   url: siteConfig.siteUrl,
   ...(hasPublicPhone() ? { telephone: siteConfig.phone } : {}),
   address: {
@@ -42,34 +42,34 @@ const schema = {
   ...(publicSocialLinks.length > 0 ? { sameAs: publicSocialLinks } : {}),
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Renewable Energy Products",
+    name: "Renewable Product Catalog",
     itemListElement: [
       {
         "@type": "ListItem",
         itemOffered: {
           "@type": "Product",
-          name: "Hydroponics Systems",
+          name: "Hydroponics Plantation Towers",
         },
       },
       {
         "@type": "ListItem",
         itemOffered: {
           "@type": "Product",
-          name: "Plant Nutrient Solutions",
+          name: "PaniPani Pumps and Nutrient Plans",
         },
       },
       {
         "@type": "ListItem",
         itemOffered: {
           "@type": "Product",
-          name: "Imported Aluminum Accessories",
+          name: "Aluminum V/T Slots and Frame Builds",
         },
       },
       {
         "@type": "ListItem",
         itemOffered: {
           "@type": "Product",
-          name: "Battery Enclosure Boxes and Wall Brackets",
+          name: "Battery Racks, Cases, and Custom Sheet Metal",
         },
       },
     ],
@@ -78,25 +78,25 @@ const schema = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: "HydroNexfarm | Hydroponics and Solar Battery Store Pakistan",
+  title: "I CAN ENERGIES | Renewable Products and Fabrication Pakistan",
   description:
-    "Shop hydroponics systems, nutrients, aluminum accessories, battery boxes, and wall brackets for Pakistan.",
+    "Browse hydroponics plantation towers, PaniPani pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products.",
   keywords: [
-    "hydroponics Pakistan",
-    "vertical farming Pakistan",
-    "battery enclosure box Pakistan",
-    "V-slot aluminum Pakistan",
-    "solar battery box",
-    "plant nutrients hydroponics",
-    "hydronexfarm",
-    "hydronexfarm.com",
-    "hydronex farm",
-    "hydroponics Karachi",
+    "hydroponics plantation Pakistan",
+    "PaniPani water pump Pakistan",
+    "battery rack Pakistan",
+    "barebone rack Pakistan",
+    "battery case Pakistan",
+    "V slot aluminum Pakistan",
+    "custom sheet metal Pakistan",
+    "I CAN ENERGIES",
+    "M/S I CAN ENERGIES Pvt. Ltd.",
+    "Karachi renewable products",
   ],
   openGraph: {
-    title: "HydroNexfarm | Hydroponics and Battery Store",
+    title: "I CAN ENERGIES | Renewable Products and Fabrication",
     description:
-      "Shop hydroponics systems, nutrients, aluminum accessories, and premium battery boxes for Pakistan.",
+      "Shop hydroponics towers, pumps, nutrient plans, aluminum slot systems, battery racks, and custom sheet metal products.",
     type: "website",
     url: siteConfig.siteUrl,
     siteName: siteConfig.storeName,

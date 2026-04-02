@@ -12,7 +12,7 @@ export function FloatingWhatsApp() {
   const pathname = usePathname();
   const whatsappVisible = hasPublicWhatsApp();
   const href = createWhatsAppLink(
-    "Hi! I want to speak with HydroNexfarm about hydroponics, battery solutions, or aluminum products.",
+    "Hi! I want to speak with I CAN ENERGIES about plantation towers, pumps, aluminum products, battery racks, or custom sheet metal work.",
   );
   const mobileSecondaryAction = pathname.startsWith("/shop")
     ? {
@@ -130,3 +130,4 @@ export function FloatingWhatsApp() {
     </>
   );
 }
+

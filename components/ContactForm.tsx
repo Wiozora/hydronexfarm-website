@@ -98,7 +98,7 @@ export function ContactForm() {
 
             <div className="mt-6 rounded-[1.35rem] bg-white p-4 shadow-sm sm:rounded-[1.5rem] sm:p-5">
               <p className="text-sm font-semibold text-primary">
-                Store flow reminder: fixed-price hydroponics systems go to cart, while nutrients, aluminum accessories, battery brackets, and battery boxes can be sent as quote items.
+                Store flow reminder: fixed-price plantation towers go to cart, while pumps, nutrient plans, aluminum items, battery racks, battery cases, and custom sheet metal products go through the quote flow.
               </p>
               <Link href="/inquiry" className="btn-green mt-4 justify-center">
                 Open inquiry basket
@@ -290,3 +290,4 @@ export function ContactForm() {
     </section>
   );
 }
+

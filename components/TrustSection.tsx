@@ -15,7 +15,7 @@ const reasons = [
   {
     icon: FaTruck,
     title: "Focused product range",
-    desc: "We are starting with a smaller, clearer catalog of hydroponics, battery, and structural products that buyers can actually understand.",
+    desc: "The catalog now focuses on the real client range: plantation towers, pumps, aluminum slot systems, battery racks, and custom fabrication products.",
     image:
       "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1400&q=80",
     hoverLabel: "Clearer start",
@@ -75,12 +75,12 @@ export function TrustSection() {
     <section className="bg-gradient-to-b from-[#eef8e7] to-[#e4f2df] py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="section-label inline-flex border-l-0 border-none pl-0 text-green-dark">Why HydroNexfarm</p>
+          <p className="section-label inline-flex border-l-0 border-none pl-0 text-green-dark">Why I CAN ENERGIES</p>
           <h2 className="text-3xl font-black text-primary md:text-4xl">
             A simpler startup storefront for buyers who want clearer product decisions
           </h2>
           <p className="mt-6 text-lg leading-8 text-text-muted">
-            The goal is straightforward: show the right products, explain their use, and make inquiry or quote discussions easier from day one.
+            The goal is straightforward: show the actual client products, explain their use, and make inquiry or quote discussions easier from day one.
           </p>
         </div>
 
@@ -142,3 +142,4 @@ export function TrustSection() {
     </section>
   );
 }
+

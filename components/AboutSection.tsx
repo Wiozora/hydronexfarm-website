@@ -5,17 +5,14 @@ import Image from "next/image";
 import { FaCheckCircle } from "react-icons/fa";
 
 const points = [
-  "Hydroponics systems for homes, rooftops, restaurants, and farms",
-  "Battery boxes and wall brackets for renewable backup systems",
-  "Imported aluminum accessories for durable structural builds",
-  "Practical support from consultation to setup guidance",
+  "Hydroponics plantation towers with 25 to 100 plant options",
+  "PaniPani pumps and nutrient planning support for hydroponics buyers",
+  "Aluminum V/T slots, connectors, frame stands, and enclosure builds",
+  "Battery racks, battery cases, and custom sheet metal fabrication support",
 ];
 
-const mainImage =
-  "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1400&q=80";
-
-const supportingImage =
-  "https://images.pexels.com/photos/7299976/pexels-photo-7299976.jpeg?auto=compress&cs=tinysrgb&w=900";
+const mainImage = "/products/aluminum/frames/frame-cart.jpeg";
+const supportingImage = "/products/hydroponics/tower-main.jpeg";
 
 export function AboutSection() {
   return (
@@ -33,16 +30,16 @@ export function AboutSection() {
           <div className="relative overflow-hidden rounded-[2.35rem] shadow-[0_30px_80px_rgba(22,32,24,0.12)]">
             <Image
               src={mainImage}
-              alt="Renewable energy installation"
+              alt="Aluminum frame build"
               width={1100}
               height={900}
               className="h-[28rem] w-full object-cover md:h-[32rem]"
             />
 
             <div className="absolute bottom-5 left-5 rounded-[1.6rem] bg-[#cfe96f] px-6 py-5 text-[#112117] shadow-[0_18px_45px_rgba(19,33,23,0.16)] md:bottom-6 md:left-6 md:px-8">
-              <p className="text-4xl font-black leading-none md:text-[3rem]">12+</p>
+              <p className="text-4xl font-black leading-none md:text-[3rem]">Real</p>
               <p className="mt-2 text-xs font-bold uppercase tracking-[0.26em] text-[#112117] md:text-sm">
-                Years Combined Field Experience
+                Client Product Catalog
               </p>
             </div>
           </div>
@@ -50,7 +47,7 @@ export function AboutSection() {
           <div className="relative mx-auto -mt-16 w-[58%] min-w-[15rem] max-w-[18rem] overflow-hidden rounded-[2rem] border-[6px] border-white bg-white shadow-[0_22px_60px_rgba(22,32,24,0.18)] md:ml-auto md:mr-2 lg:absolute lg:-bottom-12 lg:right-1 lg:mt-0">
             <Image
               src={supportingImage}
-              alt="Hydroponics greenhouse support image"
+              alt="Hydroponics plantation tower"
               width={700}
               height={620}
               className="h-[15rem] w-full object-cover"
@@ -71,25 +68,22 @@ export function AboutSection() {
           </div>
 
           <h2 className="mt-5 text-4xl font-black leading-[1.08] text-[#10203a] md:text-5xl lg:text-[4rem]">
-            HydroNexfarm
+            I CAN ENERGIES
             <br />
-            builds
+            organizes practical
             <br />
-            practical systems for
+            renewable products
             <br />
-            growing and backup
+            into one cleaner
             <br />
-            power
+            buying flow
           </h2>
 
           <p className="mt-8 text-lg leading-8 text-[#6e7d94]">
-            We focus on solutions that people in Pakistan can actually use and
-            scale.
+            The website now follows the actual client product list instead of generic demo items.
           </p>
           <p className="mt-4 text-lg leading-8 text-[#6e7d94]">
-            From hydroponics vertical plantation systems to aluminum
-            accessories and battery enclosures, our aim is to keep renewable
-            projects more reliable, easier to assemble, and better supported.
+            From plantation towers and PaniPani pumps to aluminum slot systems, battery racks, and custom sheet metal products, the goal is to make inquiry and ordering more direct.
           </p>
 
           <div className="mt-10 grid gap-x-10 gap-y-5 md:grid-cols-2">

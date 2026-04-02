@@ -52,13 +52,13 @@ export function Footer() {
                 <Image src={siteConfig.logo} alt={siteConfig.storeName} fill className="object-contain p-1" />
               </div>
               <div>
-                <p className="font-heading text-2xl font-black">HydroNexfarm</p>
+                <p className="font-heading text-2xl font-black">{siteConfig.storeName}</p>
                 <p className="text-xs uppercase tracking-[0.28em] text-[#86f556]">Pakistan</p>
               </div>
             </div>
 
             <p className="mt-5 max-w-md text-sm leading-7 text-white/72 sm:mt-6 sm:text-base sm:leading-8">
-              Explore hydroponics systems, nutrients, aluminum accessories, battery boxes, and wall brackets from one cleaner product-focused buying flow.
+              Explore hydroponics plantation towers, PaniPani pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products from one cleaner buying flow.
             </p>
 
             {quickActionExternal ? (
@@ -87,10 +87,10 @@ export function Footer() {
             <div className="mt-5 space-y-4 text-white/76">
               {[
                 { label: "All Products", href: "/shop" },
-                { label: "Hydroponics Systems", href: "/shop/hydroponics-systems" },
-                { label: "Nutrients", href: "/shop/nutrients" },
-                { label: "Aluminum Accessories", href: "/shop/aluminum-accessories" },
-                { label: "Battery Solutions", href: "/shop/battery-solutions" },
+                { label: "Hydroponics Plantation", href: "/shop/hydroponics-systems" },
+                { label: "Pumps & Nutrients", href: "/shop/nutrients" },
+                { label: "Aluminum V/T Slots", href: "/shop/aluminum-accessories" },
+                { label: "Battery & Sheet Metal", href: "/shop/battery-solutions" },
               ].map((item) => (
                 <Link key={item.label} href={item.href} className="block transition hover:text-[#86f556]">
                   {item.label}
@@ -139,7 +139,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-6 text-center text-sm text-white/72 md:flex-row md:text-left">
-          <p>All rights reserved (c) 2026 HydroNexfarm</p>
+          <p>All rights reserved (c) 2026 {siteConfig.storeName}</p>
           {visibleSocialLinks.length > 0 ? (
             <div className="flex items-center gap-4">
               {visibleSocialLinks.map((item) => (
@@ -165,3 +165,4 @@ export function Footer() {
     </footer>
   );
 }
+

@@ -15,7 +15,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
     id: "hydroponics",
     alt: "High-tech hydroponics greenhouse",
     image:
-      "https://images.pexels.com/photos/6231790/pexels-photo-6231790.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "/products/hydroponics/tower-main.jpeg",
     objectPosition: "object-center",
     keywords: [
       "hydroponics",
@@ -33,7 +33,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
     id: "nutrients",
     alt: "Hydroponic nutrient preparation",
     image:
-      "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1800&q=80",
+      "/products/hydroponics/tower-secondary.jpeg",
     objectPosition: "object-center",
     keywords: [
       "nutrient",
@@ -50,7 +50,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
     id: "battery",
     alt: "Energy storage and battery technology",
     image:
-      "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&w=1800&q=80",
+      "/products/battery/racks/rack-front.jpeg",
     objectPosition: "object-center",
     keywords: [
       "battery",
@@ -69,7 +69,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
     id: "aluminum",
     alt: "Industrial structural framing and fabrication",
     image:
-      "https://images.unsplash.com/photo-1581091215367-59ab6dcef10c?auto=format&fit=crop&w=1800&q=80",
+      "/products/aluminum/slots/profile-color-options.jpeg",
     objectPosition: "object-center",
     keywords: [
       "aluminum",
@@ -126,7 +126,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
     id: "shop",
     alt: "Renewable product catalog background",
     image:
-      "https://images.pexels.com/photos/7299976/pexels-photo-7299976.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "/products/hydroponics/tower-main.jpeg",
     objectPosition: "object-center",
     keywords: [
       "shop",
@@ -201,3 +201,4 @@ export function resolvePageHeroBackground({
 
   return bestPreset.preset;
 }
+

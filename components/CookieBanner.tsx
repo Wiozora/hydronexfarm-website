@@ -34,7 +34,7 @@ export function CookieBanner() {
             <div>
               <h4 className="text-lg font-semibold text-primary">Cookies & privacy</h4>
               <p className="mt-1 text-sm leading-6 text-text-muted">
-                We use lightweight cookies to remember preferences and keep the HydroNexfarm experience smooth.
+                We use lightweight cookies to remember preferences and keep the I CAN ENERGIES experience smooth.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -59,3 +59,4 @@ export function CookieBanner() {
     </AnimatePresence>
   );
 }
+

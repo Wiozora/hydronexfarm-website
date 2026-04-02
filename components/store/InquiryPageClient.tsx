@@ -147,10 +147,10 @@ export function InquiryPageClient() {
                     Browse all products
                   </Link>
                   <Link
-                    href="/shop/hydroponics-systems/vertical-plantation-systems"
+                    href="/shop/hydroponics-systems/vertical-plantation-towers"
                     className="inline-flex items-center justify-center gap-3 rounded-full border border-[#d6dfcb] px-6 py-3 font-bold text-[#183109] transition hover:border-[#86f556] hover:text-[#5c953f]"
                   >
-                    View hydroponics systems
+                    View plantation towers
                   </Link>
                 </div>
               </div>
@@ -469,3 +469,4 @@ export function InquiryPageClient() {
     </section>
   );
 }
+

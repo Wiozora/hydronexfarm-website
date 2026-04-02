@@ -20,41 +20,40 @@ const fadeUp = {
   }),
 };
 
-const heroImage =
-  "https://images.pexels.com/photos/7299976/pexels-photo-7299976.jpeg?auto=compress&cs=tinysrgb&w=1920";
+const heroImage = "/products/hydroponics/tower-main.jpeg";
 
 const quickTags = [
-  "Structured product pages",
-  "Quote-first custom items",
-  "Direct WhatsApp follow-up",
+  "Client product catalog",
+  "Real product images",
+  "WhatsApp quote handoff",
 ];
 
 const topPicks = [
   {
-    title: "Hydroponics systems",
-    meta: "Fixed-price models with capacity and variant details",
-    href: "/shop/hydroponics-systems/vertical-plantation-systems",
+    title: "Plantation towers",
+    meta: "25 to 100 plant fixed-price variants from the client list",
+    href: "/shop/hydroponics-systems/vertical-plantation-towers",
   },
   {
-    title: "Nutrients and additives",
-    meta: "Program-led options for cleaner crop planning",
-    href: "/shop/nutrients/hydroponics-nutrient-program",
+    title: "V/T slot profiles",
+    meta: "Real profile, connector, and frame build references",
+    href: "/shop/aluminum-accessories/vt-slot-profiles",
   },
   {
-    title: "Battery boxes and brackets",
-    meta: "Rack sizes, enclosures, and quote-based support",
-    href: "/shop/battery-solutions/battery-enclosure-boxes",
+    title: "BareBone battery racks",
+    meta: "4U, 5U, 6U, battery cases, and sheet metal support",
+    href: "/shop/battery-solutions/barebone-battery-racks",
   },
 ];
 
 const proofPoints = [
-  { value: "4", label: "starting product lines" },
-  { value: "Cart + Quote", label: "one buyer flow" },
+  { value: "4", label: "core product groups" },
+  { value: "10", label: "catalog entries live" },
   { value: "Direct", label: "support path" },
 ];
 
 const heroTagline =
-  "Hydroponics, battery, and aluminum products for practical project needs";
+  "Client-approved renewable products, racks, slots, and custom fabrication";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -154,9 +153,9 @@ export function Hero() {
               custom={1}
               className="mt-4 max-w-[11ch] text-[clamp(2.35rem,11vw,5.2rem)] font-black leading-[0.9] tracking-[-0.05em] text-white sm:mt-7 sm:max-w-[14ch] md:max-w-5xl"
             >
-              Start with clearer product pages, direct support, and one
+              Start with the real client product range and one
               {" "}
-              <span className="text-[#86f556]">simple inquiry flow</span>
+              <span className="text-[#86f556]">clean inquiry flow</span>
             </motion.h1>
 
             <motion.p
@@ -166,7 +165,7 @@ export function Hero() {
               custom={2}
               className="mt-4 max-w-xl text-[0.92rem] leading-6 text-white/84 sm:mt-8 sm:max-w-2xl sm:text-base sm:leading-8 md:text-lg"
             >
-              This startup storefront is built to help buyers understand key products, compare variants, and send cleaner WhatsApp or quote requests without confusion.
+              This catalog now follows the shared client list: plantation towers, PaniPani pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products.
             </motion.p>
 
             <motion.div
@@ -316,3 +315,6 @@ export function Hero() {
     </section>
   );
 }
+
+
+

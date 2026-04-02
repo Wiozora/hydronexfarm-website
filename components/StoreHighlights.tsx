@@ -6,31 +6,28 @@ import { FaBoxOpen, FaCubes, FaTruck } from "react-icons/fa";
 
 const highlights = [
   {
-    title: "Detailed product pages",
-    copy: "Buyers can move from category browsing into product pages with images, features, benefits, specifications, and variants.",
+    title: "Real client product pages",
+    copy: "The storefront now uses the actual shared products, images, variants, and pricing references instead of placeholder catalog items.",
     icon: FaBoxOpen,
-    image:
-      "https://images.pexels.com/photos/6231790/pexels-photo-6231790.jpeg?auto=compress&cs=tinysrgb&w=1400",
-    label: "Product detail",
-    hoverCopy: "Richer visuals and clearer specs help buyers understand the product before they message or order.",
+    image: "/products/hydroponics/tower-main.jpeg",
+    label: "Real catalog",
+    hoverCopy: "Towers, profiles, racks, and sheet metal items now open into product pages that match the client brief more closely.",
   },
   {
     title: "Cart and quote paths",
-    copy: "Fixed-price hydroponics systems can move toward checkout while custom, bulk, or variable-price items stay in a quote basket.",
+    copy: "Fixed-price plantation towers stay order-ready while pumps, aluminum, battery, and fabrication products remain in a quote-friendly flow.",
     icon: FaCubes,
-    image:
-      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1400&q=80",
+    image: "/products/aluminum/slots/profile-color-options.jpeg",
     label: "Smarter flow",
-    hoverCopy: "The store separates checkout-ready products from quote-led items, so buyers follow the right path first time.",
+    hoverCopy: "The catalog now separates checkout-ready plantation towers from project-led products that need custom discussion first.",
   },
   {
     title: "Cleaner buyer handoff",
-    copy: "Selected items, quantity, and product context stay together when the buyer sends an order or quote inquiry.",
+    copy: "Selected items, variants, quantity, and product context stay together when the buyer sends an order or quote inquiry.",
     icon: FaTruck,
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
+    image: "/products/battery/racks/rack-front.jpeg",
     label: "Clear handoff",
-    hoverCopy: "Order details, quantities, and intent stay bundled together for faster response and fewer follow-up questions.",
+    hoverCopy: "Order details, rack variants, and fabrication intent stay bundled together for faster follow-up and fewer back-and-forth messages.",
   },
 ];
 

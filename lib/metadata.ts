@@ -49,14 +49,13 @@ export function buildMetadata({
       images: [image],
     },
     keywords: [
-      "hydroponics Pakistan",
-      "vertical farming Pakistan",
-      "battery enclosure box Pakistan",
-      "V-slot aluminum Pakistan",
-      "nutrients hydroponics",
-      "HydroNexfarm",
-      "HydroNexfarm.com",
-      "HydroNex Farm",
+      "hydroponics plantation Pakistan",
+      "PaniPani water pump Pakistan",
+      "battery rack Pakistan",
+      "V slot aluminum Pakistan",
+      "custom sheet metal Pakistan",
+      "I CAN ENERGIES",
+      "M/S I CAN ENERGIES Pvt. Ltd.",
     ],
   };
 }

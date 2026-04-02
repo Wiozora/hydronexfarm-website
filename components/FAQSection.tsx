@@ -6,24 +6,24 @@ import { Minus, Plus } from "lucide-react";
 
 const faqs = [
   {
-    question: "Hydroponics system kis jagah ke liye suitable hai?",
+    question: "Hydroponics plantation towers kis range mein available hain?",
     answer:
-      "Hamare systems home rooftops, restaurants, small commercial farms, aur controlled indoor setups ke liye suitable hain. Space aur crop target ke mutabiq model recommend kiya jata hai.",
+      "Website par ab 25, 50, 75, aur 100 plant plantation tower variants diye gaye hain. Har variant ke saath price, height, aur diameter guidance bhi show hoti hai taake buyer seedha sahi option select kar sake.",
   },
   {
-    question: "Kya aap installation aur setup support dete hain?",
+    question: "Kya PaniPani pump aur nutrient plans bhi available hain?",
     answer:
-      "Ji haan. Hum consultation, layout advice, product selection, aur setup guidance provide karte hain. Kuch cases me on-site coordination bhi arrange ki ja sakti hai.",
+      "Ji haan. Pump aur nutrient section ko alag category mein organize kiya gaya hai. Buyer plantation type, chemistry type, specification type, ya pump sizing requirement ke hisaab se inquiry bhej sakta hai.",
   },
   {
-    question: "Battery boxes aur aluminum accessories kis kaam aate hain?",
+    question: "Aluminum aur battery side par website mein kya-kya include hai?",
     answer:
-      "Battery enclosures backup storage systems ko organized aur protected rakhte hain, jab ke aluminum profiles hydroponics frames aur custom structural assemblies ke liye use hote hain.",
+      "Aluminum category mein V/T slot profiles, connectors, wheels, aur frame enclosure builds hain. Battery category mein rack mount brackets, BareBone 4U / 5U / 6U racks, 3U / 4U / 5U battery cases, aur custom sheet metal products include kiye gaye hain.",
   },
   {
-    question: "Order ka process kya hai?",
+    question: "Order ya quote ka process kya hai?",
     answer:
-      "Aap WhatsApp ya contact form ke zariye requirement share karte hain, phir hum suitable product, pricing, aur delivery details discuss karte hain. Final confirmation ke baad dispatch process start hota hai.",
+      "Fixed-price plantation towers cart mein add kiye ja sakte hain, jab ke pump, nutrient, aluminum, battery, aur sheet metal items quote flow ke through bheje ja sakte hain. Buyer variant select karke WhatsApp ya inquiry basket se clean request send kar sakta hai.",
   },
 ];
 
@@ -39,7 +39,7 @@ export function FAQSection() {
             Questions buyers usually ask before ordering
           </h2>
           <p className="text-lg leading-8 text-text-muted">
-            Ye woh common sawalat hain jo clients hydroponics systems, battery enclosures, aur component supply ke hawale se poochte hain.
+            Yeh woh common sawalat hain jo clients plantation towers, pumps, V/T slots, battery racks, aur custom fabrication ke hawale se poochte hain.
           </p>
 
           <div className="rounded-[2rem] bg-bg-light p-6">
@@ -48,7 +48,7 @@ export function FAQSection() {
             </p>
             <p className="mt-4 text-3xl font-black text-text-dark">WhatsApp-first support</p>
             <p className="mt-3 text-sm leading-7 text-text-muted">
-              Agar aapko model selection, pricing, ya bulk order guidance chahiye ho to fastest reply WhatsApp ke zariye mil sakta hai.
+              Agar aapko model selection, pump sizing, rack variant, ya custom sheet metal guidance chahiye ho to fastest reply WhatsApp ke zariye mil sakta hai.
             </p>
           </div>
         </div>

@@ -1,18 +1,17 @@
 export const siteConfig = {
-  storeName: "HydroNexfarm",
-  legalName: "HydroNexfarm",
+  storeName: "I CAN ENERGIES",
+  legalName: "M/S I CAN ENERGIES Pvt. Ltd.",
   siteUrl: "https://hydronexfarm.com",
   description:
-    "Pakistan's supplier of Hydroponics vertical farming systems, battery boxes, aluminum accessories, and plant nutrients.",
+    "Pakistan's supplier of hydroponics plantation towers, PaniPani water pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products.",
   email: "info@hydronexfarm.com",
   whatsappNumber: "923000000000",
   displayPhone: "+92 300 0000000",
   phone: "+92 300 0000000",
   address: "Karachi, Pakistan",
   logo: "/logo.png",
-  tagline: "Growing the Future, Powering Tomorrow",
-  ogImage:
-    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80",
+  tagline: "Plantation systems, racks, slots, and custom fabrication",
+  ogImage: "/products/hydroponics/tower-main.jpeg",
   locale: "en-PK",
   socials: {
     instagram: "https://www.instagram.com/",
