@@ -14,8 +14,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
   {
     id: "hydroponics",
     alt: "High-tech hydroponics greenhouse",
-    image:
-      "/products/hydroponics/tower-main.jpeg",
+    image: "/products/hydroponics/client/tower-greenhouse-wide.jpeg",
     objectPosition: "object-center",
     keywords: [
       "hydroponics",
@@ -32,8 +31,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
   {
     id: "nutrients",
     alt: "Hydroponic nutrient preparation",
-    image:
-      "/products/hydroponics/tower-secondary.jpeg",
+    image: "/products/hydroponics/client/tower-greenhouse-row.jpeg",
     objectPosition: "object-center",
     keywords: [
       "nutrient",
@@ -89,8 +87,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
   {
     id: "support",
     alt: "Professional buyer support and consultation",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1800&q=80",
+    image: "/images/marketing/office-team-consultation.webp",
     objectPosition: "object-center",
     keywords: [
       "contact",
@@ -107,8 +104,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
   {
     id: "legal",
     alt: "Secure digital policy and compliance background",
-    image:
-      "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1800&q=80",
+    image: "/images/marketing/project-documents-review.webp",
     objectPosition: "object-center",
     keywords: [
       "privacy",
@@ -125,8 +121,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
   {
     id: "shop",
     alt: "Renewable product catalog background",
-    image:
-      "/products/hydroponics/tower-main.jpeg",
+    image: "/products/hydroponics/client/tower-greenhouse-wide.jpeg",
     objectPosition: "object-center",
     keywords: [
       "shop",
@@ -144,8 +139,7 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
   {
     id: "default",
     alt: "Renewable energy project background",
-    image:
-      "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=1800&q=80",
+    image: "/products/hydroponics/client/tower-greenhouse-row.jpeg",
     objectPosition: "object-center",
     keywords: [],
   },

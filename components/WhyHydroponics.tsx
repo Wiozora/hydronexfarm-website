@@ -21,32 +21,28 @@ const features = [
     description:
       "Optimized energy planning with cleaner output, lower waste, and better day-to-day performance.",
     icon: FaSolarPanel,
-    image:
-      "https://images.unsplash.com/photo-1497440001374-f26997328c1b?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/marketing/hydroponics-aisle-hero.webp",
   },
   {
     title: "Trust & Warranty",
     description:
       "Reliable sourcing, guided recommendations, and dependable after-sales support for every order.",
     icon: FaAward,
-    image:
-      "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/marketing/project-documents-review.webp",
   },
   {
     title: "High Quality Work",
     description:
       "Well-matched components and practical layouts designed for durable installation workflows.",
     icon: FaCheckCircle,
-    image:
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/marketing/industrial-fabrication-workshop.webp",
   },
   {
     title: "24/7 Support",
     description:
       "Fast response for product questions, sizing help, and delivery coordination whenever you need it.",
     icon: FaHeadset,
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/marketing/office-team-consultation.webp",
   },
 ];
 

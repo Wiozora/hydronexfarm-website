@@ -20,7 +20,7 @@ const fadeUp = {
   }),
 };
 
-const heroImage = "/products/hydroponics/tower-main.jpeg";
+const heroImage = "/products/stock/hydroponics-led-aisle.jpg";
 
 const quickTags = [
   "Client product catalog",

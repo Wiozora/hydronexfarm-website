@@ -1,0 +1,41 @@
+<svg width="1600" height="1200" viewBox="0 0 1600 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1200" rx="72" fill="#F6F8F2"/>
+  <rect x="64" y="64" width="1472" height="1072" rx="56" fill="url(#bg)"/>
+  <circle cx="1280" cy="220" r="196" fill="#E7F5D8"/>
+  <circle cx="300" cy="944" r="192" fill="#EEF8E4"/>
+  <rect x="214" y="902" width="1172" height="76" rx="28" fill="#DCE8D1"/>
+  <rect x="250" y="366" width="1100" height="386" rx="34" fill="#141816"/>
+  <rect x="284" y="398" width="1032" height="322" rx="24" fill="#1D2320"/>
+  <rect x="334" y="436" width="430" height="240" rx="22" fill="#252D29"/>
+  <rect x="802" y="436" width="462" height="70" rx="18" fill="#252D29"/>
+  <rect x="802" y="528" width="462" height="70" rx="18" fill="#252D29"/>
+  <rect x="802" y="620" width="462" height="18" rx="9" fill="#86F556" fill-opacity="0.35"/>
+  <g fill="#DDE7D3">
+    <circle cx="302" cy="430" r="7"/>
+    <circle cx="302" cy="500" r="7"/>
+    <circle cx="302" cy="570" r="7"/>
+    <circle cx="302" cy="640" r="7"/>
+    <circle cx="1298" cy="430" r="7"/>
+    <circle cx="1298" cy="500" r="7"/>
+    <circle cx="1298" cy="570" r="7"/>
+    <circle cx="1298" cy="640" r="7"/>
+    <circle cx="392" cy="388" r="7"/>
+    <circle cx="512" cy="388" r="7"/>
+    <circle cx="632" cy="388" r="7"/>
+    <circle cx="752" cy="388" r="7"/>
+    <circle cx="872" cy="388" r="7"/>
+    <circle cx="992" cy="388" r="7"/>
+    <circle cx="1112" cy="388" r="7"/>
+    <circle cx="1232" cy="388" r="7"/>
+  </g>
+  <path d="M238 214C238 186.386 260.386 164 288 164H760C787.614 164 810 186.386 810 214V264H238V214Z" fill="white" fill-opacity="0.96"/>
+  <text x="282" y="228" fill="#1C2A15" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" letter-spacing="5">MADE-TO-REQUIREMENT FABRICATION</text>
+  <text x="214" y="1008" fill="#77B74F" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700" letter-spacing="8">COVERS, PANELS, AND CUSTOM BUILDS</text>
+  <text x="214" y="1078" fill="#183109" font-family="Arial, Helvetica, sans-serif" font-size="98" font-weight="800">Sheet Metal Custom</text>
+  <defs>
+    <linearGradient id="bg" x1="126" y1="110" x2="1450" y2="1084" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAF5"/>
+      <stop offset="1" stop-color="#E3ECD8"/>
+    </linearGradient>
+  </defs>
+</svg>

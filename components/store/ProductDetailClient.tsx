@@ -2,10 +2,16 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FaArrowRight, FaCheckCircle, FaWhatsapp } from "react-icons/fa";
 
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductGallery } from "@/components/store/ProductGallery";
+import {
+  PaymentInfoPanel,
+  ProductDatasheetPanel,
+  ProductRoiPanel,
+} from "@/components/store/SupportPanels";
 import { useStore } from "@/components/store/StoreProvider";
 import { hasPublicWhatsApp } from "@/lib/site-config";
 import { createWhatsAppLink } from "@/lib/whatsapp";
@@ -22,23 +28,39 @@ import type { StoreProduct } from "@/types";
 
 export function ProductDetailClient({ product }: { product: StoreProduct }) {
   const category = getCategoryBySlug(product.categorySlug);
-  const initialVariant = getDefaultVariant(product);
-  const [selectedVariantId, setSelectedVariantId] = useState(initialVariant.id);
+  const defaultVariant = getDefaultVariant(product);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const requestedVariantId = searchParams.get("variant");
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useStore();
 
+  const selectedVariantId =
+    product.variants.find((variant) => variant.id === requestedVariantId)?.id ?? defaultVariant.id;
   const selectedVariant =
-    product.variants.find((variant) => variant.id === selectedVariantId) ?? initialVariant;
+    product.variants.find((variant) => variant.id === selectedVariantId) ?? defaultVariant;
   const selectedMode = getVariantMode(selectedVariant);
   const relatedProducts = getRelatedProducts(product);
   const whatsappVisible = hasPublicWhatsApp();
 
-  const combinedSpecifications = [...product.specifications, ...selectedVariant.specifications];
+  const selectedSpecifications = [
+    ...product.specifications,
+    { label: "Availability", value: selectedVariant.availability },
+    { label: "Lead time", value: selectedVariant.leadTime },
+    ...selectedVariant.specifications,
+  ];
   const whatsappMessage = createWhatsAppLink(
     selectedMode === "cart"
       ? `Hi! I want to order ${product.name} - ${selectedVariant.name}. Quantity: ${quantity}. Please confirm the order total and next steps.`
       : `Hi! I want a quote for ${product.name} - ${selectedVariant.name}. Quantity: ${quantity}. Please confirm pricing, availability, and next steps.`,
   );
+
+  function handleVariantChange(nextVariantId: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("variant", nextVariantId);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }
 
   function handleAdd() {
     addItem({
@@ -92,7 +114,7 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
                       <button
                         key={variant.id}
                         type="button"
-                        onClick={() => setSelectedVariantId(variant.id)}
+                        onClick={() => handleVariantChange(variant.id)}
                         className={`rounded-[1.4rem] border px-4 py-4 text-left transition ${
                           isActive
                             ? "border-[#86f556] bg-[#86f556]/10"
@@ -233,7 +255,7 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
               </p>
 
               <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-[#e6ebde]">
-                {combinedSpecifications.map((specification, index) => (
+                {selectedSpecifications.map((specification, index) => (
                   <div
                     key={`${specification.label}-${index}`}
                     className="flex items-start justify-between gap-4 border-b border-[#edf2e7] px-5 py-4 last:border-b-0"
@@ -289,6 +311,14 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
               </div>
             </div>
           </div>
+
+          <ProductDatasheetPanel product={product} selectedVariant={selectedVariant} />
+
+          {product.roi ? (
+            <ProductRoiPanel product={product} roi={product.roi} selectedVariant={selectedVariant} />
+          ) : null}
+
+          {product.paymentInfo ? <PaymentInfoPanel paymentInfo={product.paymentInfo} /> : null}
         </div>
       </section>
 

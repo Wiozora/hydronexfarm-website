@@ -5,9 +5,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaArrowRight, FaTrash, FaWhatsapp } from "react-icons/fa";
 
+import { PaymentInfoPanel } from "@/components/store/SupportPanels";
 import { useStore } from "@/components/store/StoreProvider";
 import { captureLead } from "@/lib/lead-client";
-import { hasPublicWhatsApp } from "@/lib/site-config";
+import { defaultPaymentInfo, hasPublicWhatsApp } from "@/lib/site-config";
 import {
   buildStoreInquiryMessage,
   getBasketSubtotal,
@@ -100,7 +101,7 @@ export function InquiryPageClient() {
 
   return (
     <section className="bg-[#f7f8f1] py-14 sm:py-16 md:py-22 lg:py-24">
-      <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
+      <div className="mx-auto max-w-7xl space-y-8 px-4 md:px-8 lg:px-12">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-6">
             <div className="rounded-[1.7rem] border border-[#e6ebde] bg-white p-5 shadow-[0_18px_45px_rgba(16,23,18,0.05)] sm:rounded-[2rem] sm:p-7 md:p-8">
@@ -359,11 +360,11 @@ export function InquiryPageClient() {
               <div className="mt-6 rounded-2xl bg-[#eff8e7] px-5 py-4 text-sm font-medium text-[#183109]">
                 {saveMode === "browser-queue"
                   ? whatsappVisible
-                    ? "Your basket details are queued on this device and the WhatsApp checkout draft is ready."
-                    : "Your basket details are queued on this device and ready for follow-up."
+                    ? "Your inquiry is ready in WhatsApp, and the basket details are safely saved on this device until you send it."
+                    : "Your basket details are safely saved on this device and ready for follow-up."
                   : whatsappVisible
-                    ? "Your basket details were captured and the WhatsApp checkout draft is ready."
-                    : "Your basket details were captured successfully."}
+                    ? "Your basket details were received, and the WhatsApp draft is ready to send."
+                    : "Your basket details were received successfully."}
               </div>
             ) : null}
 
@@ -465,6 +466,12 @@ export function InquiryPageClient() {
             </div>
           </div>
         </div>
+
+        <PaymentInfoPanel
+          paymentInfo={defaultPaymentInfo}
+          title="Manual payment details"
+          description="Payment options stay informational here so buyers can review COD, JazzCash, and company account guidance before final WhatsApp confirmation."
+        />
       </div>
     </section>
   );

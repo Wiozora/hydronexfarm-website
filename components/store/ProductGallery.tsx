@@ -10,7 +10,15 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
     <div className="min-w-0">
       <div className="relative overflow-hidden rounded-[1.6rem] border border-white/12 bg-white/6 shadow-[0_24px_60px_rgba(8,18,12,0.18)] sm:rounded-[2rem]">
         <div className="relative aspect-[1.02/1] min-h-[18rem] sm:min-h-[24rem]">
-          <Image src={activeImage} alt={alt} fill className="object-cover" priority />
+          <Image
+            src={activeImage}
+            alt={alt}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            quality={100}
+            className="object-cover"
+            priority
+          />
         </div>
       </div>
 
@@ -27,7 +35,14 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
             }`}
           >
             <div className="relative aspect-[1/1]">
-              <Image src={image} alt={alt} fill className="object-cover" />
+              <Image
+                src={image}
+                alt={alt}
+                fill
+                sizes="(min-width: 640px) 12rem, 30vw"
+                quality={90}
+                className="object-cover"
+              />
             </div>
           </button>
         ))}

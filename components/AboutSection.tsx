@@ -11,8 +11,8 @@ const points = [
   "Battery racks, battery cases, and custom sheet metal fabrication support",
 ];
 
-const mainImage = "/products/aluminum/frames/frame-cart.jpeg";
-const supportingImage = "/products/hydroponics/tower-main.jpeg";
+const mainImage = "/products/hydroponics/client/tower-greenhouse-wide.jpeg";
+const supportingImage = "/products/aluminum/frames/frame-cart.jpeg";
 
 export function AboutSection() {
   return (
@@ -30,9 +30,10 @@ export function AboutSection() {
           <div className="relative overflow-hidden rounded-[2.35rem] shadow-[0_30px_80px_rgba(22,32,24,0.12)]">
             <Image
               src={mainImage}
-              alt="Aluminum frame build"
+              alt="Hydroponics plantation towers arranged inside a greenhouse"
               width={1100}
               height={900}
+              quality={95}
               className="h-[28rem] w-full object-cover md:h-[32rem]"
             />
 
@@ -47,9 +48,10 @@ export function AboutSection() {
           <div className="relative mx-auto -mt-16 w-[58%] min-w-[15rem] max-w-[18rem] overflow-hidden rounded-[2rem] border-[6px] border-white bg-white shadow-[0_22px_60px_rgba(22,32,24,0.18)] md:ml-auto md:mr-2 lg:absolute lg:-bottom-12 lg:right-1 lg:mt-0">
             <Image
               src={supportingImage}
-              alt="Hydroponics plantation tower"
+              alt="Aluminum frame build with caster-mounted structure"
               width={700}
               height={620}
+              quality={95}
               className="h-[15rem] w-full object-cover"
             />
           </div>

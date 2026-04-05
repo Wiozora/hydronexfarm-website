@@ -55,6 +55,7 @@ export function StoreHighlights() {
                 alt={item.title}
                 fill
                 sizes="(max-width: 1024px) 100vw, 33vw"
+                quality={95}
                 className="object-cover opacity-0 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-100 group-focus-within:scale-105 group-focus-within:opacity-100"
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,27,14,0.14)_0%,rgba(12,27,14,0.46)_46%,rgba(12,27,14,0.86)_100%)] opacity-0 transition duration-500 group-hover:opacity-100 group-focus-within:opacity-100" />

@@ -8,22 +8,26 @@ const teamMembers = [
   {
     name: "Ahsan Raza",
     role: "Hydroponics Systems Engineer",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=900",
+    image: "/images/team/team-ahsan-raza.webp",
+    alt: "Ahsan Raza, Hydroponics Systems Engineer at I CAN ENERGIES",
   },
   {
     name: "Usman Tariq",
     role: "Project Sales Manager",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900",
+    image: "/images/team/team-usman-tariq.webp",
+    alt: "Usman Tariq, Project Sales Manager at I CAN ENERGIES",
   },
   {
     name: "Sara Imran",
     role: "Operations Coordinator",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=900",
+    image: "/images/team/team-sara-imran.webp",
+    alt: "Sara Imran, Operations Coordinator at I CAN ENERGIES",
   },
   {
     name: "Hamza Ali",
     role: "Installation Specialist",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900",
+    image: "/images/team/team-hamza-ali.webp",
+    alt: "Hamza Ali, Installation Specialist at I CAN ENERGIES",
   },
 ];
 
@@ -53,7 +57,7 @@ export function TeamSection() {
               <div className="relative h-[285px]">
                 <Image
                   src={member.image}
-                  alt={member.name}
+                  alt={member.alt}
                   fill
                   className="object-cover"
                 />

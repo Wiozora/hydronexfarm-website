@@ -40,6 +40,8 @@ export function ShopCategories() {
                 src={category.image}
                 alt={category.name}
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                quality={95}
                 className="object-cover transition duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,20,16,0.18)_0%,rgba(12,20,16,0.42)_46%,rgba(12,20,16,0.85)_100%)]" />

@@ -1,0 +1,49 @@
+<svg width="1600" height="1200" viewBox="0 0 1600 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1200" rx="72" fill="#F6F8F2"/>
+  <rect x="64" y="64" width="1472" height="1072" rx="56" fill="url(#bg)"/>
+  <circle cx="1286" cy="228" r="204" fill="#E7F5D8"/>
+  <circle cx="286" cy="932" r="186" fill="#EEF8E4"/>
+  <rect x="260" y="896" width="1080" height="78" rx="28" fill="#DCE7D2"/>
+  <rect x="420" y="294" width="760" height="472" rx="40" fill="#121614"/>
+  <rect x="454" y="326" width="692" height="408" rx="26" fill="#1B201E"/>
+  <rect x="482" y="352" width="636" height="356" rx="18" fill="#101412"/>
+  <rect x="552" y="352" width="18" height="356" fill="#2D3530"/>
+  <rect x="1046" y="352" width="18" height="356" fill="#2D3530"/>
+  <rect x="662" y="352" width="12" height="356" fill="#252C28"/>
+  <rect x="766" y="352" width="12" height="356" fill="#252C28"/>
+  <rect x="870" y="352" width="12" height="356" fill="#252C28"/>
+  <rect x="974" y="352" width="12" height="356" fill="#252C28"/>
+  <rect x="492" y="392" width="616" height="6" fill="#86F556" fill-opacity="0.35"/>
+  <rect x="492" y="462" width="616" height="6" fill="#86F556" fill-opacity="0.18"/>
+  <rect x="492" y="532" width="616" height="6" fill="#86F556" fill-opacity="0.18"/>
+  <rect x="492" y="602" width="616" height="6" fill="#86F556" fill-opacity="0.18"/>
+  <rect x="384" y="352" width="44" height="344" rx="16" fill="#0D110F"/>
+  <rect x="1172" y="352" width="44" height="344" rx="16" fill="#0D110F"/>
+  <rect x="394" y="438" width="24" height="172" rx="12" fill="#D5DBD5"/>
+  <rect x="1182" y="438" width="24" height="172" rx="12" fill="#D5DBD5"/>
+  <g fill="#DDE7D3">
+    <circle cx="432" cy="346" r="7"/>
+    <circle cx="468" cy="346" r="7"/>
+    <circle cx="504" cy="346" r="7"/>
+    <circle cx="540" cy="346" r="7"/>
+    <circle cx="576" cy="346" r="7"/>
+    <circle cx="612" cy="346" r="7"/>
+    <circle cx="648" cy="346" r="7"/>
+    <circle cx="984" cy="346" r="7"/>
+    <circle cx="1020" cy="346" r="7"/>
+    <circle cx="1056" cy="346" r="7"/>
+    <circle cx="1092" cy="346" r="7"/>
+    <circle cx="1128" cy="346" r="7"/>
+    <circle cx="1164" cy="346" r="7"/>
+  </g>
+  <path d="M234 230C234 202.386 256.386 180 284 180H694C721.614 180 744 202.386 744 230V280H234V230Z" fill="white" fill-opacity="0.96"/>
+  <text x="278" y="244" fill="#1C2A15" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="5">4U / 5U / 6U RACK RANGE</text>
+  <text x="214" y="1002" fill="#77B74F" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" letter-spacing="8">BATTERY CABINET SERIES</text>
+  <text x="214" y="1076" fill="#183109" font-family="Arial, Helvetica, sans-serif" font-size="104" font-weight="800">BareBone Racks</text>
+  <defs>
+    <linearGradient id="bg" x1="122" y1="110" x2="1446" y2="1082" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAF5"/>
+      <stop offset="1" stop-color="#E3ECD8"/>
+    </linearGradient>
+  </defs>
+</svg>

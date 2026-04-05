@@ -1,26 +1,100 @@
+import type { PaymentInfo, ProductSpecification } from "@/types";
+
+function readPublicEnv(name: string, fallback: string) {
+  const value = process.env[name];
+  return typeof value === "string" && value.trim().length > 0 ? value.trim() : fallback;
+}
+
+const storeName = "I CAN ENERGIES";
+const legalName = "I CAN ENERGIES Pvt Ltd.";
+const jazzCashNumber = readPublicEnv("NEXT_PUBLIC_JAZZCASH_NUMBER", "03340300575");
+const primaryBankName = readPublicEnv("NEXT_PUBLIC_BANK_NAME", "Habib Bank");
+const secondaryBankName = readPublicEnv("NEXT_PUBLIC_BANK_NAME_SECONDARY", "Habib Metropolitan Bank");
+const primaryBankAccountNumber = readPublicEnv("NEXT_PUBLIC_BANK_ACCOUNT_NUMBER", "");
+const primaryBankIban = readPublicEnv("NEXT_PUBLIC_BANK_IBAN", "");
+const secondaryBankAccountNumber = readPublicEnv("NEXT_PUBLIC_BANK_ACCOUNT_NUMBER_SECONDARY", "");
+const secondaryBankIban = readPublicEnv("NEXT_PUBLIC_BANK_IBAN_SECONDARY", "");
+
+const bankDetails: ProductSpecification[] = [
+  { label: "Account title", value: readPublicEnv("NEXT_PUBLIC_BANK_ACCOUNT_TITLE", legalName) },
+  { label: "JazzCash number", value: jazzCashNumber },
+  { label: "Primary bank", value: primaryBankName },
+  ...[
+    { label: "Primary account number", value: primaryBankAccountNumber },
+    { label: "Primary IBAN", value: primaryBankIban },
+  ].filter((item) => item.value.length > 0),
+  { label: "Secondary bank", value: secondaryBankName },
+  ...[
+    { label: "Secondary account number", value: secondaryBankAccountNumber },
+    { label: "Secondary IBAN", value: secondaryBankIban },
+  ].filter((item) => item.value.length > 0),
+];
+
+const hasPublishedBankTransferNumbers =
+  primaryBankAccountNumber.length > 0 ||
+  primaryBankIban.length > 0 ||
+  secondaryBankAccountNumber.length > 0 ||
+  secondaryBankIban.length > 0;
+
+export const defaultPaymentInfo: PaymentInfo = {
+  heading: "Payment Methods & Banking Details",
+  methods: [
+    {
+      id: "cod",
+      title: "Cash on Delivery",
+      description:
+        "Available on eligible fixed-price items after the order, city, and dispatch terms are confirmed.",
+      meta: "Order confirmation required",
+    },
+    {
+      id: "jazzcash",
+      title: "JazzCash",
+      description:
+        "Mobile payment can be used for confirmed orders and fast follow-up once the sales team confirms the final amount.",
+      meta: readPublicEnv("NEXT_PUBLIC_JAZZCASH_LABEL", jazzCashNumber),
+    },
+    {
+      id: "company-account",
+      title: "Company Account",
+      description:
+        "Bank transfer is available for approved quotations, fabrication work, and company-led orders.",
+      meta: hasPublishedBankTransferNumbers
+        ? "Bank details available below"
+        : "Banking channels listed below",
+    },
+  ],
+  bankDetails,
+  notes: [
+    "Payment method availability can vary by product type, order value, and delivery city.",
+    hasPublishedBankTransferNumbers
+      ? "For project-led or custom fabrication work, confirm the exact bank channel before making payment."
+      : "Exact account number and IBAN can be shared during final commercial confirmation if they are not yet published.",
+  ],
+};
+
 export const siteConfig = {
-  storeName: "I CAN ENERGIES",
-  legalName: "M/S I CAN ENERGIES Pvt. Ltd.",
-  siteUrl: "https://hydronexfarm.com",
+  storeName,
+  legalName,
+  siteUrl: readPublicEnv("NEXT_PUBLIC_SITE_URL", "https://hydronexfarm.com"),
   description:
     "Pakistan's supplier of hydroponics plantation towers, PaniPani water pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products.",
-  email: "info@hydronexfarm.com",
-  whatsappNumber: "923000000000",
-  displayPhone: "+92 300 0000000",
-  phone: "+92 300 0000000",
-  address: "Karachi, Pakistan",
+  email: readPublicEnv("NEXT_PUBLIC_CONTACT_EMAIL", "info@hydronexfarm.com"),
+  whatsappNumber: readPublicEnv("NEXT_PUBLIC_WHATSAPP_NUMBER", "923000000000"),
+  displayPhone: readPublicEnv("NEXT_PUBLIC_DISPLAY_PHONE", "+92 300 0000000"),
+  phone: readPublicEnv("NEXT_PUBLIC_PHONE", "+92 300 0000000"),
+  address: readPublicEnv("NEXT_PUBLIC_ADDRESS", "Karachi, Pakistan"),
   logo: "/logo.png",
   tagline: "Plantation systems, racks, slots, and custom fabrication",
-  ogImage: "/products/hydroponics/tower-main.jpeg",
+  ogImage: "/images/marketing/hydroponics-aisle-hero.webp",
   locale: "en-PK",
   socials: {
-    instagram: "https://www.instagram.com/",
-    facebook: "https://www.facebook.com/",
-    linkedin: "https://www.linkedin.com/",
-    twitter: "https://x.com/",
-    youtube: "https://www.youtube.com/",
+    instagram: readPublicEnv("NEXT_PUBLIC_SOCIAL_INSTAGRAM", "https://www.instagram.com/"),
+    facebook: readPublicEnv("NEXT_PUBLIC_SOCIAL_FACEBOOK", "https://www.facebook.com/"),
+    linkedin: readPublicEnv("NEXT_PUBLIC_SOCIAL_LINKEDIN", "https://www.linkedin.com/"),
+    twitter: readPublicEnv("NEXT_PUBLIC_SOCIAL_TWITTER", "https://x.com/"),
+    youtube: readPublicEnv("NEXT_PUBLIC_SOCIAL_YOUTUBE", "https://www.youtube.com/"),
   },
-} as const;
+};
 
 export const storageKeys = {
   cookies: "unique.cookies.v1",
@@ -98,6 +172,10 @@ export function hasPublicWhatsApp() {
 
 export function hasPublicSocialLink(href: string) {
   return !isGenericSocialLink(href);
+}
+
+export function hasPublicBankingDetails() {
+  return bankDetails.some((detail) => detail.label !== "Account title" && detail.value.length > 0);
 }
 
 export function getPublicPhoneHref() {

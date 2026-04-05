@@ -16,8 +16,8 @@ const reasons = [
     icon: FaTruck,
     title: "Focused product range",
     desc: "The catalog now focuses on the real client range: plantation towers, pumps, aluminum slot systems, battery racks, and custom fabrication products.",
-    image:
-      "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1400&q=80",
+    image: "/images/marketing/hydroponics-aisle-hero.webp",
+    imageAlt: "Indoor hydroponic growing aisle with bright cultivation lighting",
     hoverLabel: "Clearer start",
     hoverCopy: "A startup-friendly range built around real buyer questions instead of a cluttered catalog.",
   },
@@ -25,8 +25,8 @@ const reasons = [
     icon: FaTools,
     title: "Useful product detail pages",
     desc: "Key products are being organized with images, features, benefits, specifications, and use cases so buyers can shortlist faster.",
-    image:
-      "https://images.pexels.com/photos/7299976/pexels-photo-7299976.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    image: "/images/marketing/hydroponics-greenhouse-rows.webp",
+    imageAlt: "Commercial hydroponic growing rows inside a greenhouse",
     hoverLabel: "Better detail",
     hoverCopy: "Each product page explains what it does, where it fits, and what to ask before ordering.",
   },
@@ -34,8 +34,8 @@ const reasons = [
     icon: FaHeadset,
     title: "Direct buyer support",
     desc: "Early buyers can contact us directly on WhatsApp for product questions, quote requests, and purchase guidance.",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/marketing/technical-site-support.webp",
+    imageAlt: "Technician inspecting equipment during on-site support",
     hoverLabel: "Human follow-up",
     hoverCopy: "The focus is straightforward communication while the business is growing.",
   },
@@ -43,8 +43,8 @@ const reasons = [
     icon: FaChartLine,
     title: "Practical use cases",
     desc: "We focus on products that make sense for homes, schools, cafes, installers, and small commercial projects.",
-    image:
-      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1400&q=80",
+    image: "/images/marketing/office-team-consultation.webp",
+    imageAlt: "Project team discussing product planning in an office",
     hoverLabel: "Use-case led",
     hoverCopy: "Product pages now explain where each item fits before a buyer commits.",
   },
@@ -52,8 +52,8 @@ const reasons = [
     icon: FaCertificate,
     title: "Specification-led selection",
     desc: "Dimensions, variant details, and application notes are being structured to make product selection easier for serious buyers.",
-    image:
-      "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1400&q=80",
+    image: "/images/marketing/engineering-blueprints-desk.webp",
+    imageAlt: "Engineering drawings reviewed beside a laptop on a desk",
     hoverLabel: "Clear specs",
     hoverCopy: "Less guesswork, better shortlisting, and cleaner quote conversations.",
   },
@@ -61,8 +61,8 @@ const reasons = [
     icon: FaShippingFast,
     title: "Delivery and quote planning",
     desc: "We can coordinate delivery planning and custom quote discussions for buyers in major cities and project-based locations.",
-    image:
-      "https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1400&q=80",
+    image: "/images/marketing/project-documents-review.webp",
+    imageAlt: "Project documents and laptop arranged for delivery planning",
     hoverLabel: "Planning support",
     hoverCopy: "Useful for a startup-stage operation where careful coordination matters more than inflated promises.",
   },
@@ -100,9 +100,10 @@ export function TrustSection() {
               <div className="absolute inset-0">
                 <Image
                   src={reason.image}
-                  alt={reason.title}
+                  alt={reason.imageAlt}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  quality={95}
                   className="object-cover opacity-0 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-100 group-focus-within:scale-105 group-focus-within:opacity-100"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,36,12,0.18)_0%,rgba(15,36,12,0.46)_46%,rgba(15,36,12,0.88)_100%)] opacity-0 transition duration-500 group-hover:opacity-100 group-focus-within:opacity-100" />

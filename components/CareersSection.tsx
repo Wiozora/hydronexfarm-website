@@ -5,10 +5,30 @@ import Image from "next/image";
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
 const team = [
-  { name: "Ahmad Raza", role: "CEO & Founder", img: "https://api.dicebear.com/7.x/notionists/svg?seed=Ahmad" },
-  { name: "Sara Khan", role: "Head Engineer", img: "https://api.dicebear.com/7.x/notionists/svg?seed=Sara" },
-  { name: "Hassan Ali", role: "Solar Consultant", img: "https://api.dicebear.com/7.x/notionists/svg?seed=Hassan" },
-  { name: "Fatima Malik", role: "Project Manager", img: "https://api.dicebear.com/7.x/notionists/svg?seed=Fatima" },
+  {
+    name: "Ahmad Raza",
+    role: "CEO & Founder",
+    img: "/images/team/team-ahsan-raza.webp",
+    alt: "Ahmad Raza, CEO and Founder portrait",
+  },
+  {
+    name: "Sara Khan",
+    role: "Head Engineer",
+    img: "/images/team/team-sara-imran.webp",
+    alt: "Sara Khan, Head Engineer portrait",
+  },
+  {
+    name: "Hassan Ali",
+    role: "Solar Consultant",
+    img: "/images/team/team-hamza-ali.webp",
+    alt: "Hassan Ali, Solar Consultant portrait",
+  },
+  {
+    name: "Fatima Malik",
+    role: "Project Manager",
+    img: "/images/team/team-usman-tariq.webp",
+    alt: "Fatima Malik, Project Manager portrait",
+  },
 ];
 
 export function CareersSection() {
@@ -40,7 +60,7 @@ export function CareersSection() {
               <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
                 <Image
                   src={member.img}
-                  alt={member.name}
+                  alt={member.alt}
                   fill
                   className="object-cover"
                 />

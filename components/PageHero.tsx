@@ -57,6 +57,7 @@ export function PageHero({
           fill
           priority
           sizes="100vw"
+          quality={95}
           className={`${resolvedBackground.objectPosition ?? "object-center"} object-cover`}
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,22,10,0.96)_0%,rgba(6,26,11,0.94)_34%,rgba(6,24,11,0.88)_64%,rgba(6,24,11,0.78)_100%)]" />
@@ -79,7 +80,7 @@ export function PageHero({
               </p>
             ) : null}
 
-            <h1 className="mt-3 max-w-[12ch] text-[clamp(2.65rem,6vw,4.4rem)] font-black leading-[0.92] tracking-[-0.05em] text-white">
+            <h1 className="mt-3 max-w-[12ch] text-[clamp(2.1rem,4.8vw,3.5rem)] font-black leading-[0.95] tracking-[-0.045em] text-white">
               {title}
             </h1>
 

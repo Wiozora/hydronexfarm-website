@@ -16,9 +16,8 @@ const projects = [
     highlights: ["Low-footprint layouts", "Daily harvest focus"],
     ctaLabel: "Explore hydroponics systems",
     href: "/shop/hydroponics-systems",
-    image:
-      "https://images.pexels.com/photos/11372380/pexels-photo-11372380.jpeg?cs=srgb&dl=pexels-jordanr93-11372380.jpg&fm=jpg",
-    alt: "Fresh seedlings growing inside a greenhouse tray system",
+    image: "/images/marketing/hydroponics-greenhouse-rows.webp",
+    alt: "Leafy hydroponic rows inside a bright greenhouse",
     imageClassName: "object-center",
   },
   {
@@ -31,10 +30,9 @@ const projects = [
     highlights: ["Modular sizing", "Accessory matching"],
     ctaLabel: "Browse aluminum accessories",
     href: "/shop/aluminum-accessories",
-    image:
-      "https://images.pexels.com/photos/3845987/pexels-photo-3845987.jpeg?cs=srgb&dl=pexels-olly-3845987.jpg&fm=jpg",
-    alt: "Metal worker focused on fabrication inside an industrial workshop",
-    imageClassName: "object-center",
+    image: "/images/marketing/industrial-fabrication-workshop.webp",
+    alt: "Industrial fabrication workshop with sparks from metalwork",
+    imageClassName: "object-[center_35%]",
   },
   {
     eyebrow: "Homes & backup power",
@@ -46,10 +44,9 @@ const projects = [
     highlights: ["Enclosure sizing", "Quote-first support"],
     ctaLabel: "See battery solutions",
     href: "/shop/battery-solutions",
-    image:
-      "https://images.pexels.com/photos/6961091/pexels-photo-6961091.jpeg?cs=srgb&dl=pexels-hoan-ng-c-510735-6961091.jpg&fm=jpg",
-    alt: "Solar technicians installing a rooftop energy system for backup power planning",
-    imageClassName: "object-[center_38%]",
+    image: "/images/marketing/electrical-installation-work.webp",
+    alt: "Technician handling electrical installation wiring on site",
+    imageClassName: "object-center",
   },
 ] as const;
 
@@ -120,6 +117,7 @@ export function ProjectsShowcase() {
                   alt={project.alt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 33vw"
+                  quality={95}
                   className={`${project.imageClassName} object-cover transition duration-700 ease-out group-hover:scale-105`}
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,20,9,0.14)_0%,rgba(7,22,10,0.34)_28%,rgba(8,22,10,0.74)_62%,rgba(8,22,10,0.96)_100%)]" />

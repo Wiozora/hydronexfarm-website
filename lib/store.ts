@@ -60,8 +60,16 @@ export function getProductPath(product: Pick<StoreProduct, "categorySlug" | "slu
   return `/shop/${product.categorySlug}/${product.slug}`;
 }
 
+export function getProductVariantPath(
+  product: Pick<StoreProduct, "categorySlug" | "slug">,
+  variantId?: string,
+) {
+  const basePath = getProductPath(product);
+  return variantId ? `${basePath}?variant=${encodeURIComponent(variantId)}` : basePath;
+}
+
 export function getDefaultVariant(product: StoreProduct) {
-  return product.variants[0];
+  return product.variants.find((variant) => getVariantMode(variant) === "cart") ?? product.variants[0];
 }
 
 export function getVariantById(product: StoreProduct, variantId: string) {
@@ -69,7 +77,7 @@ export function getVariantById(product: StoreProduct, variantId: string) {
 }
 
 export function getVariantMode(variant: StoreVariant): BasketMode {
-  return variant.pricePkr ? "cart" : "quote";
+  return variant.priceStatus === "fixed" || typeof variant.pricePkr === "number" ? "cart" : "quote";
 }
 
 export function getProductModes(product: StoreProduct) {
@@ -89,6 +97,10 @@ export function getStartingPrice(product: StoreProduct) {
 }
 
 export function getPriceLabel(product: StoreProduct, variant?: StoreVariant) {
+  if (variant?.priceStatus === "pending") {
+    return "Price pending";
+  }
+
   if (variant?.pricePkr) {
     return formatPkr(variant.pricePkr);
   }
@@ -97,6 +109,10 @@ export function getPriceLabel(product: StoreProduct, variant?: StoreVariant) {
 
   if (startingPrice) {
     return `From ${formatPkr(startingPrice)}`;
+  }
+
+  if (product.variants.some((entry) => entry.priceStatus === "pending")) {
+    return "Price pending";
   }
 
   return "Quote required";

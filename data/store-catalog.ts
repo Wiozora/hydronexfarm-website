@@ -1,21 +1,48 @@
-import type { StoreCategory, StoreProduct } from "@/types";
+import { defaultPaymentInfo } from "@/lib/site-config";
+import type {
+  ProductDatasheet,
+  ProductDatasheetSection,
+  ProductRoi,
+  StoreCategory,
+  StoreProduct,
+} from "@/types";
+
+const hydroponicsClientImages = [
+  "/products/hydroponics/client/tower-lifestyle-comparison.jpeg",
+  "/products/hydroponics/client/tower-greenhouse-corridor.jpeg",
+  "/products/hydroponics/client/tower-greenhouse-row.jpeg",
+  "/products/hydroponics/client/tower-harvest-demo.jpeg",
+  "/products/hydroponics/client/tower-outdoor-installation.jpeg",
+  "/products/hydroponics/client/tower-strawberry-fruit.jpeg",
+  "/products/hydroponics/client/tower-greenhouse-wide.jpeg",
+  "/products/hydroponics/client/tower-team-installation.jpeg",
+];
 
 const hydroponicsTowerImages = [
   "/products/hydroponics/tower-main.jpeg",
-  "/products/hydroponics/tower-secondary.jpeg",
   "/products/hydroponics/tower-side.jpeg",
+  "/products/hydroponics/vertical-system-1.jpeg",
+  "/products/hydroponics/vertical-system-2.jpeg",
+  hydroponicsClientImages[0],
+  hydroponicsClientImages[2],
+  hydroponicsClientImages[6],
+  hydroponicsClientImages[7],
 ];
 
 const nutrientSupportImages = [
+  "/products/hydroponics/client/tower-greenhouse-row.jpeg",
+  "/products/hydroponics/client/tower-strawberry-fruit.jpeg",
+  "/products/hydroponics/vertical-system-3.jpeg",
+  hydroponicsClientImages[3],
   "/products/hydroponics/tower-secondary.jpeg",
-  "/products/hydroponics/tower-side.jpeg",
-  "/products/hydroponics/tower-main.jpeg",
 ];
 
 const waterPumpImages = [
-  "/products/hydroponics/tower-main.jpeg",
-  "/products/hydroponics/tower-side.jpeg",
-  "/products/hydroponics/tower-secondary.jpeg",
+  "/images/marketing/technical-site-support.webp",
+  "/images/marketing/hydroponics-aisle-hero.webp",
+  "/images/marketing/hydroponics-greenhouse-rows.webp",
+  hydroponicsClientImages[1],
+  hydroponicsClientImages[4],
 ];
 
 const aluminumSlotImages = [
@@ -30,6 +57,9 @@ const aluminumSlotImages = [
 
 const aluminumConnectorImages = [
   "/products/aluminum/connectors/triangle-bracket.jpeg",
+  "/products/aluminum/connectors/connector-1.jpeg",
+  "/products/aluminum/connectors/connector-2.jpeg",
+  "/products/aluminum/connectors/connector-3.jpeg",
   "/products/aluminum/connectors/v-wheel-system.jpeg",
   "/products/aluminum/connectors/wheel-plate.jpeg",
 ];
@@ -48,11 +78,15 @@ const batteryBracketImages = [
 ];
 
 const batteryRackImages = [
+  "/products/battery/boxes/battery-box-2.jpeg",
   "/products/battery/racks/rack-front.jpeg",
-  "/products/battery/racks/rack-rear.jpeg",
-  "/products/battery/racks/rack-open.jpeg",
   "/products/battery/racks/rack-angle.jpeg",
+  "/products/battery/racks/rack-open.jpeg",
+  "/products/battery/racks/rack-rear.jpeg",
   "/products/battery/racks/rack-closed.jpeg",
+  "/products/battery/boxes/battery-box-1.jpeg",
+  "/products/battery/boxes/battery-box-3.jpeg",
+  "/products/battery/boxes/battery-box-4.jpeg",
   "/products/battery/racks/rack-4u-drawing.jpeg",
   "/products/battery/racks/rack-5u-drawing.jpeg",
   "/products/battery/racks/rack-6u-drawing.jpeg",
@@ -104,7 +138,7 @@ export const storeCategories: StoreCategory[] = [
     tag: "Profiles and frames",
     description:
       "V-slot and T-slot profiles, connectors, wheels, frames, and enclosure builds collected in one clean category.",
-    image: aluminumSlotImages[0],
+    image: aluminumSlotImages[4],
     highlights: ["V/T slot profiles", "Connectors & wheels", "Frame builds"],
   },
   {
@@ -119,7 +153,7 @@ export const storeCategories: StoreCategory[] = [
   },
 ];
 
-export const storeProducts: StoreProduct[] = [
+const baseStoreProducts: StoreProduct[] = [
   {
     slug: "vertical-plantation-towers",
     categorySlug: "hydroponics-systems",
@@ -391,7 +425,7 @@ export const storeProducts: StoreProduct[] = [
       "V-slot and T-slot aluminum profiles with client-shared 2020, 3030, 4040, 6030, and 8040 references.",
     description:
       "This page replaces stock aluminum content with the real client profile family, profile drawings, and cross-section references used for frames and enclosure builds.",
-    image: aluminumSlotImages[0],
+    image: aluminumSlotImages[4],
     gallery: aluminumSlotImages,
     features: [
       "Uses the actual V-slot and T-slot profile imagery shared by the client",
@@ -472,7 +506,7 @@ export const storeProducts: StoreProduct[] = [
       "Triangle connectors, V-wheel systems, and accessory hardware for profile-based movement and assembly.",
     description:
       "This product groups the client-shared connector, bracket, and V-wheel references into one cleaner product page for quote-led parts selection.",
-    image: aluminumConnectorImages[0],
+    image: aluminumConnectorImages[1],
     gallery: aluminumConnectorImages,
     features: [
       "Triangle bracket reference for profile corner joining",
@@ -552,7 +586,7 @@ export const storeProducts: StoreProduct[] = [
       "Profile-built trolleys, workstations, stands, and frame enclosures shown with the client's actual aluminum build images.",
     description:
       "This page brings the shared frame builds into the storefront so buyers can ask for custom aluminum structures using real reference visuals instead of generic stock photos.",
-    image: aluminumFrameImages[0],
+    image: aluminumFrameImages[1],
     gallery: aluminumFrameImages,
     features: [
       "Uses the client's real frame cart, stand, workstation, and enclosure visuals",
@@ -633,7 +667,7 @@ export const storeProducts: StoreProduct[] = [
       "Battery rack mount bracket references and support panels added from the client's battery hardware images.",
     description:
       "This product turns the shared rack mount bracket visuals into a proper quote page so buyers can ask for bracket work without mixing it into general battery chat.",
-    image: batteryBracketImages[0],
+    image: batteryBracketImages[2],
     gallery: batteryBracketImages,
     features: [
       "Rack mount bracket visuals taken from the client files",
@@ -1007,3 +1041,170 @@ export const storeProducts: StoreProduct[] = [
     featured: true,
   },
 ];
+
+const datasheetAssetBySlug: Record<string, ProductDatasheet["asset"]> = {
+  "vt-slot-profiles": {
+    label: "View profile spec reference",
+    href: "/products/aluminum/slots/profile-2020-spec.jpeg",
+  },
+  "battery-rack-mount-brackets": {
+    label: "View bracket reference",
+    href: "/products/battery/brackets/mount-panel-front.jpeg",
+  },
+  "barebone-battery-racks": {
+    label: "View rack drawing",
+    href: "/products/battery/racks/rack-4u-drawing.jpeg",
+  },
+  "battery-cases-3u-4u-5u": {
+    label: "View case CAD reference",
+    href: "/products/battery/cases/case-cad-front.jpeg",
+  },
+  "custom-sheet-metal-products": {
+    label: "View fabrication drawing",
+    href: "/products/sheet-metal/custom-drawing-1.jpeg",
+  },
+};
+
+const hydroponicsTowerRoi: ProductRoi = {
+  title: "Hydroponics ROI Planner",
+  summary:
+    "Use your own crop assumptions to compare monthly revenue potential, operating margin, and payback across the 25, 50, 75, and 100 plant tower sizes.",
+  inputs: [
+    {
+      id: "sellingPricePerPlant",
+      label: "Selling price per harvested plant",
+      helper: "Use your local selling price for one sale-ready plant, head, or crop unit.",
+      placeholder: "e.g. 250",
+      exampleValue: 250,
+      min: 1,
+      step: 10,
+      prefix: "PKR",
+    },
+    {
+      id: "cycleDays",
+      label: "Average grow cycle",
+      helper: "Enter the usual number of days from transplant to harvest for your crop.",
+      placeholder: "e.g. 30",
+      exampleValue: 30,
+      min: 1,
+      step: 1,
+      suffix: "days",
+    },
+    {
+      id: "successRate",
+      label: "Saleable harvest rate",
+      helper: "Estimate what percent of plant positions reach sale-ready quality.",
+      placeholder: "e.g. 85",
+      exampleValue: 85,
+      min: 1,
+      max: 100,
+      step: 1,
+      suffix: "%",
+    },
+    {
+      id: "monthlyOperatingCost",
+      label: "Monthly operating cost per tower",
+      helper: "Include nutrients, water, electricity, labor, and routine maintenance for one tower.",
+      placeholder: "e.g. 2500",
+      exampleValue: 2500,
+      min: 0,
+      step: 100,
+      prefix: "PKR",
+    },
+  ],
+  sampleLabel: "Use sample leafy-green assumptions",
+  sampleNote:
+    "Sample assumptions are for on-screen planning only. Replace them with your actual crop economics before you share a final ROI with a buyer.",
+  rows: [
+    {
+      variantId: "tower-25",
+      title: "25 Plants",
+      plantCount: 25,
+      value: "Starter validation tower",
+      note: "Best for home trials, proof-of-concept installs, and buyers who want to validate crop demand before scaling.",
+    },
+    {
+      variantId: "tower-50",
+      title: "50 Plants",
+      plantCount: 50,
+      value: "Balanced starter-commercial tower",
+      note: "Good for households, cafes, and schools that want a stronger output without jumping straight to project scale.",
+    },
+    {
+      variantId: "tower-75",
+      title: "75 Plants",
+      plantCount: 75,
+      value: "Scale-focused output tower",
+      note: "Works well when the grower already knows the crop mix, target selling channel, and routine maintenance plan.",
+    },
+    {
+      variantId: "tower-100",
+      title: "100 Plants",
+      plantCount: 100,
+      value: "Commercial display and output tower",
+      note: "Made for higher-capacity planning where buyers care about repeat harvest cycles, visual impact, and stronger monthly throughput.",
+    },
+  ],
+  notes: [
+    "The calculator uses four editable assumptions: selling price, crop cycle length, saleable harvest rate, and monthly operating cost.",
+    "Final ROI should still be confirmed against the actual crop type, local selling channel, labor model, and city-level operating conditions.",
+  ],
+};
+
+function buildDatasheetSections(product: StoreProduct): ProductDatasheetSection[] {
+  return [
+    {
+      title: "Product overview",
+      summary: "Core catalog details taken from the current storefront data.",
+      specifications: product.specifications,
+    },
+    ...product.variants.map((variant) => ({
+      title: variant.name,
+      summary: variant.summary,
+      specifications: [
+        { label: "Availability", value: variant.availability },
+        { label: "Lead time", value: variant.leadTime },
+        ...(variant.priceStatus === "pending"
+          ? [{ label: "Price status", value: "Pending confirmation" }]
+          : typeof variant.pricePkr === "number"
+            ? [{ label: "Price", value: variant.badge ?? `PKR ${variant.pricePkr.toLocaleString("en-PK")}` }]
+            : [{ label: "Price status", value: "Quote required" }]),
+        ...variant.specifications,
+      ],
+    })),
+  ];
+}
+
+function buildProductDatasheet(product: StoreProduct): ProductDatasheet {
+  const hasQuoteLedVariant = product.variants.some((variant) => typeof variant.pricePkr !== "number");
+
+  return {
+    summary: `Specification sheet for ${product.shortName} built from the live product catalog and verified client assets.`,
+    sections: buildDatasheetSections(product),
+    asset: datasheetAssetBySlug[product.slug],
+    notes: hasQuoteLedVariant
+      ? [
+          "Quote-led variants may need final stock, fabrication, or requirement confirmation before dispatch.",
+        ]
+      : [
+          "Fixed-price variants still require city and dispatch confirmation before order finalization.",
+        ],
+  };
+}
+
+export const storeProducts: StoreProduct[] = baseStoreProducts.map((product) => {
+  const variants = product.variants.map((variant) => ({
+    ...variant,
+    priceStatus: variant.priceStatus ?? (typeof variant.pricePkr === "number" ? "fixed" : "quote"),
+  }));
+
+  const enrichedProduct: StoreProduct = {
+    ...product,
+    variants,
+    datasheet: buildProductDatasheet({ ...product, variants }),
+    paymentInfo: product.paymentInfo ?? defaultPaymentInfo,
+    roi: product.slug === "vertical-plantation-towers" ? hydroponicsTowerRoi : product.roi,
+  };
+
+  return enrichedProduct;
+});

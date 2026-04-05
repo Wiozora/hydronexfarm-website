@@ -13,6 +13,69 @@ export type ProductSpecification = {
   value: string;
 };
 
+export type ProductAssetLink = {
+  label: string;
+  href: string;
+};
+
+export type ProductDatasheetSection = {
+  title: string;
+  summary?: string;
+  specifications: ProductSpecification[];
+};
+
+export type ProductDatasheet = {
+  summary: string;
+  sections: ProductDatasheetSection[];
+  asset?: ProductAssetLink;
+  notes?: string[];
+};
+
+export type PaymentMethodInfo = {
+  id: string;
+  title: string;
+  description: string;
+  meta?: string;
+};
+
+export type PaymentInfo = {
+  heading?: string;
+  methods: PaymentMethodInfo[];
+  bankDetails?: ProductSpecification[];
+  notes?: string[];
+};
+
+export type ProductRoiRow = {
+  title: string;
+  value: string;
+  note: string;
+  variantId?: string;
+  plantCount?: number;
+};
+
+export type ProductRoiInput = {
+  id: string;
+  label: string;
+  helper: string;
+  placeholder: string;
+  exampleValue?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  prefix?: string;
+  suffix?: string;
+};
+
+export type ProductRoi = {
+  title?: string;
+  summary: string;
+  rows: ProductRoiRow[];
+  inputs?: ProductRoiInput[];
+  sampleLabel?: string;
+  sampleNote?: string;
+  notes?: string[];
+};
+
 export type StoreVariant = {
   id: string;
   name: string;
@@ -21,6 +84,7 @@ export type StoreVariant = {
   availability: string;
   leadTime: string;
   pricePkr?: number;
+  priceStatus?: "fixed" | "quote" | "pending";
   badge?: string;
   specifications: ProductSpecification[];
 };
@@ -40,6 +104,9 @@ export type StoreProduct = {
   applications: string[];
   specifications: ProductSpecification[];
   variants: StoreVariant[];
+  datasheet?: ProductDatasheet;
+  paymentInfo?: PaymentInfo;
+  roi?: ProductRoi;
   filterTags: string[];
   featured?: boolean;
 };

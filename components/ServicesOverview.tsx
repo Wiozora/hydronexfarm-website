@@ -14,40 +14,35 @@ const serviceCards = [
     icon: FaSeedling,
     title: "Hydroponics Systems",
     copy: "Professional vertical plantation systems for homes, rooftops, restaurants, and farms.",
-    image:
-      "https://images.pexels.com/photos/7299976/pexels-photo-7299976.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    image: "/images/marketing/hydroponics-aisle-hero.webp",
   },
   {
     id: "frame-accessories",
     icon: FaTools,
     title: "Frame Accessories",
     copy: "Imported aluminum accessories and structural profiles for clean, durable installations.",
-    image:
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1400&q=80",
+    image: "/images/marketing/industrial-fabrication-workshop.webp",
   },
   {
     id: "battery-boxes",
     icon: FaBolt,
     title: "Battery Boxes",
     copy: "Reliable enclosure solutions and wall brackets built for backup power systems.",
-    image:
-      "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1400&q=80",
+    image: "/images/marketing/electrical-installation-work.webp",
   },
   {
     id: "nutrient-solutions",
     icon: FaFlask,
     title: "Nutrient Solutions",
     copy: "Balanced A, B, bloom, and finishing formulas for every hydroponic growth stage.",
-    image:
-      "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1400&q=80",
+    image: "/images/marketing/hydroponics-greenhouse-rows.webp",
   },
   {
     id: "wall-brackets",
     icon: FaWrench,
     title: "Wall Mount Brackets",
     copy: "Heavy-duty 7U and 8U mounting brackets made for secure energy storage installations.",
-    image:
-      "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1400&q=80",
+    image: "/images/marketing/technical-site-support.webp",
   },
 ];
 

@@ -30,8 +30,8 @@ export function HomeShowcaseSection() {
           <div className="group relative overflow-hidden rounded-[2rem]">
             <div className="relative h-[17rem] md:h-[24rem] lg:h-[29rem]">
               <Image
-                src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1600&q=80"
-                alt="Solar installation team at work"
+                src="/images/marketing/hydroponics-aisle-hero.webp"
+                alt="Bright hydroponics cultivation aisle prepared for production planning"
                 fill
                 className="object-cover transition duration-700 group-hover:scale-105"
               />
@@ -105,8 +105,8 @@ export function HomeShowcaseSection() {
             <div className="grid items-stretch md:grid-cols-[16rem_1fr]">
               <div className="relative min-h-[13rem]">
                 <Image
-                  src="https://images.pexels.com/photos/9875423/pexels-photo-9875423.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                  alt="Engineer inspecting a renewable energy project"
+                  src="/images/marketing/office-team-consultation.webp"
+                  alt="Project team reviewing renewable product details together"
                   fill
                   className="object-cover"
                 />
