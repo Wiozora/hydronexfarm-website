@@ -360,10 +360,10 @@ export function InquiryPageClient() {
               <div className="mt-6 rounded-2xl bg-[#eff8e7] px-5 py-4 text-sm font-medium text-[#183109]">
                 {saveMode === "browser-queue"
                   ? whatsappVisible
-                    ? "Your inquiry is ready in WhatsApp, and the basket details are safely saved on this device until you send it."
+                    ? "Your inquiry is ready in WhatsApp, and the basket details are safely saved on this device until you send the message."
                     : "Your basket details are safely saved on this device and ready for follow-up."
                   : whatsappVisible
-                    ? "Your basket details were received, and the WhatsApp draft is ready to send."
+                    ? "Your basket details were received, and the WhatsApp message is ready to send."
                     : "Your basket details were received successfully."}
               </div>
             ) : null}

@@ -27,7 +27,11 @@ import {
   hasPublicWhatsApp,
   siteConfig,
 } from "@/lib/site-config";
-import { getWhatsAppEntryLink, shouldOpenWhatsAppInNewTab } from "@/lib/whatsapp";
+import {
+  getPageAwareWhatsAppMessage,
+  getWhatsAppEntryLink,
+  shouldOpenWhatsAppInNewTab,
+} from "@/lib/whatsapp";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -53,7 +57,7 @@ export function Navbar() {
   const directEmailVisible = hasPublicEmail();
   const directPhoneVisible = hasPublicPhone();
   const whatsappVisible = hasPublicWhatsApp();
-  const quickActionHref = getWhatsAppEntryLink();
+  const quickActionHref = getWhatsAppEntryLink(getPageAwareWhatsAppMessage(pathname));
   const quickActionExternal = shouldOpenWhatsAppInNewTab();
   const visibleSocialLinks = socialLinkDefs.filter((item) => hasPublicSocialLink(item.href));
   const mobileSocialLinks = (visibleSocialLinks.length > 0 ? visibleSocialLinks : socialLinkDefs).slice(0, 4);
@@ -216,7 +220,7 @@ export function Navbar() {
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#86f556] px-5 py-3 text-sm font-bold text-[#132117] transition hover:bg-[#73e543] 2xl:gap-3 2xl:px-8 2xl:py-4 2xl:text-lg"
                 >
                   <FaWhatsapp />
-                  <span>{whatsappVisible ? "Quick Order" : "Start Inquiry"}</span>
+                  <span>{whatsappVisible ? "WhatsApp for Pricing" : "Start Inquiry"}</span>
                 </a>
               ) : (
                 <Link
@@ -319,7 +323,7 @@ export function Navbar() {
                       className="mt-2 inline-flex items-center justify-center gap-3 rounded-full bg-[#86f556] px-6 py-3 font-bold text-[#132117] transition hover:bg-[#73e543]"
                     >
                       <FaWhatsapp />
-                      {whatsappVisible ? "Quick Order" : "Start Inquiry"}
+                    {whatsappVisible ? "WhatsApp for Pricing" : "Start Inquiry"}
                     </a>
                   ) : (
                     <Link

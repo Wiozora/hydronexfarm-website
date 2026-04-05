@@ -6,14 +6,12 @@ import { motion } from "framer-motion";
 import { ClipboardList, MessageCircle, ShoppingBag } from "lucide-react";
 
 import { hasPublicWhatsApp } from "@/lib/site-config";
-import { createWhatsAppLink } from "@/lib/whatsapp";
+import { getPageAwareWhatsAppMessage, getWhatsAppEntryLink } from "@/lib/whatsapp";
 
 export function FloatingWhatsApp() {
   const pathname = usePathname();
   const whatsappVisible = hasPublicWhatsApp();
-  const href = createWhatsAppLink(
-    "Hi! I want to speak with I CAN ENERGIES about plantation towers, pumps, aluminum products, battery racks, or custom sheet metal work.",
-  );
+  const href = getWhatsAppEntryLink(getPageAwareWhatsAppMessage(pathname));
   const mobileSecondaryAction = pathname.startsWith("/shop")
     ? {
         href: "/inquiry",
@@ -41,8 +39,8 @@ export function FloatingWhatsApp() {
     transition: { type: "spring", stiffness: 260, damping: 22, delay: 0.9 },
   } as const;
 
-  const label = whatsappVisible ? "Chat on WhatsApp" : "Open inquiry form";
-  const mobilePrimaryLabel = whatsappVisible ? "WhatsApp now" : "Contact now";
+  const label = whatsappVisible ? "Ask on WhatsApp" : "Open inquiry form";
+  const mobilePrimaryLabel = whatsappVisible ? "Ask on WhatsApp" : "Contact now";
   const mobilePrimaryClasses =
     "inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[#86f556] px-4 py-3 text-sm font-bold text-[#132117] transition hover:bg-[#73e543]";
   const mobileSecondaryClasses =

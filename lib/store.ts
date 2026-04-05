@@ -207,15 +207,15 @@ export function buildStoreInquiryMessage(
   const hasQuote = quoteLines.length > 0;
 
   const opening = hasCart && hasQuote
-    ? "Hi! I want to place an order and request a quote."
+    ? "Hi! I'm contacting I CAN ENERGIES from the website. I want to place an order and request a quote."
     : hasCart
-      ? "Hi! I want to place an order."
-      : "Hi! I want to request a quote.";
+      ? "Hi! I'm contacting I CAN ENERGIES from the website. I want to place an order."
+      : "Hi! I'm contacting I CAN ENERGIES from the website. I want to request a quote.";
 
   const cartSection = hasCart
     ? [
         "",
-        "Cart items:",
+        "Ready-to-order items from the website:",
         ...cartLines.map(
           (line, index) =>
             `${index + 1}. ${line.product.name} - ${line.variant.name} x ${line.quantity} - ${formatPkr(
@@ -229,7 +229,7 @@ export function buildStoreInquiryMessage(
   const quoteSection = hasQuote
     ? [
         "",
-        "Quote items:",
+        "Quote request items from the website:",
         ...quoteLines.map(
           (line, index) =>
             `${index + 1}. ${line.product.name} - ${line.variant.name} x ${line.quantity}`,
@@ -250,6 +250,6 @@ export function buildStoreInquiryMessage(
     ...quoteSection,
     ...notesSection,
     "",
-    "Please confirm pricing, availability, and next steps.",
+    "Please confirm pricing, availability, delivery to my city, and the best next step.",
   ].join("\n");
 }

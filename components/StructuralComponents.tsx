@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { FaShippingFast, FaTools } from "react-icons/fa";
 
-import { siteConfig } from "@/lib/site-config";
+import { buildWhatsAppMessage, createWhatsAppLink } from "@/lib/whatsapp";
 
 const products = [
   {
@@ -108,9 +108,16 @@ export function StructuralComponents() {
               <p className="mt-4 text-sm font-medium text-text-dark">{product.dimensions}</p>
               <p className="mt-3 text-sm italic leading-6 text-text-muted">{product.uses}</p>
               <a
-                href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
-                  `Hi! I need pricing for ${product.name} (${product.code}).`,
-                )}`}
+                href={createWhatsAppLink(
+                  buildWhatsAppMessage({
+                    source: `${product.name} section`,
+                    subject: `${product.name} (${product.code})`,
+                    details: [
+                      `Size / dimensions: ${product.dimensions}`,
+                      `Use case: ${product.uses}`,
+                    ],
+                  }),
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-5 inline-flex text-sm font-semibold text-sky"
@@ -129,9 +136,15 @@ export function StructuralComponents() {
             </p>
           </div>
           <a
-            href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
-              "Hi! I need custom lengths or bulk pricing for aluminum accessories.",
-            )}`}
+            href={createWhatsAppLink(
+              buildWhatsAppMessage({
+                source: "aluminum bulk pricing banner",
+                subject: "custom lengths or bulk pricing for aluminum accessories",
+                details: [
+                  "I want guidance for a bulk or custom aluminum requirement.",
+                ],
+              }),
+            )}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-green mt-6"

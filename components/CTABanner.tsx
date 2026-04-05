@@ -3,6 +3,7 @@
 import { FaEnvelope, FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
 
 import { siteConfig } from "@/lib/site-config";
+import { buildWhatsAppMessage, createWhatsAppLink } from "@/lib/whatsapp";
 
 export function CTABanner() {
   return (
@@ -17,7 +18,15 @@ export function CTABanner() {
           </p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <a
-              href={`https://wa.me/${siteConfig.whatsappNumber}`}
+              href={createWhatsAppLink(
+                buildWhatsAppMessage({
+                  source: "CTA banner",
+                  subject: "hydroponics, battery, aluminum, or custom fabrication support",
+                  details: [
+                    "I want pricing and guidance for my project requirement.",
+                  ],
+                }),
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-green justify-center"

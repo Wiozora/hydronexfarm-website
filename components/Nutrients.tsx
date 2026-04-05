@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaWhatsapp } from "react-icons/fa";
 
-import { siteConfig } from "@/lib/site-config";
+import { buildWhatsAppMessage, createWhatsAppLink } from "@/lib/whatsapp";
 
 const nutrients = [
   {
@@ -136,9 +136,16 @@ export function Nutrients() {
               </div>
 
               <a
-                href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
-                  `Hi! I'm interested in ${item.name}. Please share price and availability.`,
-                )}`}
+                href={createWhatsAppLink(
+                  buildWhatsAppMessage({
+                    source: `${item.name} section`,
+                    subject: item.name,
+                    details: [
+                      `Usage stage: ${item.usage}`,
+                      `Dosage reference: ${item.dosage}`,
+                    ],
+                  }),
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-green mt-8 justify-center"
@@ -157,9 +164,15 @@ export function Nutrients() {
             complete nutrition program.
           </p>
           <a
-            href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
-              "Hi! I want the complete nutrient set (A + B + C + D). Please share bundle price.",
-            )}`}
+            href={createWhatsAppLink(
+              buildWhatsAppMessage({
+                source: "nutrient bundle banner",
+                subject: "the complete nutrient set (A + B + C + D)",
+                details: [
+                  "I want bundle pricing and availability for the full nutrient program.",
+                ],
+              }),
+            )}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-green mt-6"

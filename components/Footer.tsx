@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   FaFacebookF,
   FaInstagram,
@@ -18,9 +19,14 @@ import {
   hasPublicWhatsApp,
   siteConfig,
 } from "@/lib/site-config";
-import { getWhatsAppEntryLink, shouldOpenWhatsAppInNewTab } from "@/lib/whatsapp";
+import {
+  getPageAwareWhatsAppMessage,
+  getWhatsAppEntryLink,
+  shouldOpenWhatsAppInNewTab,
+} from "@/lib/whatsapp";
 
 export function Footer() {
+  const pathname = usePathname();
   const visibleSocialLinks = [
     { href: siteConfig.socials.facebook, icon: FaFacebookF, label: "Facebook" },
     { href: siteConfig.socials.instagram, icon: FaInstagram, label: "Instagram" },
@@ -38,8 +44,8 @@ export function Footer() {
     { label: "Service area", value: siteConfig.address },
   ].filter(Boolean) as { label: string; value: string }[];
 
-  const quickActionLabel = hasPublicWhatsApp() ? "Order on WhatsApp" : "Open inquiry form";
-  const quickActionHref = getWhatsAppEntryLink();
+  const quickActionLabel = hasPublicWhatsApp() ? "WhatsApp for Pricing" : "Open inquiry form";
+  const quickActionHref = getWhatsAppEntryLink(getPageAwareWhatsAppMessage(pathname));
   const quickActionExternal = shouldOpenWhatsAppInNewTab();
 
   return (
@@ -58,7 +64,7 @@ export function Footer() {
             </div>
 
             <p className="mt-5 max-w-md text-sm leading-7 text-white/72 sm:mt-6 sm:text-base sm:leading-8">
-              Explore hydroponics plantation towers, PaniPani pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products from one cleaner buying flow.
+              Explore hydroponics plantation towers, pumps, nutrient plans, aluminum V/T slots, battery racks, and custom fabrication with direct WhatsApp support for pricing, availability, and business guidance.
             </p>
 
             {quickActionExternal ? (

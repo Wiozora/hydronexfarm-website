@@ -14,7 +14,7 @@ import {
 } from "@/components/store/SupportPanels";
 import { useStore } from "@/components/store/StoreProvider";
 import { hasPublicWhatsApp } from "@/lib/site-config";
-import { createWhatsAppLink } from "@/lib/whatsapp";
+import { buildWhatsAppMessage, createWhatsAppLink } from "@/lib/whatsapp";
 import {
   getCategoryBySlug,
   getDefaultVariant,
@@ -51,9 +51,26 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
     ...selectedVariant.specifications,
   ];
   const whatsappMessage = createWhatsAppLink(
-    selectedMode === "cart"
-      ? `Hi! I want to order ${product.name} - ${selectedVariant.name}. Quantity: ${quantity}. Please confirm the order total and next steps.`
-      : `Hi! I want a quote for ${product.name} - ${selectedVariant.name}. Quantity: ${quantity}. Please confirm pricing, availability, and next steps.`,
+    buildWhatsAppMessage({
+      source: `${product.shortName} product page`,
+      subject:
+        selectedMode === "cart"
+          ? `${product.name} with the ${selectedVariant.name} option`
+          : `${product.name} pricing and recommendation for the ${selectedVariant.name} option`,
+      details: [
+        `Selected variant: ${selectedVariant.name}`,
+        `Quantity: ${quantity}`,
+        `Availability shown: ${selectedVariant.availability}`,
+        `Lead time shown: ${selectedVariant.leadTime}`,
+        typeof selectedVariant.pricePkr === "number"
+          ? `Website price: ${formatPkr(selectedVariant.pricePkr)}`
+          : "Website price: Quote required",
+      ],
+      closing:
+        selectedMode === "cart"
+          ? "Please confirm total amount, delivery to my city, and payment method so I can place the order."
+          : "Please share price, availability, and the best option for my requirement.",
+    }),
   );
 
   function handleVariantChange(nextVariantId: string) {
@@ -187,7 +204,7 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
                     className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/16 px-6 py-4 text-sm font-bold text-white transition hover:border-[#86f556] hover:text-[#86f556] sm:w-auto"
                   >
                     <FaWhatsapp />
-                    WhatsApp now
+                    {selectedMode === "cart" ? "Confirm on WhatsApp" : "Get Quote on WhatsApp"}
                   </a>
                 ) : (
                   <Link

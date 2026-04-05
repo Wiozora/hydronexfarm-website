@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { FaBolt, FaCheckCircle, FaWhatsapp } from "react-icons/fa";
 
-import { siteConfig } from "@/lib/site-config";
+import { buildWhatsAppMessage, createWhatsAppLink } from "@/lib/whatsapp";
 
 const wallBrackets = [
   {
@@ -204,9 +204,15 @@ export function BatteryBoxes() {
               </div>
 
               <a
-                href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
-                  `Hi! I want to inquire about ${box.name}. Please share pricing and availability.`,
-                )}`}
+                href={createWhatsAppLink(
+                  buildWhatsAppMessage({
+                    source: `${box.name} section`,
+                    subject: `${box.name}`,
+                    details: [
+                      "I want pricing and availability for this battery enclosure.",
+                    ],
+                  }),
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary mt-7 justify-center"

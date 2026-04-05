@@ -9,7 +9,10 @@ import {
   FaClipboardList,
   FaMapMarkerAlt,
   FaShoppingBag,
+  FaWhatsapp,
 } from "react-icons/fa";
+
+import { createWhatsAppLink, buildWhatsAppMessage } from "@/lib/whatsapp";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -23,9 +26,9 @@ const fadeUp = {
 const heroImage = "/products/stock/hydroponics-led-aisle.jpg";
 
 const quickTags = [
-  "Client product catalog",
-  "Real product images",
-  "WhatsApp quote handoff",
+  "Fast WhatsApp response",
+  "Real product references",
+  "Custom fabrication support",
 ];
 
 const topPicks = [
@@ -47,13 +50,13 @@ const topPicks = [
 ];
 
 const proofPoints = [
-  { value: "4", label: "core product groups" },
-  { value: "10", label: "catalog entries live" },
-  { value: "Direct", label: "support path" },
+  { value: "25-100", label: "plant tower options" },
+  { value: "4", label: "main product groups" },
+  { value: "Direct", label: "WhatsApp support" },
 ];
 
 const heroTagline =
-  "Client-approved renewable products, racks, slots, and custom fabrication";
+  "Hydroponics, aluminum, battery racks, and custom fabrication from one business supplier";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -97,6 +100,16 @@ export function Hero() {
     scrollYProgress,
     [0, 1],
     prefersReducedMotion ? [0, 0] : [0, -24],
+  );
+  const heroWhatsAppHref = createWhatsAppLink(
+    buildWhatsAppMessage({
+      source: "homepage hero",
+      subject: "the best product or service for my requirement",
+      details: [
+        "I'm interested in plantation towers, pumps, nutrients, aluminum products, battery racks, or custom fabrication.",
+      ],
+      closing: "Please guide me on pricing, availability, and the best next step.",
+    }),
   );
 
   return (
@@ -153,9 +166,9 @@ export function Hero() {
               custom={1}
               className="mt-4 max-w-[11ch] text-[clamp(2.35rem,11vw,5.2rem)] font-black leading-[0.9] tracking-[-0.05em] text-white sm:mt-7 sm:max-w-[14ch] md:max-w-5xl"
             >
-              Start with the real client product range and one
+              Grow, build, and source the right
               {" "}
-              <span className="text-[#86f556]">clean inquiry flow</span>
+              <span className="text-[#86f556]">project setup from one place</span>
             </motion.h1>
 
             <motion.p
@@ -165,7 +178,7 @@ export function Hero() {
               custom={2}
               className="mt-4 max-w-xl text-[0.92rem] leading-6 text-white/84 sm:mt-8 sm:max-w-2xl sm:text-base sm:leading-8 md:text-lg"
             >
-              This catalog now follows the shared client list: plantation towers, PaniPani pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products.
+              Compare hydroponics towers, pumps, nutrients, aluminum profiles, battery racks, and custom sheet metal products, then move straight into fast WhatsApp support for pricing and guidance.
             </motion.p>
 
             <motion.div
@@ -183,9 +196,19 @@ export function Hero() {
                 Browse products
               </Link>
 
+              <a
+                href={heroWhatsAppHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-3 rounded-full border-2 border-[#86f556] px-5 py-3 text-sm font-bold text-[#86f556] transition hover:bg-[#86f556] hover:text-[#132117] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+              >
+                <FaWhatsapp />
+                WhatsApp for pricing
+              </a>
+
               <Link
                 href="/inquiry"
-                className="inline-flex w-full items-center justify-center gap-3 rounded-full border-2 border-[#86f556] px-5 py-3 text-sm font-bold text-[#86f556] transition hover:bg-[#86f556] hover:text-[#132117] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+                className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/18 px-5 py-3 text-sm font-bold text-white transition hover:border-[#86f556] hover:text-[#86f556] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
                 <FaClipboardList />
                 Start inquiry basket
