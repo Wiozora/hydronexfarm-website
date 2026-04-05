@@ -6,14 +6,14 @@ function readPublicEnv(name: string, fallback: string) {
 }
 
 const storeName = "I CAN ENERGIES";
-const legalName = "I CAN ENERGIES Pvt Ltd.";
+const legalName = "I CAN ENERGIES (PRIVATE) LIMITED";
 const jazzCashNumber = readPublicEnv("NEXT_PUBLIC_JAZZCASH_NUMBER", "03340300575");
 const primaryBankName = readPublicEnv("NEXT_PUBLIC_BANK_NAME", "Habib Bank");
 const secondaryBankName = readPublicEnv("NEXT_PUBLIC_BANK_NAME_SECONDARY", "Habib Metropolitan Bank");
-const primaryBankAccountNumber = readPublicEnv("NEXT_PUBLIC_BANK_ACCOUNT_NUMBER", "");
-const primaryBankIban = readPublicEnv("NEXT_PUBLIC_BANK_IBAN", "");
-const secondaryBankAccountNumber = readPublicEnv("NEXT_PUBLIC_BANK_ACCOUNT_NUMBER_SECONDARY", "");
-const secondaryBankIban = readPublicEnv("NEXT_PUBLIC_BANK_IBAN_SECONDARY", "");
+const primaryBankAccountNumber = readPublicEnv("NEXT_PUBLIC_BANK_ACCOUNT_NUMBER", "0008787901007303");
+const primaryBankIban = readPublicEnv("NEXT_PUBLIC_BANK_IBAN", "PK55HABB0008787901007303");
+const secondaryBankAccountNumber = readPublicEnv("NEXT_PUBLIC_BANK_ACCOUNT_NUMBER_SECONDARY", "1110067140104500");
+const secondaryBankIban = readPublicEnv("NEXT_PUBLIC_BANK_IBAN_SECONDARY", "PK72MPBL1110067140104500");
 
 const bankDetails: ProductSpecification[] = [
   { label: "Account title", value: readPublicEnv("NEXT_PUBLIC_BANK_ACCOUNT_TITLE", legalName) },
@@ -78,11 +78,14 @@ export const siteConfig = {
   siteUrl: readPublicEnv("NEXT_PUBLIC_SITE_URL", "https://hydronexfarm.com"),
   description:
     "Pakistan's supplier of hydroponics plantation towers, PaniPani water pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products.",
-  email: readPublicEnv("NEXT_PUBLIC_CONTACT_EMAIL", "info@hydronexfarm.com"),
-  whatsappNumber: readPublicEnv("NEXT_PUBLIC_WHATSAPP_NUMBER", "923000000000"),
-  displayPhone: readPublicEnv("NEXT_PUBLIC_DISPLAY_PHONE", "+92 300 0000000"),
-  phone: readPublicEnv("NEXT_PUBLIC_PHONE", "+92 300 0000000"),
-  address: readPublicEnv("NEXT_PUBLIC_ADDRESS", "Karachi, Pakistan"),
+  email: readPublicEnv("NEXT_PUBLIC_CONTACT_EMAIL", ""),
+  whatsappNumber: readPublicEnv("NEXT_PUBLIC_WHATSAPP_NUMBER", "923251508970"),
+  displayPhone: readPublicEnv("NEXT_PUBLIC_DISPLAY_PHONE", "0325 1508970"),
+  phone: readPublicEnv("NEXT_PUBLIC_PHONE", "+923251508970"),
+  address: readPublicEnv(
+    "NEXT_PUBLIC_ADDRESS",
+    "Commercial Building LS43, Block 15, Gulberg Town, Dastagir Society, F.B. Area, Karachi",
+  ),
   logo: "/logo.png",
   tagline: "Plantation systems, racks, slots, and custom fabrication",
   ogImage: "/images/marketing/hydroponics-aisle-hero.webp",
