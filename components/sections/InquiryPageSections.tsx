@@ -9,7 +9,7 @@ export function InquiryPageSections() {
           <StoreBreadcrumbs
             items={[
               { label: "Home", href: "/" },
-              { label: "Inquiry Basket" },
+              { label: "Request Quote" },
             ]}
           />
         </div>

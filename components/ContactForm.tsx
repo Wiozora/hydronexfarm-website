@@ -93,18 +93,18 @@ export function ContactForm() {
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <div className="grid gap-8 md:gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[1.7rem] bg-bg-light p-5 shadow-sm sm:p-8 md:rounded-[2rem] md:p-10">
-            <p className="section-label">Inquiry Support</p>
-            <h2 className="section-title">Need pricing, stock confirmation, or project guidance?</h2>
+            <p className="section-label">Contact & WhatsApp</p>
+            <h2 className="section-title">Ready to ask about a product?</h2>
             <p className="mt-5 text-base leading-7 text-text-muted md:text-lg md:leading-8">
-              Send one clean request for products, fabrication, or bulk requirements. WhatsApp stays the fastest response path, and the form helps keep your request structured.
+              Send one clear request for product pricing, availability, or project support. WhatsApp is the fastest path, and this form helps keep the inquiry clear.
             </p>
 
             <div className="mt-6 rounded-[1.35rem] bg-white p-4 shadow-sm sm:rounded-[1.5rem] sm:p-5">
               <p className="text-sm font-semibold text-primary">
-                Store flow reminder: fixed-price plantation towers go to cart, while pumps, nutrient plans, aluminum items, battery racks, battery cases, and custom sheet metal products go through the quote flow.
+                Share the product name, quantity, city, and any size or project notes. That is usually enough for the team to guide you to the right next step.
               </p>
               <Link href="/inquiry" className="btn-green mt-4 justify-center">
-                Open inquiry basket
+                Request Quote
               </Link>
             </div>
 
@@ -212,8 +212,8 @@ export function ContactForm() {
                 {isSubmitting
                   ? "Saving inquiry..."
                   : whatsappVisible
-                    ? "Send Inquiry on WhatsApp"
-                    : "Save inquiry details"}
+                    ? "WhatsApp Now"
+                    : "Request Quote"}
               </button>
             </form>
           </div>
@@ -232,7 +232,7 @@ export function ContactForm() {
                 </div>
               </div>
               <p className="mt-4 text-sm leading-7 text-white/82">
-                Share your products, city, and requirement. The team can confirm pricing, stock, and the best next step from one clean request.
+                Share your product, quantity, city, and requirement. The team can then confirm pricing, availability, and the best next step.
               </p>
             </div>
 

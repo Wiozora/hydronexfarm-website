@@ -4,10 +4,7 @@ import { useState } from "react";
 
 import { ProductCard } from "@/components/store/ProductCard";
 import { storeCategories } from "@/data/store-catalog";
-import { getProductModes } from "@/lib/store";
 import type { StoreProduct } from "@/types";
-
-type RequestFilter = "all" | "cart" | "quote";
 
 export function StoreCatalogClient({
   products,
@@ -23,16 +20,11 @@ export function StoreCatalogClient({
   showCategoryFilters?: boolean;
 }) {
   const [activeCategory, setActiveCategory] = useState(defaultCategory);
-  const [activeRequest, setActiveRequest] = useState<RequestFilter>("all");
 
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory =
-      !showCategoryFilters || activeCategory === "all" || product.categorySlug === activeCategory;
-    const matchesRequest =
-      activeRequest === "all" || getProductModes(product).includes(activeRequest);
-
-    return matchesCategory && matchesRequest;
-  });
+  const filteredProducts = products.filter(
+    (product) =>
+      !showCategoryFilters || activeCategory === "all" || product.categorySlug === activeCategory,
+  );
 
   return (
     <section id="products" className="bg-[#f7f8f1] py-18 md:py-22 lg:py-24">
@@ -85,32 +77,6 @@ export function StoreCatalogClient({
             </div>
           ) : null}
 
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#6f7988]">
-              Filter by purchase flow
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              {[
-                { value: "all", label: "All products" },
-                { value: "cart", label: "Fixed price" },
-                { value: "quote", label: "Quote required" },
-              ].map((filter) => (
-                <button
-                  key={filter.value}
-                  type="button"
-                  onClick={() => setActiveRequest(filter.value as RequestFilter)}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                    activeRequest === filter.value
-                      ? "bg-[#86f556] text-[#132117]"
-                      : "border border-[#dbe6cf] text-[#183109] hover:border-[#86f556]"
-                  }`}
-                >
-                  {filter.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
           <p className="text-sm font-semibold text-[#6f7988]">
             Showing {filteredProducts.length} product{filteredProducts.length === 1 ? "" : "s"}
           </p>
@@ -124,7 +90,7 @@ export function StoreCatalogClient({
           </div>
         ) : (
           <div className="mt-10 rounded-[2rem] border border-dashed border-[#cfd9c2] bg-white p-10 text-center text-[#6f7988] shadow-[0_18px_45px_rgba(16,23,18,0.05)]">
-            No products match this filter yet. Try switching category or purchase flow.
+            No products match this category yet. Try switching to another product group.
           </div>
         )}
       </div>

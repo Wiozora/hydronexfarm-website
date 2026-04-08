@@ -10,10 +10,8 @@ import {
   FaEnvelope,
   FaFacebookF,
   FaInstagram,
-  FaLinkedinIn,
   FaPhoneAlt,
   FaTimes,
-  FaTwitter,
   FaWhatsapp,
 } from "react-icons/fa";
 
@@ -36,16 +34,13 @@ import {
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
+  { label: "Battery Cases", href: "/shop/battery-cases" },
   { label: "Hydroponics", href: "/shop/hydroponics-systems" },
-  { label: "Pumps & Nutrients", href: "/shop/nutrients" },
-  { label: "Aluminum", href: "/shop/aluminum-accessories" },
-  { label: "Battery & Sheet Metal", href: "/shop/battery-solutions" },
+  { label: "T & V-Slots", href: "/shop/t-v-slots" },
 ];
 
 const socialLinkDefs = [
   { label: "Facebook", href: siteConfig.socials.facebook, icon: FaFacebookF },
-  { label: "Twitter", href: siteConfig.socials.twitter, icon: FaTwitter },
-  { label: "LinkedIn", href: siteConfig.socials.linkedin, icon: FaLinkedinIn },
   { label: "Instagram", href: siteConfig.socials.instagram, icon: FaInstagram },
 ];
 
@@ -91,11 +86,11 @@ export function Navbar() {
       : "border-white/55 bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(247,250,244,0.58))] shadow-[0_18px_48px_rgba(12,18,14,0.14)]"
   }`;
   const mobilePanelClasses =
-    "max-h-[calc(100svh-5.5rem)] overflow-y-auto border-t border-white/35 bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(247,250,244,0.74))] backdrop-blur-2xl xl:hidden";
+    "max-h-[calc(100svh-5.5rem)] overflow-y-auto border-t border-white/35 bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(247,250,244,0.74))] backdrop-blur-2xl min-[1200px]:hidden";
 
   return (
     <header className="fixed inset-x-0 top-0 z-[200] isolate pt-2 sm:pt-3 md:pt-4">
-      <div className="hidden xl:block">
+      <div className="hidden min-[1200px]:block">
         <div className={topStripClasses}>
           <div className="flex items-center gap-8">
             {directEmailVisible ? (
@@ -166,11 +161,11 @@ export function Navbar() {
 
       <div className="mx-auto max-w-[92rem] px-3 sm:px-4 md:px-6">
         <div className={mainNavClasses}>
-          <div className="flex items-center justify-between gap-3 px-3 py-3.5 sm:px-5 md:px-7 md:py-4 lg:gap-5 lg:px-8 xl:grid xl:grid-cols-[16rem_minmax(0,1fr)_23rem] xl:items-center xl:gap-6 2xl:grid-cols-[18rem_minmax(0,1fr)_25rem]">
+          <div className="flex items-center justify-between gap-3 px-3 py-3.5 sm:px-5 md:px-7 md:py-4 lg:gap-5 lg:px-8">
             <Link
               href="/"
               onClick={() => setIsOpen(false)}
-              className="flex min-w-0 shrink items-center gap-3"
+              className="flex min-w-0 flex-1 items-center gap-3 min-[1200px]:max-w-[15.25rem] min-[1200px]:flex-[0_1_15.25rem] min-[1500px]:max-w-[17rem] min-[1500px]:flex-[0_1_17rem] min-[1700px]:max-w-[20rem] min-[1700px]:flex-[0_1_20rem]"
             >
               <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full sm:h-11 sm:w-11 md:h-12 md:w-12">
                 <Image
@@ -182,16 +177,13 @@ export function Navbar() {
                 />
               </div>
               <div className="min-w-0">
-                <p className="truncate font-heading text-sm font-black tracking-tight text-[#132117] sm:text-base md:text-lg">
+                <p className="font-heading text-sm font-black leading-none tracking-tight text-[#132117] sm:text-base md:text-lg">
                   {siteConfig.storeName}
-                </p>
-                <p className="truncate text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#79d84a] sm:text-[0.68rem]">
-                  {siteConfig.tagline}
                 </p>
               </div>
             </Link>
 
-            <nav className="hidden min-w-0 items-center justify-center gap-4 xl:flex 2xl:gap-7">
+            <nav className="hidden min-w-0 flex-1 items-center justify-center gap-3 min-[1200px]:flex min-[1500px]:gap-4 min-[1700px]:gap-6">
               {navLinks.map((link) => {
                 const isActive = isLinkActive(link.href);
 
@@ -199,7 +191,7 @@ export function Navbar() {
                   <div key={link.label} className="relative shrink-0">
                     <Link
                       href={link.href}
-                      className={`flex items-center gap-2 whitespace-nowrap text-[0.92rem] font-semibold transition 2xl:text-lg ${
+                      className={`flex items-center gap-2 whitespace-nowrap text-[0.88rem] font-semibold transition min-[1500px]:text-[0.96rem] min-[1700px]:text-[1.04rem] ${
                         isActive ? "text-[#79d84a]" : "text-[#151b12] hover:text-[#79d84a]"
                       }`}
                     >
@@ -210,30 +202,54 @@ export function Navbar() {
               })}
             </nav>
 
-            <div className="hidden shrink-0 items-center justify-end gap-2 xl:flex 2xl:gap-3">
-              <BasketButton />
+            <div className="hidden shrink-0 items-center justify-end gap-2.5 min-[1200px]:flex min-[1700px]:gap-3">
+              <BasketButton label="Request Quote" responsiveLabel />
               {quickActionExternal ? (
                 <a
                   href={quickActionHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#86f556] px-5 py-3 text-sm font-bold text-[#132117] transition hover:bg-[#73e543] 2xl:gap-3 2xl:px-8 2xl:py-4 2xl:text-lg"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#86f556] px-4 py-3 text-[0.9rem] font-bold text-[#132117] transition hover:bg-[#73e543] min-[1500px]:px-5 min-[1500px]:text-[0.95rem] min-[1700px]:gap-3 min-[1700px]:px-8 min-[1700px]:py-4 min-[1700px]:text-lg"
                 >
                   <FaWhatsapp />
-                  <span>{whatsappVisible ? "WhatsApp for Pricing" : "Start Inquiry"}</span>
+                  <span className="min-[1500px]:hidden">{whatsappVisible ? "WhatsApp" : "Quote"}</span>
+                  <span className="hidden min-[1500px]:inline">{whatsappVisible ? "WhatsApp Now" : "Request Quote"}</span>
                 </a>
               ) : (
                 <Link
                   href={quickActionHref}
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#86f556] px-5 py-3 text-sm font-bold text-[#132117] transition hover:bg-[#73e543] 2xl:gap-3 2xl:px-8 2xl:py-4 2xl:text-lg"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#86f556] px-4 py-3 text-[0.9rem] font-bold text-[#132117] transition hover:bg-[#73e543] min-[1500px]:px-5 min-[1500px]:text-[0.95rem] min-[1700px]:gap-3 min-[1700px]:px-8 min-[1700px]:py-4 min-[1700px]:text-lg"
                 >
                   <FaWhatsapp />
-                  <span>Start Inquiry</span>
+                  <span className="min-[1500px]:hidden">Quote</span>
+                  <span className="hidden min-[1500px]:inline">Request Quote</span>
                 </Link>
               )}
             </div>
 
-            <div className="flex items-center gap-2 xl:hidden">
+            <div className="ml-auto flex items-center gap-2 min-[1200px]:hidden">
+              {quickActionExternal ? (
+                <a
+                  href={quickActionHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={whatsappVisible ? "WhatsApp Now" : "Request Quote"}
+                  className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#86f556] text-[#132117] sm:inline-flex sm:h-11 sm:w-11"
+                >
+                  <FaWhatsapp />
+                </a>
+              ) : (
+                <Link
+                  href={quickActionHref}
+                  aria-label="Request Quote"
+                  className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#86f556] text-[#132117] sm:inline-flex sm:h-11 sm:w-11"
+                >
+                  <FaWhatsapp />
+                </Link>
+              )}
+              <div className="hidden sm:block">
+                <BasketButton compact />
+              </div>
               <button
                 type="button"
                 onClick={() => setIsOpen((current) => !current)}
@@ -274,7 +290,7 @@ export function Navbar() {
                       Buyer support
                     </p>
                     <p className="mt-3 leading-7">
-                      Share product choice, quantity, and city to start a cleaner order or quote flow.
+                      Share the product name, quantity, and city to start a clear WhatsApp inquiry.
                     </p>
                   </div>
 
@@ -323,7 +339,7 @@ export function Navbar() {
                       className="mt-2 inline-flex items-center justify-center gap-3 rounded-full bg-[#86f556] px-6 py-3 font-bold text-[#132117] transition hover:bg-[#73e543]"
                     >
                       <FaWhatsapp />
-                    {whatsappVisible ? "WhatsApp for Pricing" : "Start Inquiry"}
+                      {whatsappVisible ? "WhatsApp Now" : "Request Quote"}
                     </a>
                   ) : (
                     <Link
@@ -332,7 +348,7 @@ export function Navbar() {
                       className="mt-2 inline-flex items-center justify-center gap-3 rounded-full bg-[#86f556] px-6 py-3 font-bold text-[#132117] transition hover:bg-[#73e543]"
                     >
                       <FaWhatsapp />
-                      Start Inquiry
+                      Request Quote
                     </Link>
                   )}
                 </div>

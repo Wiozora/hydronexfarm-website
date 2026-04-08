@@ -14,21 +14,32 @@ const serviceAreas = [
   "Quetta",
 ];
 
+const useCases = [
+  "Homes",
+  "Rooftops",
+  "Cafes",
+  "Schools",
+  "Installers",
+  "Workshops",
+  "Backup power setups",
+  "Small business spaces",
+];
+
 const supportCards = [
   {
     icon: FaTruck,
-    title: "Delivery support",
-    copy: "Products can be planned for dispatch, project coordination, or stock confirmation depending on the item type.",
+    title: "Home and small business use",
+    copy: "Hydroponics systems and battery cases fit homes, rooftops, cafes, and smaller business spaces that need a clear product-first inquiry flow.",
   },
   {
     icon: FaCheckCircle,
-    title: "Standards-focused supply",
-    copy: "Battery boxes, aluminum accessories, and hydroponics systems are presented with clearer specifications and order paths.",
+    title: "Business and installation work",
+    copy: "T & V-Slot profiles and connectors work well for installers, technical teams, and aluminum structure requirements.",
   },
   {
     icon: FaBoxOpen,
-    title: "Project-ready handling",
-    copy: "Bulk inquiries, custom builds, and quote-required items stay separated from fixed-price store products.",
+    title: "Clear product selection",
+    copy: "Each listed item has its own page so buyers can open the right product first and then continue on WhatsApp with less confusion.",
   },
 ];
 
@@ -40,16 +51,27 @@ export function ServiceAreaSection() {
           <div className="rounded-[1.8rem] bg-[#183109] p-6 text-white shadow-[0_22px_55px_rgba(16,23,18,0.14)] sm:p-8">
             <p className="inline-flex items-center gap-3 text-sm font-bold uppercase tracking-[0.24em] text-[#86f556]">
               <FaMapMarkedAlt />
-              Service coverage
+              Use cases
             </p>
             <h2 className="mt-4 text-3xl font-black leading-tight text-white sm:text-4xl">
-              Delivery and buyer support across major Pakistan cities
+              Where these products are commonly used
             </h2>
             <p className="mt-5 text-sm leading-7 text-white/78 sm:text-base sm:leading-8">
-              Buyers can shortlist products, compare variants, and send structured quote requests before final delivery confirmation.
+              I CAN ENERGIES supplies products for homes, businesses, installers, and project teams. Buyers can review the range first, then confirm details for their city on WhatsApp.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
+              {useCases.map((useCase) => (
+                <span
+                  key={useCase}
+                  className="rounded-full border border-white/14 bg-white/8 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-white/86"
+                >
+                  {useCase}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3 border-t border-white/10 pt-6">
               {serviceAreas.map((area) => (
                 <span
                   key={area}
@@ -59,7 +81,7 @@ export function ServiceAreaSection() {
                 </span>
               ))}
               <span className="rounded-full bg-[#86f556] px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-[#132117]">
-                Pakistan-wide dispatch planning
+                Pakistan-wide support
               </span>
             </div>
           </div>

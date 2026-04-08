@@ -71,8 +71,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     });
 
     const product = getProductBySlug(item.productSlug);
-    const actionLabel = item.mode === "cart" ? "cart" : "quote basket";
-    toast.success(`${product?.shortName ?? "Item"} added to ${actionLabel}.`);
+    toast.success(`${product?.shortName ?? "Item"} saved for follow-up.`);
     trackEvent("add_to_cart", {
       item_name: product?.shortName ?? item.productSlug,
       quantity: item.quantity,

@@ -23,40 +23,40 @@ const fadeUp = {
   }),
 };
 
-const heroImage = "/products/stock/hydroponics-led-aisle.jpg";
+const heroImage = "/products/hydroponics/client/tower-greenhouse-wide.jpeg";
 
 const quickTags = [
-  "Fast WhatsApp response",
-  "Real product references",
-  "Custom fabrication support",
+  "Real product photos",
+  "WhatsApp support",
+  "Clear prices and notes",
 ];
 
 const topPicks = [
   {
-    title: "Plantation towers",
-    meta: "25 to 100 plant fixed-price variants from the client list",
-    href: "/shop/hydroponics-systems/vertical-plantation-towers",
+    title: "Hydroponics systems",
+    meta: "25, 50, and 75 plant options with clear product pages",
+    href: "/shop/hydroponics-systems/hydroponics-system-25-plants",
   },
   {
-    title: "V/T slot profiles",
-    meta: "Real profile, connector, and frame build references",
-    href: "/shop/aluminum-accessories/vt-slot-profiles",
+    title: "T & V-Slots",
+    meta: "V Slot profiles and connectors with prices shown clearly",
+    href: "/shop/t-v-slots/v-slot-2020",
   },
   {
-    title: "BareBone battery racks",
-    meta: "4U, 5U, 6U, battery cases, and sheet metal support",
-    href: "/shop/battery-solutions/barebone-battery-racks",
+    title: "Battery cases",
+    meta: '19" battery boxes and 7U brackets with simple quote support',
+    href: "/shop/battery-cases/19-inch-battery-box-3u",
   },
 ];
 
 const proofPoints = [
-  { value: "25-100", label: "plant tower options" },
-  { value: "4", label: "main product groups" },
-  { value: "Direct", label: "WhatsApp support" },
+  { value: "3", label: "product categories" },
+  { value: "10", label: "listed products" },
+  { value: "Real", label: "product images" },
 ];
 
 const heroTagline =
-  "Hydroponics, aluminum, battery racks, and custom fabrication from one business supplier";
+  "I CAN ENERGIES | Battery Cases, Hydroponics Systems, and T & V-Slots";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -104,9 +104,9 @@ export function Hero() {
   const heroWhatsAppHref = createWhatsAppLink(
     buildWhatsAppMessage({
       source: "homepage hero",
-      subject: "the best product or service for my requirement",
+      subject: "the right product for my requirement",
       details: [
-        "I'm interested in plantation towers, pumps, nutrients, aluminum products, battery racks, or custom fabrication.",
+        'I am interested in battery cases, hydroponics systems, or T & V-Slots.',
       ],
       closing: "Please guide me on pricing, availability, and the best next step.",
     }),
@@ -164,11 +164,11 @@ export function Hero() {
               animate="visible"
               variants={fadeUp}
               custom={1}
-              className="mt-4 max-w-[11ch] text-[clamp(2.35rem,11vw,5.2rem)] font-black leading-[0.9] tracking-[-0.05em] text-white sm:mt-7 sm:max-w-[14ch] md:max-w-5xl"
+              className="mt-4 max-w-[14ch] text-[clamp(2.35rem,11vw,5.2rem)] font-black leading-[0.9] tracking-[-0.05em] text-white sm:mt-7 sm:max-w-[16ch] md:max-w-5xl"
             >
-              Grow, build, and source the right
+              Battery cases, hydroponics systems, and
               {" "}
-              <span className="text-[#86f556]">project setup from one place</span>
+              <span className="text-[#86f556]">T & V-Slots from one supplier</span>
             </motion.h1>
 
             <motion.p
@@ -178,7 +178,7 @@ export function Hero() {
               custom={2}
               className="mt-4 max-w-xl text-[0.92rem] leading-6 text-white/84 sm:mt-8 sm:max-w-2xl sm:text-base sm:leading-8 md:text-lg"
             >
-              Compare hydroponics towers, pumps, nutrients, aluminum profiles, battery racks, and custom sheet metal products, then move straight into fast WhatsApp support for pricing and guidance.
+              See the exact products clearly, open the right product page, and move straight to WhatsApp for details, pricing, and availability.
             </motion.p>
 
             <motion.div
@@ -193,7 +193,7 @@ export function Hero() {
                 className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#86f556] px-5 py-3 text-sm font-bold text-[#132117] transition hover:bg-[#73e543] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
                 <FaShoppingBag />
-                Browse products
+                View Details
               </Link>
 
               <a
@@ -203,7 +203,7 @@ export function Hero() {
                 className="inline-flex w-full items-center justify-center gap-3 rounded-full border-2 border-[#86f556] px-5 py-3 text-sm font-bold text-[#86f556] transition hover:bg-[#86f556] hover:text-[#132117] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
                 <FaWhatsapp />
-                WhatsApp for pricing
+                WhatsApp Now
               </a>
 
               <Link
@@ -211,7 +211,7 @@ export function Hero() {
                 className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/18 px-5 py-3 text-sm font-bold text-white transition hover:border-[#86f556] hover:text-[#86f556] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
                 <FaClipboardList />
-                Start inquiry basket
+                Request Quote
               </Link>
             </motion.div>
 
@@ -286,7 +286,7 @@ export function Hero() {
           >
             <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.24em] text-[#86f556]">
               <FaMapMarkerAlt />
-              Popular buyer paths
+              Popular product paths
             </p>
             <div className="mt-4 space-y-3 sm:mt-5 sm:space-y-4">
               {topPicks.map((item) => (
@@ -307,10 +307,10 @@ export function Hero() {
             </div>
             <div className="mt-5 rounded-[1.4rem] border border-white/10 bg-black/14 p-4">
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#86f556]">
-                Best for mobile buyers
+                Fastest next step
               </p>
               <p className="mt-3 text-sm leading-7 text-white/74">
-                Open a product, compare variants, then send one clean order or quote inquiry without losing details.
+                Open the right product, review the details, then start the conversation on WhatsApp.
               </p>
             </div>
           </motion.aside>

@@ -108,23 +108,23 @@ export function InquiryPageClient() {
               <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <div>
                   <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-                    Cart and quote basket
+                    Request quote
                   </p>
                   <h2 className="mt-4 text-3xl font-black leading-tight text-[#183109] sm:text-4xl md:text-5xl">
-                    Review selected items before WhatsApp checkout
+                    Review your selected items before WhatsApp
                   </h2>
                 </div>
                 <Link
                   href="/shop"
                   className="inline-flex items-center gap-3 rounded-full border border-[#d6dfcb] px-5 py-3 text-sm font-bold text-[#183109] transition hover:border-[#86f556] hover:text-[#5c953f]"
                 >
-                  Continue shopping
+                  View Details
                   <FaArrowRight />
                 </Link>
               </div>
 
               <p className="mt-6 text-sm leading-7 text-[#6f7988] sm:text-base sm:leading-8">
-                Fixed-price items stay in the cart. Quote-only items stay in the quote basket. Both can be sent together in one WhatsApp inquiry.
+                Keep your selected products in one place, then send a clear WhatsApp request with quantity, city, and project notes.
               </p>
             </div>
 
@@ -136,22 +136,22 @@ export function InquiryPageClient() {
 
             {isReady && lines.length === 0 ? (
               <div className="rounded-[1.7rem] border border-dashed border-[#cfd9c2] bg-white p-8 text-center shadow-[0_18px_45px_rgba(16,23,18,0.05)] sm:rounded-[2rem] sm:p-10">
-                <h3 className="text-2xl font-black text-[#183109]">Your basket is empty</h3>
+                <h3 className="text-2xl font-black text-[#183109]">No products selected yet</h3>
                 <p className="mt-4 text-sm leading-7 text-[#6f7988] sm:text-base sm:leading-8">
-                  Add products from the shop to build a mixed order or quote request with proper item details.
+                  Add products from the shop so you can send one clear quote request with the right item details.
                 </p>
                 <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                   <Link
                     href="/shop"
                     className="inline-flex items-center justify-center gap-3 rounded-full bg-[#86f556] px-6 py-3 font-bold text-[#132117] transition hover:bg-[#73e543]"
                   >
-                    Browse all products
+                    View Details
                   </Link>
                   <Link
-                    href="/shop/hydroponics-systems/vertical-plantation-towers"
+                    href="/shop/hydroponics-systems/hydroponics-system-25-plants"
                     className="inline-flex items-center justify-center gap-3 rounded-full border border-[#d6dfcb] px-6 py-3 font-bold text-[#183109] transition hover:border-[#86f556] hover:text-[#5c953f]"
                   >
-                    View plantation towers
+                    Request Quote
                   </Link>
                 </div>
               </div>
@@ -162,9 +162,9 @@ export function InquiryPageClient() {
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-                      Fixed-price cart items
+                      Selected products
                     </p>
-                    <h3 className="mt-3 text-2xl font-black text-[#183109]">Ready for checkout</h3>
+                    <h3 className="mt-3 text-2xl font-black text-[#183109]">Items with listed pricing</h3>
                   </div>
                   <span className="rounded-full bg-[#eff8e7] px-4 py-2 text-sm font-bold text-[#183109]">
                     {formatPkr(subtotal)}
@@ -257,7 +257,7 @@ export function InquiryPageClient() {
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-                      Quote basket items
+                      Quote-led products
                     </p>
                     <h3 className="mt-3 text-2xl font-black text-[#183109]">Pricing will be confirmed by the team</h3>
                   </div>
@@ -351,20 +351,20 @@ export function InquiryPageClient() {
             <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
               Buyer details
             </p>
-            <h2 className="mt-4 text-2xl font-black text-[#183109] sm:text-3xl">Send your basket on WhatsApp</h2>
+            <h2 className="mt-4 text-2xl font-black text-[#183109] sm:text-3xl">Send your request on WhatsApp</h2>
             <p className="mt-5 text-sm leading-7 text-[#6f7988] sm:text-base sm:leading-8">
-              Share your contact details once, and the message will include both fixed-price and quote-only items in one clean inquiry.
+              Share your contact details once, and the message will include your selected items in one clean inquiry.
             </p>
 
             {submitted ? (
               <div className="mt-6 rounded-2xl bg-[#eff8e7] px-5 py-4 text-sm font-medium text-[#183109]">
                 {saveMode === "browser-queue"
                   ? whatsappVisible
-                    ? "Your inquiry is ready in WhatsApp, and the basket details are safely saved on this device until you send the message."
-                    : "Your basket details are safely saved on this device and ready for follow-up."
+                    ? "Your inquiry is ready in WhatsApp, and the selected product details are safely saved on this device until you send the message."
+                    : "Your selected product details are safely saved on this device and ready for follow-up."
                   : whatsappVisible
-                    ? "Your basket details were received, and the WhatsApp message is ready to send."
-                    : "Your basket details were received successfully."}
+                    ? "Your request details were received, and the WhatsApp message is ready to send."
+                    : "Your request details were received successfully."}
               </div>
             ) : null}
 
@@ -427,14 +427,10 @@ export function InquiryPageClient() {
               >
                 <FaWhatsapp />
                 {isSubmitting
-                  ? "Saving basket..."
+                  ? "Saving request..."
                   : whatsappVisible
-                    ? cartLines.length > 0 && quoteLines.length > 0
-                      ? "Send order + quote request"
-                      : cartLines.length > 0
-                        ? "Send order on WhatsApp"
-                        : "Request quote on WhatsApp"
-                    : "Save basket inquiry"}
+                    ? "WhatsApp Now"
+                    : "Request Quote"}
               </button>
             </form>
 
@@ -442,7 +438,7 @@ export function InquiryPageClient() {
               <h3 className="text-lg font-black text-[#183109]">Summary</h3>
               <div className="mt-4 space-y-3 text-sm text-[#6f7988]">
                 <div className="flex items-center justify-between gap-3">
-                  <span>Cart items</span>
+                  <span>Priced items</span>
                   <span className="font-semibold text-[#183109]">{cartLines.length}</span>
                 </div>
                 <div className="flex items-center justify-between gap-3">
@@ -450,7 +446,7 @@ export function InquiryPageClient() {
                   <span className="font-semibold text-[#183109]">{quoteLines.length}</span>
                 </div>
                 <div className="flex items-center justify-between gap-3 border-t border-[#dbe6cf] pt-3">
-                  <span>Estimated subtotal</span>
+                  <span>Reference subtotal</span>
                   <span className="font-black text-[#183109]">{formatPkr(subtotal)}</span>
                 </div>
               </div>
@@ -461,7 +457,7 @@ export function InquiryPageClient() {
                 className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#6f7988] transition hover:text-[#183109]"
               >
                 <FaTrash />
-                Clear basket
+                Clear request
               </button>
             </div>
           </div>

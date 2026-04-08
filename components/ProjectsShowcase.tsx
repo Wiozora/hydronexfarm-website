@@ -7,53 +7,53 @@ import { FaArrowRight } from "react-icons/fa";
 
 const projects = [
   {
-    eyebrow: "Restaurants & cafes",
-    title: "Compact hydroponics planning for fresh daily supply",
+    eyebrow: "Hydroponics systems",
+    title: "25, 50, and 75 plant hydroponics systems",
     description:
-      "Useful for buyers who want herbs, lettuce, or starter greens in a smaller footprint without turning the whole space into a farm.",
+      "Each hydroponics system now has its own product page with a clear name, price, image, and simple specifications.",
     buyerAsk:
-      "Buyers usually ask about footprint, output, maintenance effort, and the right starter configuration.",
-    highlights: ["Low-footprint layouts", "Daily harvest focus"],
-    ctaLabel: "Explore hydroponics systems",
-    href: "/shop/hydroponics-systems",
-    image: "/images/marketing/hydroponics-greenhouse-rows.webp",
-    alt: "Leafy hydroponic rows inside a bright greenhouse",
+      "Buyers usually ask about plant capacity, footprint, maintenance, and which tower size fits their space.",
+    highlights: ["25 / 50 / 75 plants", "Price shown clearly"],
+    ctaLabel: "View Details",
+    href: "/shop/hydroponics-systems/hydroponics-system-25-plants",
+    image: "/products/hydroponics/client/tower-outdoor-installation.jpeg",
+    alt: "Hydroponics tower installed outdoors",
     imageClassName: "object-center",
   },
   {
-    eyebrow: "Installers & project teams",
-    title: "Aluminum frame builds that stay easier to size and expand",
+    eyebrow: "T & V-Slots",
+    title: "Profiles and connectors with simple pricing",
     description:
-      "A practical direction for modular grow racks, equipment stands, and structural layouts where profile sizing and accessories need to stay clear.",
+      "V Slot profiles and connector items are shown as separate products so buyers can quickly identify the right size or connector type.",
     buyerAsk:
-      "Buyers usually ask which profiles, brackets, and support parts match the load and layout before they order.",
-    highlights: ["Modular sizing", "Accessory matching"],
-    ctaLabel: "Browse aluminum accessories",
-    href: "/shop/aluminum-accessories",
-    image: "/images/marketing/industrial-fabrication-workshop.webp",
-    alt: "Industrial fabrication workshop with sparks from metalwork",
-    imageClassName: "object-[center_35%]",
+      "Buyers usually ask which profile size or connector type matches their structure.",
+    highlights: ["2020 / 2030 / 2040 / 4040", "Triangle / Tee / Cross"],
+    ctaLabel: "View Details",
+    href: "/shop/t-v-slots/v-slot-2020",
+    image: "/products/aluminum/slots/profile-series.jpeg",
+    alt: "Aluminum profile series shown together",
+    imageClassName: "object-center",
   },
   {
-    eyebrow: "Homes & backup power",
-    title: "Battery enclosure planning for cleaner power setups",
+    eyebrow: "Battery cases",
+    title: '19" battery boxes and 7U brackets',
     description:
-      "Useful when buyers need safer battery placement, clearer wall-space planning, and a more structured quote conversation around backup systems.",
+      'Battery cases are organized into 19" Battery Box 3U, 4U, 5U, and 19" Brackets 7U so buyers can ask about the exact item they need.',
     buyerAsk:
-      "Buyers usually ask about box size, battery fit, mounting approach, and whether the setup should go to cart or quote.",
-    highlights: ["Enclosure sizing", "Quote-first support"],
-    ctaLabel: "See battery solutions",
-    href: "/shop/battery-solutions",
-    image: "/images/marketing/electrical-installation-work.webp",
-    alt: "Technician handling electrical installation wiring on site",
+      "Buyers usually ask which box size fits their setup and whether the bracket or case is available.",
+    highlights: ['19" product format', "Price on request"],
+    ctaLabel: "View Details",
+    href: "/shop/battery-cases/19-inch-battery-box-3u",
+    image: "/products/battery/cases/case-front.jpeg",
+    alt: "19 inch battery case shown from the front",
     imageClassName: "object-center",
   },
 ] as const;
 
 const supportPoints = [
-  "Real buyer questions",
-  "Cleaner product paths",
-  "Quote-ready conversations",
+  "Real product images",
+  "Current catalog items",
+  "Useful buyer references",
 ] as const;
 
 export function ProjectsShowcase() {
@@ -71,21 +71,20 @@ export function ProjectsShowcase() {
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-end">
           <div className="max-w-4xl">
             <p className="inline-flex rounded-full border border-[#d8e8c9] bg-white/80 px-4 py-2 text-[0.7rem] font-bold uppercase tracking-[0.28em] text-[#6ea73f] shadow-[0_12px_28px_rgba(24,49,9,0.06)] backdrop-blur-sm">
-              Project directions
+              Product proof
             </p>
             <h2 className="mt-5 text-[clamp(2.2rem,6vw,4.3rem)] font-black leading-[0.94] tracking-[-0.04em] text-[#0f1f08]">
-              Practical use cases buyers usually ask about
+              Real product and project references
             </h2>
             <p className="mt-5 max-w-3xl text-base leading-8 text-[#667389] md:text-lg">
-              From compact hydroponics to modular frame builds and backup power planning, these are
-              the kinds of real-world directions buyers usually want to understand before sending an
-              inquiry.
+              These sections use actual product and workshop visuals, so buyers can see the kinds of
+              items the business handles before they ask for pricing or project support.
             </p>
           </div>
 
           <div className="rounded-[1.8rem] border border-[#dbe7cf] bg-white/82 p-5 shadow-[0_18px_45px_rgba(20,28,18,0.06)] backdrop-blur-sm">
             <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#6ea73f]">
-              What this section does
+              Why this matters
             </p>
             <div className="mt-4 space-y-2.5">
               {supportPoints.map((point) => (

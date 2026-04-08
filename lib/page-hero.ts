@@ -30,8 +30,8 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
   },
   {
     id: "nutrients",
-    alt: "Hydroponic nutrient preparation",
-    image: "/products/hydroponics/client/tower-greenhouse-row.jpeg",
+    alt: "Hydroponic crop support and nutrient growth",
+    image: "/products/hydroponics/client/tower-greenhouse-corridor.jpeg",
     objectPosition: "object-center",
     keywords: [
       "nutrient",
@@ -65,9 +65,8 @@ const heroBackgroundPresets: HeroBackgroundPreset[] = [
   },
   {
     id: "aluminum",
-    alt: "Industrial structural framing and fabrication",
-    image:
-      "/products/aluminum/slots/profile-color-options.jpeg",
+    alt: "Aluminum enclosure frame and structural profile build",
+    image: "/products/aluminum/frames/frame-enclosure.jpeg",
     objectPosition: "object-center",
     keywords: [
       "aluminum",

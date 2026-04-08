@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import {
   FaFacebookF,
   FaInstagram,
-  FaLinkedinIn,
   FaMapMarkerAlt,
   FaWhatsapp,
   FaYoutube,
@@ -30,7 +29,6 @@ export function Footer() {
   const visibleSocialLinks = [
     { href: siteConfig.socials.facebook, icon: FaFacebookF, label: "Facebook" },
     { href: siteConfig.socials.instagram, icon: FaInstagram, label: "Instagram" },
-    { href: siteConfig.socials.linkedin, icon: FaLinkedinIn, label: "LinkedIn" },
     { href: siteConfig.socials.youtube, icon: FaYoutube, label: "YouTube" },
   ].filter((item) => hasPublicSocialLink(item.href));
 
@@ -44,7 +42,7 @@ export function Footer() {
     { label: "Service area", value: siteConfig.address },
   ].filter(Boolean) as { label: string; value: string }[];
 
-  const quickActionLabel = hasPublicWhatsApp() ? "WhatsApp for Pricing" : "Open inquiry form";
+  const quickActionLabel = hasPublicWhatsApp() ? "WhatsApp Now" : "Request Quote";
   const quickActionHref = getWhatsAppEntryLink(getPageAwareWhatsAppMessage(pathname));
   const quickActionExternal = shouldOpenWhatsAppInNewTab();
 
@@ -64,7 +62,7 @@ export function Footer() {
             </div>
 
             <p className="mt-5 max-w-md text-sm leading-7 text-white/72 sm:mt-6 sm:text-base sm:leading-8">
-              Explore hydroponics plantation towers, pumps, nutrient plans, aluminum V/T slots, battery racks, and custom fabrication with direct WhatsApp support for pricing, availability, and business guidance.
+              Explore battery cases, hydroponics systems, and T & V-Slot aluminum accessories with direct WhatsApp support for pricing and product guidance.
             </p>
 
             {quickActionExternal ? (
@@ -93,10 +91,9 @@ export function Footer() {
             <div className="mt-5 space-y-4 text-white/76">
               {[
                 { label: "All Products", href: "/shop" },
-                { label: "Hydroponics Plantation", href: "/shop/hydroponics-systems" },
-                { label: "Pumps & Nutrients", href: "/shop/nutrients" },
-                { label: "Aluminum V/T Slots", href: "/shop/aluminum-accessories" },
-                { label: "Battery & Sheet Metal", href: "/shop/battery-solutions" },
+                { label: "Battery Cases", href: "/shop/battery-cases" },
+                { label: "Hydroponics Systems", href: "/shop/hydroponics-systems" },
+                { label: "T & V-Slots", href: "/shop/t-v-slots" },
               ].map((item) => (
                 <Link key={item.label} href={item.href} className="block transition hover:text-[#86f556]">
                   {item.label}
@@ -109,7 +106,7 @@ export function Footer() {
             <h3 className="text-xl font-black">Support</h3>
             <div className="mt-5 space-y-4 text-white/76">
               {[
-                { label: "Inquiry Basket", href: "/inquiry" },
+                { label: "Request Quote", href: "/inquiry" },
                 { label: "Privacy Policy", href: "/privacy-policy" },
                 { label: "Terms & Conditions", href: "/terms-and-conditions" },
                 { label: "Refund / Warranty", href: "/refund-policy" },

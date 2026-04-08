@@ -6,28 +6,28 @@ import { FaBoxOpen, FaCubes, FaTruck } from "react-icons/fa";
 
 const highlights = [
   {
-    title: "Real client product pages",
-    copy: "The storefront now uses the actual shared products, images, variants, and pricing references instead of placeholder catalog items.",
+    title: "Know what we sell quickly",
+    copy: "The homepage now leads buyers into clear product groups instead of making them guess what the business offers.",
     icon: FaBoxOpen,
-    image: "/products/hydroponics/tower-main.jpeg",
-    label: "Real catalog",
-    hoverCopy: "Towers, profiles, racks, and sheet metal items now open into product pages that match the client brief more closely.",
+    image: "/products/hydroponics/client/tower-greenhouse-row.jpeg",
+    label: "Clear offer",
+    hoverCopy: "Battery Cases, Hydroponics Systems, and T & V-Slots are separated into simple paths.",
   },
   {
-    title: "Cart and quote paths",
-    copy: "Fixed-price plantation towers stay order-ready while pumps, aluminum, battery, and fabrication products remain in a quote-friendly flow.",
+    title: "Choose the right product faster",
+    copy: "Each category leads to real products, real images, and useful details so buyers can shortlist with more confidence.",
     icon: FaCubes,
-    image: "/products/aluminum/slots/profile-color-options.jpeg",
-    label: "Smarter flow",
-    hoverCopy: "The catalog now separates checkout-ready plantation towers from project-led products that need custom discussion first.",
+    image: "/products/aluminum/frames/frame-workstation.jpeg",
+    label: "Better structure",
+    hoverCopy: "Open a category, compare the main options, and move straight into the product page that matches your requirement.",
   },
   {
-    title: "Cleaner buyer handoff",
-    copy: "Selected items, variants, quantity, and product context stay together when the buyer sends an order or quote inquiry.",
+    title: "Move straight to WhatsApp",
+    copy: "The flow is built around inquiry, so buyers can ask about the right product, quantity, city, or custom requirement without extra steps.",
     icon: FaTruck,
-    image: "/products/battery/racks/rack-front.jpeg",
-    label: "Clear handoff",
-    hoverCopy: "Order details, rack variants, and fabrication intent stay bundled together for faster follow-up and fewer back-and-forth messages.",
+    image: "/products/battery/cases/case-front.jpeg",
+    label: "Simple inquiry",
+    hoverCopy: "This keeps the journey focused on one goal: product details first, then a clean WhatsApp conversation.",
   },
 ];
 

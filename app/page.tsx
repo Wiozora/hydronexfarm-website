@@ -4,16 +4,13 @@ import { SiteShell } from "@/components/layout/SiteShell";
 import { HomePageSections } from "@/components/sections/HomePageSections";
 
 export const metadata: Metadata = {
-  title: "I CAN ENERGIES | Renewable Products and Fabrication Pakistan",
+  title: "I CAN ENERGIES | Battery Cases, Hydroponics Systems, and T & V-Slots",
   description:
-    "Browse hydroponics plantation towers, PaniPani pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products.",
+    'Browse 19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories with WhatsApp inquiry support.',
   keywords: [
-    "hydroponics plantation Pakistan",
-    "PaniPani water pump Pakistan",
-    "battery rack Pakistan",
-    "barebone battery rack Pakistan",
+    '19" battery box Pakistan',
     "V slot aluminum Pakistan",
-    "sheet metal custom product Pakistan",
+    "hydroponics system Pakistan",
     "I CAN ENERGIES",
     "M/S I CAN ENERGIES Pvt. Ltd.",
   ],

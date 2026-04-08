@@ -14,18 +14,18 @@ export function ShopPageSections({ products }: ShopPageSectionsProps) {
     <>
       <PageHero
         eyebrow="Storefront overview"
-        title="Browse products by category, then drill into the right detail page"
-        description="The catalog now separates fixed-price products from quote-only products, adds filters, and gives each item a more complete product detail flow."
+        title="Browse products by category, then open the right product page"
+        description="Use the category view to move quickly between Battery Cases, Hydroponics Systems, and T & V-Slots."
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Shop" }]}
         backgroundContext="shop storefront catalog"
         quickActions={[
           {
-            label: "Open inquiry basket",
+            label: "Request Quote",
             href: "/inquiry",
             icon: FaClipboardList,
           },
           {
-            label: "Back to homepage",
+            label: "View Details",
             href: "/",
             icon: FaArrowRight,
             variant: "secondary",
@@ -38,7 +38,7 @@ export function ShopPageSections({ products }: ShopPageSectionsProps) {
       <StoreCatalogClient
         products={products}
         title="Filter the full catalog"
-        intro="Use category and purchase-flow filters to move quickly between fixed-price items and quote-only products without changing the visual style of the site."
+        intro="Choose the right product group, open the product page, and continue the conversation on WhatsApp."
       />
     </>
   );

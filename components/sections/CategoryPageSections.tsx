@@ -28,12 +28,12 @@ export function CategoryPageSections({
         backgroundContext={category.slug}
         quickActions={[
           {
-            label: "Open inquiry basket",
+            label: "Request Quote",
             href: "/inquiry",
             icon: FaClipboardList,
           },
           {
-            label: "Back to shop",
+            label: "View Details",
             href: "/shop",
             icon: FaArrowRight,
             variant: "secondary",
@@ -44,7 +44,7 @@ export function CategoryPageSections({
       <StoreCatalogClient
         products={products}
         title={`Explore ${category.shortName}`}
-        intro="Products stay grouped inside the category while the filter controls still help users separate fixed-price and quote-based buying flows."
+        intro="Products stay grouped inside this category so buyers can compare the right options before they request pricing or support."
         defaultCategory={category.slug}
         showCategoryFilters={false}
       />

@@ -77,7 +77,7 @@ export const siteConfig = {
   legalName,
   siteUrl: readPublicEnv("NEXT_PUBLIC_SITE_URL", "https://hydronexfarm.com"),
   description:
-    "Pakistan's supplier of hydroponics plantation towers, PaniPani water pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products.",
+    'Pakistan supplier of 19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories.',
   email: readPublicEnv("NEXT_PUBLIC_CONTACT_EMAIL", ""),
   whatsappNumber: readPublicEnv("NEXT_PUBLIC_WHATSAPP_NUMBER", "923251508970"),
   displayPhone: readPublicEnv("NEXT_PUBLIC_DISPLAY_PHONE", "0325 1508970"),
@@ -87,8 +87,8 @@ export const siteConfig = {
     "Commercial Building LS43, Block 15, Gulberg Town, Dastagir Society, F.B. Area, Karachi",
   ),
   logo: "/logo.png",
-  tagline: "Plantation systems, racks, slots, and custom fabrication",
-  ogImage: "/images/marketing/hydroponics-aisle-hero.webp",
+  tagline: 'Battery cases, hydroponics systems, and T & V-Slots',
+  ogImage: "/products/hydroponics/client/tower-greenhouse-wide.jpeg",
   locale: "en-PK",
   socials: {
     instagram: readPublicEnv("NEXT_PUBLIC_SOCIAL_INSTAGRAM", "https://www.instagram.com/"),

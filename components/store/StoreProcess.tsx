@@ -2,18 +2,18 @@ import { FaClipboardList, FaLayerGroup, FaSearch } from "react-icons/fa";
 
 const steps = [
   {
-    title: "Browse by category",
-    copy: "Start from hydroponics, nutrients, aluminum accessories, or battery solutions instead of scrolling through mixed sections.",
+    title: "View Details",
+    copy: "Start with the right category, then open the product page that matches your requirement.",
     icon: FaSearch,
   },
   {
-    title: "Open the product page",
-    copy: "Review images, descriptions, features, benefits, specifications, and selectable variants before making a decision.",
+    title: "Request Quote",
+    copy: "Shortlist the product, note the quantity or size you need, and keep the request clear before you contact the team.",
     icon: FaLayerGroup,
   },
   {
-    title: "Cart or quote basket",
-    copy: "Fixed-price systems go to cart. Quote-only products go to the quote basket. Both can be sent together on WhatsApp.",
+    title: "WhatsApp Now",
+    copy: "Send your inquiry on WhatsApp and continue the conversation with product, pricing, and delivery guidance.",
     icon: FaClipboardList,
   },
 ];
@@ -25,14 +25,14 @@ export function StoreProcess() {
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-              Better buying flow
+              Inquiry flow
             </p>
             <h2 className="mt-4 text-3xl font-black leading-tight text-[#183109] sm:text-4xl md:text-5xl">
-              A simpler path from product page to final inquiry
+              A simple path from product to conversation
             </h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-[#6f7988] sm:text-base sm:leading-8">
-            The catalog stays product-first while still keeping WhatsApp or inquiry follow-up as the final sales step.
+            The goal is simple: help the buyer understand the product first, then move into a clean WhatsApp inquiry without extra steps.
           </p>
         </div>
 

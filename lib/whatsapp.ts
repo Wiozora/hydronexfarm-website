@@ -42,6 +42,14 @@ export function buildWhatsAppMessage({
   ].join("\n");
 }
 
+export function buildSimpleProductWhatsAppMessage(productName: string) {
+  return `Hello, I am interested in ${productName}. Please share details.`;
+}
+
+export function getProductWhatsAppLink(productName: string) {
+  return createWhatsAppLink(buildSimpleProductWhatsAppMessage(productName));
+}
+
 export function getPageAwareWhatsAppMessage(pathname: string) {
   const pathParts = pathname.split("/").filter(Boolean);
 
@@ -57,10 +65,10 @@ export function getPageAwareWhatsAppMessage(pathname: string) {
 
   if (pathname === "/inquiry") {
     return buildWhatsAppMessage({
-      source: "inquiry basket",
-      subject: "placing an order or sending a quote request from the website basket",
+      source: "request quote page",
+      subject: "the products I selected on your website",
       details: [
-        "I have reviewed products on the website and want help with the next step.",
+        "I have reviewed products on the website and want help with pricing and the next step.",
       ],
       closing: "Please guide me on pricing, availability, delivery, and payment options.",
     });
@@ -69,51 +77,35 @@ export function getPageAwareWhatsAppMessage(pathname: string) {
   if (pathParts[0] === "shop" && pathParts.length >= 3) {
     const productLabel = slugToTitle(pathParts.at(-1) ?? "product");
 
-    return buildWhatsAppMessage({
-      source: `${productLabel} page`,
-      subject: `${productLabel} and the right option for my requirement`,
-      details: [
-        "I'm reviewing this product on your website and want the right option for my setup.",
-      ],
-    });
+    return buildSimpleProductWhatsAppMessage(productLabel);
   }
 
   if (pathname.startsWith("/shop/hydroponics-systems")) {
     return buildWhatsAppMessage({
       source: "hydroponics category page",
-      subject: "hydroponics plantation towers and ROI guidance",
+      subject: "a hydroponics system for my requirement",
       details: [
-        "I want help choosing the right tower size for my requirement.",
+        "I want help choosing between the 25, 50, and 75 plant options.",
       ],
     });
   }
 
-  if (pathname.startsWith("/shop/nutrients")) {
+  if (pathname.startsWith("/shop/t-v-slots")) {
     return buildWhatsAppMessage({
-      source: "pumps and nutrients page",
-      subject: "water pumps, nutrient plans, and crop support items",
+      source: "t and v slots page",
+      subject: "V Slot profiles or aluminum connectors",
       details: [
-        "I want the right pump or nutrient option for my crop and system.",
+        "I want pricing or guidance for the right profile or connector.",
       ],
     });
   }
 
-  if (pathname.startsWith("/shop/aluminum-accessories")) {
+  if (pathname.startsWith("/shop/battery-cases")) {
     return buildWhatsAppMessage({
-      source: "aluminum accessories page",
-      subject: "aluminum V/T slots, connectors, and frame accessories",
+      source: "battery cases page",
+      subject: 'a 19" battery box or 7U bracket',
       details: [
-        "I want pricing or guidance for profiles, connectors, or frame parts.",
-      ],
-    });
-  }
-
-  if (pathname.startsWith("/shop/battery-solutions")) {
-    return buildWhatsAppMessage({
-      source: "battery solutions page",
-      subject: "battery racks, battery cases, and sheet metal fabrication",
-      details: [
-        "I want the right rack, case, or fabrication option for my requirement.",
+        "I want help choosing the right battery case size for my requirement.",
       ],
     });
   }
@@ -130,7 +122,7 @@ export function getPageAwareWhatsAppMessage(pathname: string) {
 
   return buildWhatsAppMessage({
     source: "homepage",
-    subject: "hydroponics towers, pumps, aluminum products, battery racks, or custom fabrication",
+    subject: 'battery cases, hydroponics systems, or T & V-Slots',
     details: [
       "I'm interested in your products and want the best recommendation for my requirement.",
     ],

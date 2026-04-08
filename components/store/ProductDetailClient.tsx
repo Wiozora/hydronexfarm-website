@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FaArrowRight, FaCheckCircle, FaWhatsapp } from "react-icons/fa";
+import { FaCheckCircle, FaWhatsapp } from "react-icons/fa";
 
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductGallery } from "@/components/store/ProductGallery";
@@ -14,16 +13,14 @@ import {
 } from "@/components/store/SupportPanels";
 import { useStore } from "@/components/store/StoreProvider";
 import { hasPublicWhatsApp } from "@/lib/site-config";
-import { buildWhatsAppMessage, createWhatsAppLink } from "@/lib/whatsapp";
+import { getProductWhatsAppLink } from "@/lib/whatsapp";
 import {
   getCategoryBySlug,
   getDefaultVariant,
-  getModeLabel,
   getPriceLabel,
   getRelatedProducts,
   getVariantMode,
 } from "@/lib/store";
-import { formatPkr } from "@/lib/utils";
 import type { StoreProduct } from "@/types";
 
 export function ProductDetailClient({ product }: { product: StoreProduct }) {
@@ -33,8 +30,8 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
   const pathname = usePathname();
   const router = useRouter();
   const requestedVariantId = searchParams.get("variant");
-  const [quantity, setQuantity] = useState(1);
   const { addItem } = useStore();
+  const quantity = 1;
 
   const selectedVariantId =
     product.variants.find((variant) => variant.id === requestedVariantId)?.id ?? defaultVariant.id;
@@ -42,6 +39,7 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
     product.variants.find((variant) => variant.id === selectedVariantId) ?? defaultVariant;
   const selectedMode = getVariantMode(selectedVariant);
   const relatedProducts = getRelatedProducts(product);
+  const hasMultipleVariants = product.variants.length > 1;
   const whatsappVisible = hasPublicWhatsApp();
 
   const selectedSpecifications = [
@@ -50,28 +48,7 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
     { label: "Lead time", value: selectedVariant.leadTime },
     ...selectedVariant.specifications,
   ];
-  const whatsappMessage = createWhatsAppLink(
-    buildWhatsAppMessage({
-      source: `${product.shortName} product page`,
-      subject:
-        selectedMode === "cart"
-          ? `${product.name} with the ${selectedVariant.name} option`
-          : `${product.name} pricing and recommendation for the ${selectedVariant.name} option`,
-      details: [
-        `Selected variant: ${selectedVariant.name}`,
-        `Quantity: ${quantity}`,
-        `Availability shown: ${selectedVariant.availability}`,
-        `Lead time shown: ${selectedVariant.leadTime}`,
-        typeof selectedVariant.pricePkr === "number"
-          ? `Website price: ${formatPkr(selectedVariant.pricePkr)}`
-          : "Website price: Quote required",
-      ],
-      closing:
-        selectedMode === "cart"
-          ? "Please confirm total amount, delivery to my city, and payment method so I can place the order."
-          : "Please share price, availability, and the best option for my requirement.",
-    }),
-  );
+  const whatsappMessage = getProductWhatsAppLink(product.name);
 
   function handleVariantChange(nextVariantId: string) {
     const params = new URLSearchParams(searchParams.toString());
@@ -86,6 +63,8 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
       quantity,
       mode: selectedMode,
     });
+
+    router.push("/inquiry");
   }
 
   return (
@@ -97,14 +76,14 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
 
             <div className="min-w-0 rounded-[2rem] border border-white/10 bg-white/8 p-5 shadow-[0_22px_50px_rgba(8,18,12,0.22)] backdrop-blur-md md:p-8 lg:sticky lg:top-28">
               <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#86f556]">
-                Configure your selection
+                Product details
               </p>
               <h2 className="mt-3 text-[1.9rem] font-black leading-tight text-white md:mt-4 md:text-[2.5rem]">
-                Choose the right variant, quantity, and buying path
+                Simple product information before you contact us
               </h2>
               <p className="mt-4 text-sm leading-7 text-white/78 md:mt-5 md:text-lg md:leading-8">
                 {category
-                  ? `${category.shortName} buyers can compare availability, lead time, and pricing before moving into cart or quote.`
+                  ? `${category.shortName} buyers can review the product name, image, price, and specifications here before they send a WhatsApp inquiry.`
                   : product.description}
               </p>
 
@@ -120,73 +99,43 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
                 </span>
               </div>
 
-              <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-black/14 p-5">
-                <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#86f556]">
-                  Select variant
-                </p>
-                <div className="mt-4 grid gap-3">
-                  {product.variants.map((variant) => {
-                    const isActive = variant.id === selectedVariant.id;
-                    return (
-                      <button
-                        key={variant.id}
-                        type="button"
-                        onClick={() => handleVariantChange(variant.id)}
-                        className={`rounded-[1.4rem] border px-4 py-4 text-left transition ${
-                          isActive
-                            ? "border-[#86f556] bg-[#86f556]/10"
-                            : "border-white/10 bg-white/4 hover:border-white/25"
-                        }`}
-                      >
-                        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-                          <div className="min-w-0">
-                            <p className="text-lg font-black text-white">{variant.name}</p>
-                            <p className="mt-2 text-sm leading-6 text-white/70">{variant.summary}</p>
+              {hasMultipleVariants ? (
+                <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-black/14 p-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#86f556]">
+                    Select variant
+                  </p>
+                  <div className="mt-4 grid gap-3">
+                    {product.variants.map((variant) => {
+                      const isActive = variant.id === selectedVariant.id;
+                      return (
+                        <button
+                          key={variant.id}
+                          type="button"
+                          onClick={() => handleVariantChange(variant.id)}
+                          className={`rounded-[1.4rem] border px-4 py-4 text-left transition ${
+                            isActive
+                              ? "border-[#86f556] bg-[#86f556]/10"
+                              : "border-white/10 bg-white/4 hover:border-white/25"
+                          }`}
+                        >
+                          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                            <div className="min-w-0">
+                              <p className="text-lg font-black text-white">{variant.name}</p>
+                              <p className="mt-2 text-sm leading-6 text-white/70">{variant.summary}</p>
+                            </div>
+                            <div className="text-left sm:text-right">
+                              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#86f556]">
+                                {variant.badge ?? getPriceLabel(product, variant)}
+                              </p>
+                              <p className="mt-2 text-xs text-white/60">{variant.sku}</p>
+                            </div>
                           </div>
-                          <div className="text-left sm:text-right">
-                            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#86f556]">
-                              {variant.badge ?? getPriceLabel(product, variant)}
-                            </p>
-                            <p className="mt-2 text-xs text-white/60">{variant.sku}</p>
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-black/14 p-5">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="min-w-0">
-                    <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#86f556]">
-                      Quantity
-                    </p>
-                    <p className="mt-1 text-sm leading-6 text-white/68">
-                      {selectedMode === "cart"
-                        ? `Estimated total: ${formatPkr((selectedVariant.pricePkr ?? 0) * quantity)}`
-                        : "Quantity is included in your quote request."}
-                    </p>
-                  </div>
-                  <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-start">
-                    <button
-                      type="button"
-                      onClick={() => setQuantity((current) => Math.max(1, current - 1))}
-                      className="flex h-11 w-11 items-center justify-center rounded-full border border-white/14 text-white transition hover:border-[#86f556]"
-                    >
-                      -
-                    </button>
-                    <span className="min-w-10 text-center text-lg font-black text-white">{quantity}</span>
-                    <button
-                      type="button"
-                      onClick={() => setQuantity((current) => current + 1)}
-                      className="flex h-11 w-11 items-center justify-center rounded-full border border-white/14 text-white transition hover:border-[#86f556]"
-                    >
-                      +
-                    </button>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
-              </div>
+              ) : null}
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <button
@@ -194,7 +143,7 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
                   onClick={handleAdd}
                   className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#86f556] px-6 py-4 text-sm font-bold text-[#132117] transition hover:bg-[#73e543] sm:w-auto"
                 >
-                  {getModeLabel(selectedMode)}
+                  Request Quote
                 </button>
                 {whatsappVisible ? (
                   <a
@@ -204,7 +153,7 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
                     className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/16 px-6 py-4 text-sm font-bold text-white transition hover:border-[#86f556] hover:text-[#86f556] sm:w-auto"
                   >
                     <FaWhatsapp />
-                    {selectedMode === "cart" ? "Confirm on WhatsApp" : "Get Quote on WhatsApp"}
+                    WhatsApp Now
                   </a>
                 ) : (
                   <Link
@@ -212,16 +161,9 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
                     className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/16 px-6 py-4 text-sm font-bold text-white transition hover:border-[#86f556] hover:text-[#86f556] sm:w-auto"
                   >
                     <FaWhatsapp />
-                    Contact for pricing
+                    Request Quote
                   </Link>
                 )}
-                <Link
-                  href="/inquiry"
-                  className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/16 px-6 py-4 text-sm font-bold text-white transition hover:border-[#86f556] hover:text-[#86f556] sm:w-auto"
-                >
-                  Open inquiry basket
-                  <FaArrowRight />
-                </Link>
               </div>
             </div>
           </div>
@@ -264,12 +206,12 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
             </div>
 
             <div className="rounded-[2rem] border border-[#e6ebde] bg-white p-7 shadow-[0_18px_45px_rgba(16,23,18,0.05)] md:p-8">
-              <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-                Specifications
-              </p>
-              <p className="mt-4 text-sm leading-7 text-[#6f7988]">
-                Specifications update when you switch variants, so buyers can compare details before confirming an order or quote request.
-              </p>
+                  <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
+                    Specifications
+                  </p>
+                  <p className="mt-4 text-sm leading-7 text-[#6f7988]">
+                Basic specifications are shown clearly so buyers can understand the product before they contact the business.
+                  </p>
 
               <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-[#e6ebde]">
                 {selectedSpecifications.map((specification, index) => (
@@ -292,7 +234,7 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
           <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="rounded-[2rem] border border-[#e6ebde] bg-white p-7 shadow-[0_18px_45px_rgba(16,23,18,0.05)] md:p-8">
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-                Selected variant
+                {hasMultipleVariants ? "Selected variant" : "Price and availability"}
               </p>
               <h2 className="mt-4 text-3xl font-black text-[#183109]">{selectedVariant.name}</h2>
               <p className="mt-4 text-base leading-8 text-[#6f7988]">{selectedVariant.summary}</p>
@@ -311,10 +253,10 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
 
             <div className="rounded-[2rem] border border-[#e6ebde] bg-white p-7 shadow-[0_18px_45px_rgba(16,23,18,0.05)] md:p-8">
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-                Best business use cases
+                Use cases
               </p>
               <p className="mt-4 text-base leading-8 text-[#6f7988]">
-                If a buyer wants to know where this product makes sense in real work, these are the main business or project types it fits.
+                These are the main places where this product is commonly used.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 {product.applications.map((application) => (
@@ -329,7 +271,9 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
             </div>
           </div>
 
-          <ProductDatasheetPanel product={product} selectedVariant={selectedVariant} />
+          {product.datasheet ? (
+            <ProductDatasheetPanel product={product} selectedVariant={selectedVariant} />
+          ) : null}
 
           {product.roi ? (
             <ProductRoiPanel product={product} roi={product.roi} selectedVariant={selectedVariant} />

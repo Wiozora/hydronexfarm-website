@@ -97,6 +97,10 @@ export function getStartingPrice(product: StoreProduct) {
 }
 
 export function getPriceLabel(product: StoreProduct, variant?: StoreVariant) {
+  if (variant?.badge) {
+    return variant.badge;
+  }
+
   if (variant?.priceStatus === "pending") {
     return "Price pending";
   }
@@ -106,6 +110,11 @@ export function getPriceLabel(product: StoreProduct, variant?: StoreVariant) {
   }
 
   const startingPrice = getStartingPrice(product);
+  const singleVariant = product.variants.length === 1 ? product.variants[0] : undefined;
+
+  if (singleVariant?.badge) {
+    return singleVariant.badge;
+  }
 
   if (startingPrice) {
     return `From ${formatPkr(startingPrice)}`;
@@ -119,11 +128,12 @@ export function getPriceLabel(product: StoreProduct, variant?: StoreVariant) {
 }
 
 export function getModeLabel(mode: BasketMode) {
-  return mode === "cart" ? "Add to cart" : "Add to quote";
+  void mode;
+  return "Request Quote";
 }
 
 export function getModeSummary(mode: BasketMode) {
-  return mode === "cart" ? "Fixed-price item" : "Quote-only item";
+  return mode === "cart" ? "Ready-price product" : "Quote-based product";
 }
 
 export function getCategoryProductCount(categorySlug: string) {
@@ -207,29 +217,29 @@ export function buildStoreInquiryMessage(
   const hasQuote = quoteLines.length > 0;
 
   const opening = hasCart && hasQuote
-    ? "Hi! I'm contacting I CAN ENERGIES from the website. I want to place an order and request a quote."
+    ? "Hi! I'm contacting I CAN ENERGIES from the website. I want pricing and guidance for the selected products."
     : hasCart
-      ? "Hi! I'm contacting I CAN ENERGIES from the website. I want to place an order."
+      ? "Hi! I'm contacting I CAN ENERGIES from the website. I want pricing and product guidance."
       : "Hi! I'm contacting I CAN ENERGIES from the website. I want to request a quote.";
 
   const cartSection = hasCart
     ? [
         "",
-        "Ready-to-order items from the website:",
+        "Products with listed pricing:",
         ...cartLines.map(
           (line, index) =>
             `${index + 1}. ${line.product.name} - ${line.variant.name} x ${line.quantity} - ${formatPkr(
               line.lineTotalPkr ?? 0,
             )}`,
         ),
-        `Estimated subtotal: ${formatPkr(getBasketSubtotal(cartLines))}`,
+        `Reference subtotal: ${formatPkr(getBasketSubtotal(cartLines))}`,
       ]
     : [];
 
   const quoteSection = hasQuote
     ? [
         "",
-        "Quote request items from the website:",
+        "Quote request items:",
         ...quoteLines.map(
           (line, index) =>
             `${index + 1}. ${line.product.name} - ${line.variant.name} x ${line.quantity}`,

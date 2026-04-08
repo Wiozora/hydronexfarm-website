@@ -2,17 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaWhatsapp } from "react-icons/fa";
 
-import { useStore } from "@/components/store/StoreProvider";
 import {
   getCategoryBySlug,
-  getDefaultVariant,
-  getModeLabel,
   getPriceLabel,
   getProductPath,
-  getVariantMode,
 } from "@/lib/store";
+import { getProductWhatsAppLink } from "@/lib/whatsapp";
 import type { StoreProduct } from "@/types";
 
 export function ProductCard({
@@ -22,10 +19,8 @@ export function ProductCard({
   product: StoreProduct;
   showCategory?: boolean;
 }) {
-  const { addItem } = useStore();
   const category = getCategoryBySlug(product.categorySlug);
-  const defaultVariant = getDefaultVariant(product);
-  const defaultMode = getVariantMode(defaultVariant);
+  const whatsappHref = getProductWhatsAppLink(product.name);
 
   return (
     <article className="overflow-hidden rounded-[1.7rem] border border-[#e6ebde] bg-white shadow-[0_22px_55px_rgba(16,23,18,0.06)] transition hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(16,23,18,0.12)] sm:rounded-[2rem]">
@@ -73,23 +68,18 @@ export function ProductCard({
             href={getProductPath(product)}
             className="inline-flex items-center justify-center gap-3 rounded-full bg-[#86f556] px-5 py-3 text-sm font-bold text-[#132117] transition hover:bg-[#73e543]"
           >
-            Open product page
+            View Details
             <FaArrowRight />
           </Link>
-          <button
-            type="button"
-            onClick={() =>
-              addItem({
-                productSlug: product.slug,
-                variantId: defaultVariant.id,
-                quantity: 1,
-                mode: defaultMode,
-              })
-            }
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-3 rounded-full border border-[#d6dfcb] px-5 py-3 text-sm font-bold text-[#183109] transition hover:border-[#86f556] hover:text-[#5c953f]"
           >
-            {getModeLabel(defaultMode)}
-          </button>
+            <FaWhatsapp />
+            WhatsApp Now
+          </a>
         </div>
       </div>
     </article>

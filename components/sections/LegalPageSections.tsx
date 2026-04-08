@@ -25,12 +25,12 @@ export function LegalPageSections({
         backgroundContext={backgroundContext}
         quickActions={[
           {
-            label: "Contact support",
+            label: "Request Quote",
             href: "/contact",
             icon: FaEnvelope,
           },
           {
-            label: "Browse products",
+            label: "View Details",
             href: "/shop",
             icon: FaArrowRight,
             variant: "secondary",

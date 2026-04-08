@@ -15,18 +15,18 @@ export function FloatingWhatsApp() {
   const mobileSecondaryAction = pathname.startsWith("/shop")
     ? {
         href: "/inquiry",
-        label: "Open inquiry",
+        label: "Request Quote",
         icon: ClipboardList,
       }
     : pathname === "/inquiry"
       ? {
           href: "/shop",
-          label: "View products",
+          label: "View Details",
           icon: ShoppingBag,
         }
       : {
           href: "/shop",
-          label: "View products",
+          label: "View Details",
           icon: ShoppingBag,
         };
   const sharedProps = {
@@ -39,8 +39,8 @@ export function FloatingWhatsApp() {
     transition: { type: "spring", stiffness: 260, damping: 22, delay: 0.9 },
   } as const;
 
-  const label = whatsappVisible ? "Ask on WhatsApp" : "Open inquiry form";
-  const mobilePrimaryLabel = whatsappVisible ? "Ask on WhatsApp" : "Contact now";
+  const label = whatsappVisible ? "WhatsApp Now" : "Request Quote";
+  const mobilePrimaryLabel = whatsappVisible ? "WhatsApp Now" : "Request Quote";
   const mobilePrimaryClasses =
     "inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[#86f556] px-4 py-3 text-sm font-bold text-[#132117] transition hover:bg-[#73e543]";
   const mobileSecondaryClasses =

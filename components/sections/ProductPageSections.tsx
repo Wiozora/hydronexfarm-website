@@ -31,12 +31,12 @@ export function ProductPageSections({
         backgroundContext={`${product.categorySlug} ${product.name}`}
         quickActions={[
           {
-            label: "Open inquiry basket",
+            label: "Request Quote",
             href: "/inquiry",
             icon: FaClipboardList,
           },
           {
-            label: "Back to shop",
+            label: "View Details",
             href: category ? getCategoryPath(category) : "/shop",
             icon: FaArrowRight,
             variant: "secondary",

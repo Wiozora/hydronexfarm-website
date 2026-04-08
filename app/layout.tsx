@@ -31,7 +31,7 @@ const schema = {
   "@type": "Store",
   name: siteConfig.storeName,
   description:
-    "Hydroponics plantation towers, pumps and nutrient inputs, aluminum V/T slots, battery racks, and custom sheet metal products",
+    '19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories',
   url: siteConfig.siteUrl,
   ...(hasPublicPhone() ? { telephone: siteConfig.phone } : {}),
   address: {
@@ -42,34 +42,27 @@ const schema = {
   ...(publicSocialLinks.length > 0 ? { sameAs: publicSocialLinks } : {}),
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Renewable Product Catalog",
+    name: "Product Catalog",
     itemListElement: [
       {
         "@type": "ListItem",
         itemOffered: {
           "@type": "Product",
-          name: "Hydroponics Plantation Towers",
+          name: "Battery Cases",
         },
       },
       {
         "@type": "ListItem",
         itemOffered: {
           "@type": "Product",
-          name: "PaniPani Pumps and Nutrient Plans",
+          name: "Hydroponics Systems",
         },
       },
       {
         "@type": "ListItem",
         itemOffered: {
           "@type": "Product",
-          name: "Aluminum V/T Slots and Frame Builds",
-        },
-      },
-      {
-        "@type": "ListItem",
-        itemOffered: {
-          "@type": "Product",
-          name: "Battery Racks, Cases, and Custom Sheet Metal",
+          name: "T & V-Slots",
         },
       },
     ],
@@ -78,25 +71,25 @@ const schema = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: "I CAN ENERGIES | Renewable Products and Fabrication Pakistan",
+  title: "I CAN ENERGIES | Battery Cases, Hydroponics Systems, and T & V-Slots",
   description:
-    "Browse hydroponics plantation towers, PaniPani pumps, nutrient plans, aluminum V/T slots, battery racks, and custom sheet metal products.",
+    'Browse 19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories with WhatsApp inquiry support.',
   keywords: [
-    "hydroponics plantation Pakistan",
-    "PaniPani water pump Pakistan",
-    "battery rack Pakistan",
-    "barebone rack Pakistan",
+    '19" battery box Pakistan',
+    '19" battery brackets Pakistan',
     "battery case Pakistan",
-    "V slot aluminum Pakistan",
-    "custom sheet metal Pakistan",
+    "hydroponics system Pakistan",
+    "V slot Pakistan",
+    "T slot Pakistan",
+    "triangle connector Pakistan",
     "I CAN ENERGIES",
     "M/S I CAN ENERGIES Pvt. Ltd.",
-    "Karachi renewable products",
+    "Karachi product supplier",
   ],
   openGraph: {
-    title: "I CAN ENERGIES | Renewable Products and Fabrication",
+    title: "I CAN ENERGIES | Battery Cases, Hydroponics Systems, and T & V-Slots",
     description:
-      "Shop hydroponics towers, pumps, nutrient plans, aluminum slot systems, battery racks, and custom sheet metal products.",
+      'Browse 19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories.',
     type: "website",
     url: siteConfig.siteUrl,
     siteName: siteConfig.storeName,

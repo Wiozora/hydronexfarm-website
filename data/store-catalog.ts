@@ -1,1210 +1,796 @@
-import { defaultPaymentInfo } from "@/lib/site-config";
-import type {
-  ProductDatasheet,
-  ProductDatasheetSection,
-  ProductRoi,
-  StoreCategory,
-  StoreProduct,
-} from "@/types";
+import type { StoreCategory, StoreProduct, StoreVariant } from "@/types";
 
-const hydroponicsClientImages = [
-  "/products/hydroponics/client/tower-lifestyle-comparison.jpeg",
-  "/products/hydroponics/client/tower-greenhouse-corridor.jpeg",
-  "/products/hydroponics/client/tower-greenhouse-row.jpeg",
-  "/products/hydroponics/client/tower-harvest-demo.jpeg",
-  "/products/hydroponics/client/tower-outdoor-installation.jpeg",
-  "/products/hydroponics/client/tower-strawberry-fruit.jpeg",
-  "/products/hydroponics/client/tower-greenhouse-wide.jpeg",
-  "/products/hydroponics/client/tower-team-installation.jpeg",
-];
+function buildVariant({
+  id,
+  name,
+  sku,
+  summary,
+  availability,
+  leadTime,
+  pricePkr,
+  badge,
+  priceStatus = typeof pricePkr === "number" ? "fixed" : "quote",
+  specifications,
+}: {
+  id: string;
+  name: string;
+  sku: string;
+  summary: string;
+  availability: string;
+  leadTime: string;
+  pricePkr?: number;
+  badge?: string;
+  priceStatus?: "fixed" | "quote" | "pending";
+  specifications: StoreVariant["specifications"];
+}): StoreVariant {
+  return {
+    id,
+    name,
+    sku,
+    summary,
+    availability,
+    leadTime,
+    pricePkr,
+    priceStatus,
+    badge,
+    specifications,
+  };
+}
 
-const hydroponicsTowerImages = [
+function buildProduct({
+  slug,
+  categorySlug,
+  name,
+  tag,
+  summary,
+  description,
+  image,
+  gallery,
+  features,
+  benefits,
+  applications,
+  specifications,
+  variant,
+  filterTags,
+  featured = false,
+}: {
+  slug: string;
+  categorySlug: string;
+  name: string;
+  tag: string;
+  summary: string;
+  description: string;
+  image: string;
+  gallery: string[];
+  features: string[];
+  benefits: string[];
+  applications: string[];
+  specifications: StoreProduct["specifications"];
+  variant: StoreVariant;
+  filterTags: string[];
+  featured?: boolean;
+}): StoreProduct {
+  return {
+    slug,
+    categorySlug,
+    name,
+    shortName: name,
+    tag,
+    summary,
+    description,
+    image,
+    gallery,
+    features,
+    benefits,
+    applications,
+    specifications,
+    variants: [variant],
+    filterTags,
+    featured,
+  };
+}
+
+const hydroponicsGallery = [
   "/products/hydroponics/tower-main.jpeg",
   "/products/hydroponics/tower-side.jpeg",
   "/products/hydroponics/vertical-system-1.jpeg",
   "/products/hydroponics/vertical-system-2.jpeg",
-  hydroponicsClientImages[0],
-  hydroponicsClientImages[2],
-  hydroponicsClientImages[6],
-  hydroponicsClientImages[7],
-];
-
-const nutrientSupportImages = [
+  "/products/hydroponics/client/tower-greenhouse-wide.jpeg",
   "/products/hydroponics/client/tower-greenhouse-row.jpeg",
-  "/products/hydroponics/client/tower-strawberry-fruit.jpeg",
-  "/products/hydroponics/vertical-system-3.jpeg",
-  hydroponicsClientImages[3],
-  "/products/hydroponics/tower-secondary.jpeg",
 ];
 
-const waterPumpImages = [
-  "/images/marketing/technical-site-support.webp",
-  "/images/marketing/hydroponics-aisle-hero.webp",
-  "/images/marketing/hydroponics-greenhouse-rows.webp",
-  hydroponicsClientImages[1],
-  hydroponicsClientImages[4],
-];
-
-const aluminumSlotImages = [
-  "/products/aluminum/slots/profile-color-options.jpeg",
-  "/products/aluminum/slots/profile-size-stack.jpeg",
-  "/products/aluminum/slots/profile-2020-spec.jpeg",
-  "/products/aluminum/slots/profile-2040-spec.jpeg",
-  "/products/aluminum/slots/profile-series.jpeg",
-  "/products/aluminum/slots/v-slot-vs-t-slot.jpeg",
-  "/products/aluminum/slots/profile-3030-4040.jpeg",
-];
-
-const aluminumConnectorImages = [
-  "/products/aluminum/connectors/triangle-bracket.jpeg",
-  "/products/aluminum/connectors/connector-1.jpeg",
-  "/products/aluminum/connectors/connector-2.jpeg",
-  "/products/aluminum/connectors/connector-3.jpeg",
-  "/products/aluminum/connectors/v-wheel-system.jpeg",
-  "/products/aluminum/connectors/wheel-plate.jpeg",
-];
-
-const aluminumFrameImages = [
-  "/products/aluminum/frames/frame-cart.jpeg",
-  "/products/aluminum/frames/frame-workstation.jpeg",
-  "/products/aluminum/frames/frame-stand.jpeg",
-  "/products/aluminum/frames/frame-enclosure.jpeg",
-];
-
-const batteryBracketImages = [
-  "/products/battery/brackets/mount-bracket-angle.jpeg",
-  "/products/battery/brackets/mount-panel-front.jpeg",
-  "/products/battery/brackets/mount-bracket-front.jpeg",
-];
-
-const batteryRackImages = [
-  "/products/battery/boxes/battery-box-2.jpeg",
-  "/products/battery/racks/rack-front.jpeg",
-  "/products/battery/racks/rack-angle.jpeg",
-  "/products/battery/racks/rack-open.jpeg",
-  "/products/battery/racks/rack-rear.jpeg",
-  "/products/battery/racks/rack-closed.jpeg",
-  "/products/battery/boxes/battery-box-1.jpeg",
-  "/products/battery/boxes/battery-box-3.jpeg",
-  "/products/battery/boxes/battery-box-4.jpeg",
-  "/products/battery/racks/rack-4u-drawing.jpeg",
-  "/products/battery/racks/rack-5u-drawing.jpeg",
-  "/products/battery/racks/rack-6u-drawing.jpeg",
-];
-
-const batteryCaseImages = [
+const batteryCaseGallery = [
   "/products/battery/cases/case-front.jpeg",
   "/products/battery/cases/case-angle.jpeg",
   "/products/battery/cases/case-side.jpeg",
   "/products/battery/cases/case-open-top.jpeg",
   "/products/battery/cases/case-top-panel.jpeg",
-  "/products/battery/cases/case-cad-front.jpeg",
 ];
 
-const customSheetMetalImages = [
-  "/products/sheet-metal/side-cover.jpeg",
-  "/products/sheet-metal/top-cover.jpeg",
-  "/products/sheet-metal/flat-panel.jpeg",
-  "/products/sheet-metal/custom-drawing-1.jpeg",
-  "/products/sheet-metal/custom-drawing-2.jpeg",
-  "/products/sheet-metal/custom-drawing-3.jpeg",
+const batteryBracketGallery = [
+  "/products/battery/brackets/mount-panel-front.jpeg",
+  "/products/battery/brackets/mount-bracket-front.jpeg",
+  "/products/battery/brackets/mount-bracket-angle.jpeg",
+];
+
+const slotGallery = [
+  "/products/aluminum/slots/profile-series.jpeg",
+  "/products/aluminum/slots/profile-size-stack.jpeg",
+  "/products/aluminum/slots/profile-color-options.jpeg",
+  "/products/aluminum/slots/v-slot-vs-t-slot.jpeg",
+];
+
+const connectorGallery = [
+  "/products/aluminum/connectors/triangle-bracket.jpeg",
+  "/products/aluminum/connectors/connector-1.jpeg",
+  "/products/aluminum/connectors/connector-2.jpeg",
+  "/products/aluminum/connectors/connector-3.jpeg",
 ];
 
 export const storeCategories: StoreCategory[] = [
   {
+    slug: "battery-cases",
+    name: "Battery Cases",
+    shortName: "Battery Cases",
+    tag: "19 inch range",
+    description:
+      '19" battery boxes and brackets for battery cabinet, rack, and enclosure work.',
+    image: "/products/battery/cases/case-front.jpeg",
+    highlights: ["3U / 4U / 5U battery boxes", '19" Brackets 7U', "WhatsApp inquiry"],
+  },
+  {
     slug: "hydroponics-systems",
-    name: "Hydroponics Plantation Systems",
+    name: "Hydroponics Systems",
     shortName: "Hydroponics",
-    tag: "25 to 100 plants",
+    tag: "25 to 75 plants",
     description:
-      "Vertical plantation towers with real plant-count pricing and size guidance for homes, cafes, schools, and project setups.",
-    image: hydroponicsTowerImages[0],
-    highlights: ["25 / 50 / 75 / 100 plants", "Tower sizing", "Direct order flow"],
+      "Hydroponics systems for 25, 50, and 75 plants with simple product details and fixed pricing.",
+    image: "/products/hydroponics/client/tower-greenhouse-wide.jpeg",
+    highlights: ["25 / 50 / 75 plants", "Fixed prices", "Use-case guidance"],
   },
   {
-    slug: "nutrients",
-    name: "Water Pumps and Nutrient Inputs",
-    shortName: "Pumps & Nutrients",
-    tag: "Crop support supply",
+    slug: "t-v-slots",
+    name: "T & V-Slots",
+    shortName: "T & V-Slots",
+    tag: "Aluminum accessories",
     description:
-      "PaniPani water pumps and nutrient planning options organized around plantation type, chemistry, and crop requirement.",
-    image: nutrientSupportImages[0],
-    highlights: ["PaniPani pump", "Plant-type nutrient plan", "Chemistry options"],
-  },
-  {
-    slug: "aluminum-accessories",
-    name: "Aluminum V/T Slots and Enclosures",
-    shortName: "Aluminum",
-    tag: "Profiles and frames",
-    description:
-      "V-slot and T-slot profiles, connectors, wheels, frames, and enclosure builds collected in one clean category.",
-    image: aluminumSlotImages[4],
-    highlights: ["V/T slot profiles", "Connectors & wheels", "Frame builds"],
-  },
-  {
-    slug: "battery-solutions",
-    name: "Battery Racks, Barebone Cases and Sheet Metal",
-    shortName: "Battery",
-    tag: "Rack and fabrication range",
-    description:
-      "Battery rack mount brackets, barebone racks, 3U to 6U cases, and custom sheet metal products prepared for project-based orders.",
-    image: batteryRackImages[0],
-    highlights: ["Barebone 4U / 5U / 6U", "Battery cases", "Custom sheet metal"],
+      "V Slot profiles and aluminum connectors with clear per-feet pricing for profile selection.",
+    image: "/products/aluminum/slots/profile-series.jpeg",
+    highlights: ["2020 / 2030 / 2040 / 4040", "Triangle / Tee / Cross", "Price shown clearly"],
   },
 ];
 
-const baseStoreProducts: StoreProduct[] = [
-  {
-    slug: "vertical-plantation-towers",
-    categorySlug: "hydroponics-systems",
-    name: "Hydroponics Vertical Plantation Towers",
-    shortName: "Vertical Plantation Towers",
-    tag: "Fixed-price tower range",
-    summary:
-      "Client-approved plantation towers available in 25, 50, 75, and 100 plant options.",
+export const storeProducts: StoreProduct[] = [
+  buildProduct({
+    slug: "19-inch-battery-box-3u",
+    categorySlug: "battery-cases",
+    name: '19" Battery Box 3U',
+    tag: "Price on request",
+    summary: '19" battery box in 3U size for compact cabinet and enclosure setups.',
     description:
-      "This product page follows the shared client price sheet so buyers can compare plant count, tower height, diameter, and ordering path from one place.",
-    image: hydroponicsTowerImages[0],
-    gallery: hydroponicsTowerImages,
+      '19" Battery Box 3U is a compact battery case for buyers who need a clean 19 inch enclosure format and want to confirm sizing before ordering.',
+    image: "/products/battery/cases/case-front.jpeg",
+    gallery: batteryCaseGallery,
     features: [
-      "Client pricing is shown directly by plant capacity",
-      "Variant comparison includes height and diameter guidance",
-      "Built for vertical plantation and compact hydroponics layouts",
-      "Buyers can go straight from tower selection into order or inquiry flow",
+      '19" battery box format',
+      "Compact 3U size",
+      "Real product images",
+      "WhatsApp inquiry support",
     ],
     benefits: [
-      "Replaces generic hydroponics cards with the actual client product range",
-      "Helps buyers shortlist the right plant count before they message sales",
-      "Makes WhatsApp and inquiry requests cleaner because the variant is explicit",
-      "Keeps the hydroponics section focused on the real towers being sold",
+      "Easy to identify for buyers who need a smaller battery case",
+      "Useful for cleaner cabinet planning",
+      "Simple quote discussion before confirmation",
     ],
-    applications: ["Homes", "Schools", "Cafes", "Rooftops", "Small commercial plantation"],
+    applications: ["Battery cabinets", "Backup power setups", "Technical enclosures"],
     specifications: [
-      { label: "Product family", value: "Vertical plantation tower" },
-      { label: "Ordering mode", value: "Fixed-price by plant count" },
-      { label: "Crop focus", value: "Leafy greens and plantation crops" },
-      { label: "Support", value: "Can be paired with pump and nutrient inquiry" },
+      { label: "Product type", value: '19" Battery Box' },
+      { label: "Size", value: "3U" },
+      { label: "Price", value: "Price on request" },
     ],
-    variants: [
-      {
-        id: "tower-25",
-        name: "25 Plants",
-        sku: "HPT-25",
-        summary: "Starter plantation tower for compact home or test-grow setups.",
-        availability: "Order ready",
-        leadTime: "3 to 5 working days",
-        pricePkr: 25000,
-        badge: "PKR 25,000",
-        specifications: [
-          { label: "Plant pockets", value: "25 plants" },
-          { label: "Height", value: "24 inches" },
-          { label: "Diameter", value: "5 to 6 inches" },
-          { label: "Best for", value: "Small homes and compact setups" },
-        ],
-      },
-      {
-        id: "tower-50",
-        name: "50 Plants",
-        sku: "HPT-50",
-        summary: "Balanced plantation tower for buyers who need more growing capacity.",
-        availability: "Order ready",
-        leadTime: "3 to 5 working days",
-        pricePkr: 40000,
-        badge: "PKR 40,000",
-        specifications: [
-          { label: "Plant pockets", value: "50 plants" },
-          { label: "Height", value: "48 inches" },
-          { label: "Diameter", value: "6 to 7 inches" },
-          { label: "Best for", value: "Homes, schools, and cafes" },
-        ],
-      },
-      {
-        id: "tower-75",
-        name: "75 Plants",
-        sku: "HPT-75",
-        summary: "Larger tower option for heavier plantation and project-led use.",
-        availability: "Order ready",
-        leadTime: "5 to 7 working days",
-        pricePkr: 65000,
-        badge: "PKR 65,000",
-        specifications: [
-          { label: "Plant pockets", value: "75 plants" },
-          { label: "Height", value: "72 inches" },
-          { label: "Diameter", value: "7 to 8 inches" },
-          { label: "Best for", value: "Project setups and wider output needs" },
-        ],
-      },
-      {
-        id: "tower-100",
-        name: "100 Plants",
-        sku: "HPT-100",
-        summary: "High-capacity plantation tower for larger output and retail-style display use.",
-        availability: "Order ready",
-        leadTime: "5 to 7 working days",
-        pricePkr: 75000,
-        badge: "PKR 75,000",
-        specifications: [
-          { label: "Plant pockets", value: "100 plants" },
-          { label: "Height", value: "72 inches" },
-          { label: "Diameter", value: "8 to 9 inches" },
-          { label: "Best for", value: "Commercial and showcase plantation use" },
-        ],
-      },
-    ],
-    filterTags: ["fixed-price", "hydroponics", "plantation"],
-    featured: true,
-  },
-  {
-    slug: "plantation-nutrient-plans",
-    categorySlug: "nutrients",
-    name: "Plantation Nutrient Plans",
-    shortName: "Nutrient Plans",
-    tag: "Crop and chemistry based",
-    summary:
-      "Nutrient planning grouped the same way the client shared it: plantation type, chemistry type, and specification type.",
-    description:
-      "This section mirrors the WhatsApp product brief so buyers can ask for nutrients by crop family or chemistry path instead of sending generic messages.",
-    image: nutrientSupportImages[0],
-    gallery: nutrientSupportImages,
-    features: [
-      "Plantation-type nutrient guidance for tomatoes, cherry lines, and capsicum",
-      "Chemistry-based and specification-based inquiry options",
-      "Useful for buyers who already know the crop or dosing direction",
-      "Quote-first flow for stock check and requirement confirmation",
-    ],
-    benefits: [
-      "Turns the nutrient conversation into a structured product page",
-      "Reduces confusion by splitting requests into clear planning paths",
-      "Makes plant-specific WhatsApp inquiries easier to prepare",
-      "Keeps nutrient requests linked with the plantation systems being sold",
-    ],
-    applications: ["Tomatoes", "Cherry tomatoes", "Capsicum", "Hydroponics crop planning"],
-    specifications: [
-      { label: "Planning sections", value: "Plantation type, chemistry type, specification type" },
-      { label: "Crop examples", value: "Tomatoes, cherry, capsicum" },
-      { label: "Order mode", value: "Quote and consultation" },
-      { label: "Use case", value: "Hydroponics nutrient planning" },
-    ],
-    variants: [
-      {
-        id: "nutrient-plantation-type",
-        name: "By Plantation Type",
-        sku: "NUT-PLANT",
-        summary: "Choose nutrient support around crop family such as tomatoes, cherry varieties, and capsicum lines.",
-        availability: "Quote required",
-        leadTime: "Same-day response",
-        badge: "Plant-based plan",
-        specifications: [
-          { label: "Tomatoes", value: "Red cherry, black/brown, giant red" },
-          { label: "Cherry", value: "Red cherry, giant red cherry" },
-          { label: "Capsicum", value: "Red, brown, black, violet, white, cream, orange, blue hybrid, green" },
-          { label: "Best for", value: "Buyers who already know the crop family" },
-        ],
-      },
-      {
-        id: "nutrient-chemistry-type",
-        name: "By Chemistry Type",
-        sku: "NUT-CHEM",
-        summary: "Chemistry-led nutrient planning for growers who want formula discussion before placing a requirement.",
-        availability: "Quote required",
-        leadTime: "Same-day response",
-        badge: "Chemistry plan",
-        specifications: [
-          { label: "Selection basis", value: "Chemistry and nutrient formula" },
-          { label: "Support mode", value: "Discussed against plantation requirement" },
-          { label: "Order path", value: "Quote and advisory support" },
-          { label: "Best for", value: "Growers comparing formula logic" },
-        ],
-      },
-      {
-        id: "nutrient-specification-type",
-        name: "By Specification Type",
-        sku: "NUT-SPEC",
-        summary: "Specification-led nutrient support for projects that already know their technical requirement.",
-        availability: "Quote required",
-        leadTime: "Same-day response",
-        badge: "Specification plan",
-        specifications: [
-          { label: "Selection basis", value: "Specification and dosing requirement" },
-          { label: "Support mode", value: "Requirement matched before dispatch" },
-          { label: "Order path", value: "Quote and stock confirmation" },
-          { label: "Best for", value: "Projects with defined nutrient targets" },
-        ],
-      },
-    ],
-    filterTags: ["quote-only", "ready-stock", "hydroponics"],
-    featured: true,
-  },
-  {
-    slug: "panipani-water-pump",
-    categorySlug: "nutrients",
-    name: "PaniPani Water Pump",
-    shortName: "PaniPani Pump",
-    tag: "Hydroponics circulation",
-    summary:
-      "PaniPani water pump support for hydroponics circulation, plantation flow, and reservoir movement.",
-    description:
-      "Added directly from the client product list so buyers can request the right pump capacity together with towers and nutrient planning.",
-    image: waterPumpImages[0],
-    gallery: waterPumpImages,
-    features: [
-      "Pump inquiries can be bundled with plantation tower orders",
-      "Useful for water circulation and nutrient flow support",
-      "Quote-first sizing keeps the selection practical to the actual setup",
-      "Works as a clean add-on product instead of being hidden in chat only",
-    ],
-    benefits: [
-      "Makes the pump line visible inside the catalog",
-      "Lets buyers start with a specific pump requirement instead of a vague message",
-      "Supports mixed inquiries for tower, pump, and nutrient combinations",
-      "Keeps hydroponics support items connected to the main plantation offering",
-    ],
-    applications: ["Plantation towers", "Reservoir circulation", "Hydroponics flow support", "Project setups"],
-    specifications: [
-      { label: "Product line", value: "PaniPani water pump" },
-      { label: "Sales flow", value: "Quote and sizing support" },
-      { label: "Typical use", value: "Hydroponics water movement" },
-      { label: "Pairing", value: "Tower and nutrient requests" },
-    ],
-    variants: [
-      {
-        id: "pump-compact",
-        name: "Compact Circulation Pump",
-        sku: "PANI-COMPACT",
-        summary: "Compact pump option for starter plantation towers and home circulation support.",
-        availability: "Quote required",
-        leadTime: "Same-day response",
-        badge: "Home setup",
-        specifications: [
-          { label: "Use case", value: "Starter and compact towers" },
-          { label: "Support mode", value: "Matched to plant count and reservoir size" },
-          { label: "Order mode", value: "Quote item" },
-          { label: "Best for", value: "Home and small plantation use" },
-        ],
-      },
-      {
-        id: "pump-medium",
-        name: "Medium Flow Pump",
-        sku: "PANI-MEDIUM",
-        summary: "Balanced circulation option for medium plantation loads and longer running cycles.",
-        availability: "Quote required",
-        leadTime: "Same-day response",
-        badge: "Medium flow",
-        specifications: [
-          { label: "Use case", value: "50 to 75 plant setups" },
-          { label: "Support mode", value: "Matched to tower and nutrient routine" },
-          { label: "Order mode", value: "Quote item" },
-          { label: "Best for", value: "Project and school plantation installs" },
-        ],
-      },
-      {
-        id: "pump-project",
-        name: "Project Flow Pump",
-        sku: "PANI-PROJECT",
-        summary: "Project-led pump inquiry for higher circulation demand or custom plantation layouts.",
-        availability: "Quote required",
-        leadTime: "Project review",
-        badge: "Project inquiry",
-        specifications: [
-          { label: "Use case", value: "Larger plantation and custom systems" },
-          { label: "Support mode", value: "Flow matched after requirement review" },
-          { label: "Order mode", value: "Quote item" },
-          { label: "Best for", value: "Commercial or custom tower work" },
-        ],
-      },
-    ],
-    filterTags: ["quote-only", "hydroponics", "ready-stock"],
-  },
-  {
-    slug: "vt-slot-profiles",
-    categorySlug: "aluminum-accessories",
-    name: "V/T Slot Profiles",
-    shortName: "V/T Slot Profiles",
-    tag: "2020 to 8040 range",
-    summary:
-      "V-slot and T-slot aluminum profiles with client-shared 2020, 3030, 4040, 6030, and 8040 references.",
-    description:
-      "This page replaces stock aluminum content with the real client profile family, profile drawings, and cross-section references used for frames and enclosure builds.",
-    image: aluminumSlotImages[4],
-    gallery: aluminumSlotImages,
-    features: [
-      "Uses the actual V-slot and T-slot profile imagery shared by the client",
-      "Shows profile families, profile drawings, and color / finish direction",
-      "Supports frame building, rack projects, and enclosure fabrication",
-      "Quote-first flow keeps custom cut length discussion inside the product page",
-    ],
-    benefits: [
-      "Moves the aluminum section from demo content to real supplied profiles",
-      "Helps buyers name the right profile family before requesting a quote",
-      "Improves trust because drawings and product photos match the catalog",
-      "Creates a stronger base for future SKU-by-length expansion",
-    ],
-    applications: ["Frames", "Enclosures", "Industrial assemblies", "Hydroponics structures"],
-    specifications: [
-      { label: "Profile families", value: "V-slot and T-slot" },
-      { label: "Shared references", value: "2020, 3030, 4040, 6030, 8040" },
-      { label: "Order mode", value: "Quote and custom length discussion" },
-      { label: "Finish options", value: "Silver and black profile examples shared" },
-    ],
-    variants: [
-      {
-        id: "profile-2020",
-        name: "2020 V Slot",
-        sku: "ALU-2020",
-        summary: "Compact V-slot profile with drawing reference and black / silver finish examples.",
-        availability: "Quote required",
-        leadTime: "3 to 7 working days",
-        badge: "2020 profile",
-        specifications: [
-          { label: "Size", value: "20 x 20" },
-          { label: "Reference", value: "XV-2020V / VB style" },
-          { label: "Use case", value: "Light frames and accessories" },
-          { label: "Finish", value: "Clear and black examples shared" },
-        ],
-      },
-      {
-        id: "profile-3030",
-        name: "3030 / 4040 Profiles",
-        sku: "ALU-3030-4040",
-        summary: "Mid-range slot profiles for stronger frame builds and modular enclosure work.",
-        availability: "Quote required",
-        leadTime: "3 to 7 working days",
-        badge: "3030 / 4040",
-        specifications: [
-          { label: "Size", value: "30 x 30 and 40 x 40" },
-          { label: "Reference", value: "Shared comparison drawing included" },
-          { label: "Use case", value: "Trolleys, towers, and machine frames" },
-          { label: "Finish", value: "Silver and black examples shared" },
-        ],
-      },
-      {
-        id: "profile-heavy",
-        name: "6030 / 8040 Profiles",
-        sku: "ALU-6030-8040",
-        summary: "Heavier profile range for larger support structures and high-rigidity builds.",
-        availability: "Quote required",
-        leadTime: "3 to 7 working days",
-        badge: "6030 / 8040",
-        specifications: [
-          { label: "Size", value: "60 x 30 and 80 x 40" },
-          { label: "Reference", value: "Client profile stack image" },
-          { label: "Use case", value: "Heavy frames and structural support" },
-          { label: "Order mode", value: "Quote and cut length planning" },
-        ],
-      },
-    ],
-    filterTags: ["quote-only", "bulk-order", "aluminum"],
-    featured: true,
-  },
-  {
-    slug: "aluminum-connectors-and-wheels",
-    categorySlug: "aluminum-accessories",
-    name: "Aluminum Connectors and Wheels",
-    shortName: "Connectors & Wheels",
-    tag: "Bracket and wheel hardware",
-    summary:
-      "Triangle connectors, V-wheel systems, and accessory hardware for profile-based movement and assembly.",
-    description:
-      "This product groups the client-shared connector, bracket, and V-wheel references into one cleaner product page for quote-led parts selection.",
-    image: aluminumConnectorImages[1],
-    gallery: aluminumConnectorImages,
-    features: [
-      "Triangle bracket reference for profile corner joining",
-      "V-wheel images for track and rolling applications",
-      "Accessory visuals that fit slot-based machine and trolley builds",
-      "Quote-first path for project quantities and part matching",
-    ],
-    benefits: [
-      "Stops connector requests from being scattered across general chat",
-      "Makes it easier to request the right part family with the right profile system",
-      "Supports bulk and fabrication-led orders",
-      "Gives the aluminum category a more complete parts journey",
-    ],
-    applications: ["Profile assembly", "Wheel tracks", "Trolleys", "Machine support builds"],
-    specifications: [
-      { label: "Parts covered", value: "Triangle connectors, V-wheel systems, hardware" },
-      { label: "Sales flow", value: "Quote and bulk quantity support" },
-      { label: "Compatibility", value: "V-slot and T-slot profile assemblies" },
-      { label: "Use mode", value: "Assembly and movement hardware" },
-    ],
-    variants: [
-      {
-        id: "triangle-brackets",
-        name: "Triangle Brackets",
-        sku: "ALU-TRIANGLE",
-        summary: "Corner connector brackets for rigid profile joins and frame stability.",
-        availability: "Quote required",
-        leadTime: "3 to 7 working days",
-        badge: "Assembly bracket",
-        specifications: [
-          { label: "Part family", value: "Triangle connector" },
-          { label: "Use case", value: "Profile corner reinforcement" },
-          { label: "Order mode", value: "Bulk inquiry" },
-          { label: "Best for", value: "Frame assembly" },
-        ],
-      },
-      {
-        id: "v-wheel-system",
-        name: "V Wheel System",
-        sku: "ALU-VWHEEL",
-        summary: "V-wheel and track-ready hardware for guided profile movement.",
-        availability: "Quote required",
-        leadTime: "3 to 7 working days",
-        badge: "Wheel hardware",
-        specifications: [
-          { label: "Part family", value: "V-wheel and track hardware" },
-          { label: "Use case", value: "Rolling plates and guided movement" },
-          { label: "Order mode", value: "Bulk inquiry" },
-          { label: "Best for", value: "Slides, carts, and moving assemblies" },
-        ],
-      },
-      {
-        id: "accessory-hardware",
-        name: "Accessory Hardware",
-        sku: "ALU-ACCESSORY",
-        summary: "Supporting aluminum parts for projects that need additional hardware around slot frames.",
-        availability: "Quote required",
-        leadTime: "3 to 7 working days",
-        badge: "Hardware support",
-        specifications: [
-          { label: "Part family", value: "Accessory hardware" },
-          { label: "Use case", value: "Project-based slot builds" },
-          { label: "Order mode", value: "Bulk inquiry" },
-          { label: "Best for", value: "Assemblies needing matched hardware" },
-        ],
-      },
-    ],
-    filterTags: ["quote-only", "bulk-order", "aluminum"],
-  },
-  {
-    slug: "rack-frames-and-enclosures",
-    categorySlug: "aluminum-accessories",
-    name: "Rack Frames and Enclosures",
-    shortName: "Frames & Enclosures",
-    tag: "Build-ready slot frames",
-    summary:
-      "Profile-built trolleys, workstations, stands, and frame enclosures shown with the client's actual aluminum build images.",
-    description:
-      "This page brings the shared frame builds into the storefront so buyers can ask for custom aluminum structures using real reference visuals instead of generic stock photos.",
-    image: aluminumFrameImages[1],
-    gallery: aluminumFrameImages,
-    features: [
-      "Uses the client's real frame cart, stand, workstation, and enclosure visuals",
-      "Supports quote-led custom fabrication around slot profiles",
-      "Fits machine stands, work tables, rack shells, and boxed frame builds",
-      "Pairs naturally with profile and connector product pages",
-    ],
-    benefits: [
-      "Makes custom aluminum build work visible on the site",
-      "Helps buyers share the right build style during inquiry",
-      "Improves upsell from profiles into complete frame fabrication",
-      "Keeps the aluminum category grounded in real work examples",
-    ],
-    applications: ["Workstations", "Machine frames", "Rack shells", "Custom enclosures"],
-    specifications: [
-      { label: "Build style", value: "Slot-based frame fabrication" },
-      { label: "Sales flow", value: "Quote and custom drawing review" },
-      { label: "Material base", value: "Aluminum V/T slot profiles" },
-      { label: "Typical outcome", value: "Stand, trolley, enclosure, or workstation" },
-    ],
-    variants: [
-      {
-        id: "frame-cart",
-        name: "Frame Trolley / Cart",
-        sku: "ALU-CART",
-        summary: "Mobile aluminum frame cart for workstation and project support builds.",
-        availability: "Quote required",
-        leadTime: "Project-based timeline",
-        badge: "Cart build",
-        specifications: [
-          { label: "Build type", value: "Mobile profile cart" },
-          { label: "Use case", value: "Equipment and fabrication support" },
-          { label: "Order mode", value: "Custom quote" },
-          { label: "Best for", value: "Workstations and movable builds" },
-        ],
-      },
-      {
-        id: "frame-stand",
-        name: "Tall Frame Stand",
-        sku: "ALU-STAND",
-        summary: "Tall aluminum stand structure for supported assemblies and mounted equipment.",
-        availability: "Quote required",
-        leadTime: "Project-based timeline",
-        badge: "Stand build",
-        specifications: [
-          { label: "Build type", value: "Tall profile stand" },
-          { label: "Use case", value: "Mounted equipment and custom support" },
-          { label: "Order mode", value: "Custom quote" },
-          { label: "Best for", value: "Vertical support structures" },
-        ],
-      },
-      {
-        id: "frame-enclosure",
-        name: "Profile Enclosure Frame",
-        sku: "ALU-ENCLOSURE",
-        summary: "Box-style aluminum enclosure frame for clean structural shells and panels.",
-        availability: "Quote required",
-        leadTime: "Project-based timeline",
-        badge: "Enclosure build",
-        specifications: [
-          { label: "Build type", value: "Enclosure frame" },
-          { label: "Use case", value: "Protective shells and structured boxes" },
-          { label: "Order mode", value: "Custom quote" },
-          { label: "Best for", value: "Machine and rack enclosure support" },
-        ],
-      },
-    ],
-    filterTags: ["quote-only", "custom-build", "aluminum"],
-    featured: true,
-  },
-  {
-    slug: "battery-rack-mount-brackets",
-    categorySlug: "battery-solutions",
-    name: "Battery Rack Mount Brackets",
-    shortName: "Rack Mount Brackets",
-    tag: "Support hardware",
-    summary:
-      "Battery rack mount bracket references and support panels added from the client's battery hardware images.",
-    description:
-      "This product turns the shared rack mount bracket visuals into a proper quote page so buyers can ask for bracket work without mixing it into general battery chat.",
-    image: batteryBracketImages[2],
-    gallery: batteryBracketImages,
-    features: [
-      "Rack mount bracket visuals taken from the client files",
-      "Support panel and front bracket references grouped in one place",
-      "Quote-led flow for project quantities and fitting requirements",
-      "Natural pairing with battery racks, cases, and custom sheet metal work",
-    ],
-    benefits: [
-      "Makes battery support hardware visible in the storefront",
-      "Helps installers request the right bracket family more accurately",
-      "Supports project-based quantities instead of one-off confusion",
-      "Links mounting hardware to the rest of the battery catalog",
-    ],
-    applications: ["Battery racks", "Support frames", "Installer projects", "Energy storage hardware"],
-    specifications: [
-      { label: "Product family", value: "Battery rack mount hardware" },
-      { label: "Sales flow", value: "Quote and fitment review" },
-      { label: "Use case", value: "Mounting and support structure" },
-      { label: "Typical buyer", value: "Installers and project teams" },
-    ],
-    variants: [
-      {
-        id: "mount-bracket",
-        name: "Rack Mount Bracket",
-        sku: "BAT-MOUNT",
-        summary: "Main bracket option for mounting battery rack and enclosure structures.",
-        availability: "Quote required",
-        leadTime: "3 to 7 working days",
-        badge: "Bracket build",
-        specifications: [
-          { label: "Part type", value: "Rack mount bracket" },
-          { label: "Use case", value: "Battery rack support" },
-          { label: "Order mode", value: "Quote item" },
-          { label: "Best for", value: "Installer and integration work" },
-        ],
-      },
-      {
-        id: "support-panel",
-        name: "Support Panel",
-        sku: "BAT-PANEL",
-        summary: "Panel-style support component for battery rack and enclosure layouts.",
-        availability: "Quote required",
-        leadTime: "3 to 7 working days",
-        badge: "Panel support",
-        specifications: [
-          { label: "Part type", value: "Support panel" },
-          { label: "Use case", value: "Front or structural support" },
-          { label: "Order mode", value: "Quote item" },
-          { label: "Best for", value: "Custom rack hardware sets" },
-        ],
-      },
-      {
-        id: "custom-mounting-set",
-        name: "Custom Mounting Set",
-        sku: "BAT-MOUNT-CUSTOM",
-        summary: "Project-led mounting hardware set when the rack or case needs custom support parts.",
-        availability: "Quote required",
-        leadTime: "Project review",
-        badge: "Custom set",
-        specifications: [
-          { label: "Part type", value: "Custom mounting hardware set" },
-          { label: "Use case", value: "Matched to rack or case requirement" },
-          { label: "Order mode", value: "Custom quote" },
-          { label: "Best for", value: "Project-specific installations" },
-        ],
-      },
-    ],
-    filterTags: ["quote-only", "installer", "battery"],
-  },
-  {
-    slug: "barebone-battery-racks",
-    categorySlug: "battery-solutions",
-    name: "BareBone Battery Racks",
-    shortName: "BareBone Racks",
-    tag: "4U / 5U / 6U rack range",
-    summary:
-      "BareBone rack products organized around the exact names shared by the client, including 4U, 5U, 6U, CPU 4U, and Battery Box 4U variants.",
-    description:
-      "This page replaces generic battery rack copy with the client's real barebone rack lineup and the workshop / CAD visuals already shared for the product family.",
-    image: batteryRackImages[0],
-    gallery: batteryRackImages,
-    features: [
-      "Uses the real front, rear, open, angle, and CAD rack images from the client folder",
-      "Variant names match the shared product labels",
-      "Supports quote-first handling for fabrication and rack preparation",
-      "Keeps rack inquiries separate from battery cases and sheet metal covers",
-    ],
-    benefits: [
-      "Turns the rack lineup into a proper product page instead of scattered WhatsApp media",
-      "Makes it easier to quote the correct rack family",
-      "Gives buyers both workshop photos and drawing references in one place",
-      "Improves the overall battery catalog structure",
-    ],
-    applications: ["Battery housing", "Rack assemblies", "Barebone cabinet work", "Installer projects"],
-    specifications: [
-      { label: "Product family", value: "BareBone and rack enclosure builds" },
-      { label: "Shared variants", value: "BareBone 4U, 5U, 6U, CPU 4U, Battery Box 4U" },
-      { label: "Sales flow", value: "Quote and fabrication confirmation" },
-      { label: "Support mode", value: "Can be paired with bracket and sheet metal requests" },
-    ],
-    variants: [
-      {
-        id: "barebone-4u-rack",
-        name: "BareBone 4U Rack",
-        sku: "BBR-4U",
-        summary: "4U barebone rack structure for compact battery and equipment enclosure work.",
-        availability: "Quote required",
-        leadTime: "5 to 8 working days",
-        badge: "4U Rack",
-        specifications: [
-          { label: "Rack size", value: "4U" },
-          { label: "Drawing reference", value: "Client 4U drawing included" },
-          { label: "Use case", value: "Compact rack builds" },
-          { label: "Best for", value: "Battery and small equipment enclosures" },
-        ],
-      },
-      {
-        id: "barebone-5u-rack",
-        name: "BareBone 5U Rack",
-        sku: "BBR-5U",
-        summary: "5U rack option for larger barebone cabinet and battery housing requirements.",
-        availability: "Quote required",
-        leadTime: "5 to 8 working days",
-        badge: "5U Rack",
-        specifications: [
-          { label: "Rack size", value: "5U" },
-          { label: "Drawing reference", value: "Client 5U drawing included" },
-          { label: "Use case", value: "Mid-size rack builds" },
-          { label: "Best for", value: "Battery housing and cabinet work" },
-        ],
-      },
-      {
-        id: "barebone-6u-rack",
-        name: "BareBone 6U Rack",
-        sku: "BBR-6U",
-        summary: "6U barebone rack option for broader rack housing and higher-volume cabinet work.",
-        availability: "Quote required",
-        leadTime: "5 to 8 working days",
-        badge: "6U Rack",
-        specifications: [
-          { label: "Rack size", value: "6U" },
-          { label: "Drawing reference", value: "Client 6U drawing included" },
-          { label: "Use case", value: "Larger rack assemblies" },
-          { label: "Best for", value: "Heavy battery and equipment housing" },
-        ],
-      },
-      {
-        id: "cpu-4u-rack",
-        name: "CPU 4U Rack",
-        sku: "CPU-4U",
-        summary: "4U rack style shared by the client for CPU and equipment enclosure style requirements.",
-        availability: "Quote required",
-        leadTime: "5 to 8 working days",
-        badge: "CPU 4U",
-        specifications: [
-          { label: "Rack size", value: "4U" },
-          { label: "Use case", value: "CPU and equipment housing" },
-          { label: "Order mode", value: "Quote item" },
-          { label: "Best for", value: "Technical rack enclosures" },
-        ],
-      },
-      {
-        id: "battery-box-4u-rack",
-        name: "Battery Box 4U Rack",
-        sku: "BATBOX-4U",
-        summary: "4U rack style specifically aligned with the battery box naming shared by the client.",
-        availability: "Quote required",
-        leadTime: "5 to 8 working days",
-        badge: "Battery Box 4U",
-        specifications: [
-          { label: "Rack size", value: "4U" },
-          { label: "Use case", value: "Battery box style rack housing" },
-          { label: "Order mode", value: "Quote item" },
-          { label: "Best for", value: "Battery cabinet projects" },
-        ],
-      },
-    ],
-    filterTags: ["quote-only", "custom-build", "battery"],
-    featured: true,
-  },
-  {
-    slug: "battery-cases-3u-4u-5u",
-    categorySlug: "battery-solutions",
-    name: "3U, 4U and 5U Battery Cases",
-    shortName: "3U / 4U / 5U Cases",
-    tag: "Battery case range",
-    summary:
-      "3U, 4U, and 5U battery case references with inside / outside dimension support and workshop photos.",
-    description:
-      "This product page is structured from the shared battery case images so buyers can ask for the correct case size or request inside / outside dimension review before quoting.",
-    image: batteryCaseImages[0],
-    gallery: batteryCaseImages,
-    features: [
-      "Shared workshop photos and CAD references grouped together",
-      "3U, 4U, and 5U size discussion in one product page",
-      "Inside / outside dimension review can be requested as part of the quote",
-      "Natural follow-up product for the rack and bracket range",
-    ],
-    benefits: [
-      "Makes battery case sizes easier to compare from one place",
-      "Lets buyers ask for dimensional review before fabrication",
-      "Prevents case requests from being mixed with unrelated rack products",
-      "Improves the completeness of the battery catalog",
-    ],
-    applications: ["Battery housing", "Rack integration", "Custom case fabrication", "Energy storage builds"],
-    specifications: [
-      { label: "Case sizes", value: "3U, 4U, 5U" },
-      { label: "Support mode", value: "Inside and outside dimension review" },
-      { label: "Sales flow", value: "Quote and fabrication confirmation" },
-      { label: "Visual support", value: "Workshop photos plus CAD reference" },
-    ],
-    variants: [
-      {
-        id: "battery-case-3u",
-        name: "3U Battery Case",
-        sku: "CASE-3U",
-        summary: "Compact 3U battery case for smaller storage and case-led projects.",
-        availability: "Quote required",
-        leadTime: "5 to 8 working days",
-        badge: "3U Case",
-        specifications: [
-          { label: "Case size", value: "3U" },
-          { label: "Use case", value: "Compact battery housing" },
-          { label: "Order mode", value: "Quote item" },
-          { label: "Best for", value: "Smaller backup builds" },
-        ],
-      },
-      {
-        id: "battery-case-4u",
-        name: "4U Battery Case",
-        sku: "CASE-4U",
-        summary: "Balanced 4U case option for battery box and rack integration work.",
-        availability: "Quote required",
-        leadTime: "5 to 8 working days",
-        badge: "4U Case",
-        specifications: [
-          { label: "Case size", value: "4U" },
-          { label: "Use case", value: "Battery box and rack work" },
-          { label: "Order mode", value: "Quote item" },
-          { label: "Best for", value: "General battery installations" },
-        ],
-      },
-      {
-        id: "battery-case-5u",
-        name: "5U Battery Case",
-        sku: "CASE-5U",
-        summary: "Larger 5U battery case for projects needing more enclosure volume.",
-        availability: "Quote required",
-        leadTime: "5 to 8 working days",
-        badge: "5U Case",
-        specifications: [
-          { label: "Case size", value: "5U" },
-          { label: "Use case", value: "Larger battery enclosure work" },
-          { label: "Order mode", value: "Quote item" },
-          { label: "Best for", value: "Higher-capacity cabinet projects" },
-        ],
-      },
-      {
-        id: "battery-case-dimensions",
-        name: "Inside / Outside Dimensions",
-        sku: "CASE-DIMENSIONS",
-        summary: "Dimension-led review path for buyers who need inside and outside battery case confirmation.",
-        availability: "Quote required",
-        leadTime: "Project review",
-        badge: "Dimension review",
-        specifications: [
-          { label: "Support type", value: "Inside and outside dimension review" },
-          { label: "Use case", value: "Fitment and fabrication confirmation" },
-          { label: "Order mode", value: "Custom quote" },
-          { label: "Best for", value: "Projects with exact sizing requirements" },
-        ],
-      },
-    ],
-    filterTags: ["quote-only", "custom-build", "battery"],
-    featured: true,
-  },
-  {
-    slug: "custom-sheet-metal-products",
-    categorySlug: "battery-solutions",
-    name: "Custom Sheet Metal Products",
-    shortName: "Sheet Metal Custom",
-    tag: "Made-to-requirement fabrication",
-    summary:
-      "Custom sheet metal covers, panels, and fabrication work added from the client's shared cover drawings and fabrication photos.",
-    description:
-      "This product captures the sheet metal custom made work listed by the client so enclosure covers, panels, and full fabricated sets can be requested directly from the storefront.",
-    image: customSheetMetalImages[0],
-    gallery: customSheetMetalImages,
-    features: [
-      "Uses real side-cover, top-cover, panel, and drawing visuals shared by the client",
-      "Supports single cover requests or full custom fabrication sets",
-      "Fits naturally with battery racks, cases, and enclosure work",
-      "Quote-first structure keeps custom fabrication practical",
-    ],
-    benefits: [
-      "Makes the sheet metal custom-made capability visible on the site",
-      "Helps buyers explain what kind of cover or panel they need",
-      "Supports design-to-build conversations with real visual references",
-      "Expands the battery section into a more complete fabrication offering",
-    ],
-    applications: ["Side covers", "Top covers", "Panels", "Custom fabricated enclosure parts"],
-    specifications: [
-      { label: "Fabrication type", value: "Custom sheet metal" },
-      { label: "Shared visuals", value: "Photo parts and CAD-style drawings" },
-      { label: "Sales flow", value: "Quote and fabrication review" },
-      { label: "Typical outcome", value: "Cover, panel, or full custom set" },
-    ],
-    variants: [
-      {
-        id: "side-cover-fabrication",
-        name: "Side Cover Fabrication",
-        sku: "SM-SIDE",
-        summary: "Side cover fabrication for enclosure bodies and rack-based sheet metal work.",
-        availability: "Quote required",
-        leadTime: "Project-based timeline",
-        badge: "Side cover",
-        specifications: [
-          { label: "Part type", value: "Side cover" },
-          { label: "Use case", value: "Enclosures and cabinets" },
-          { label: "Order mode", value: "Custom quote" },
-          { label: "Best for", value: "Sheet metal enclosure projects" },
-        ],
-      },
-      {
-        id: "top-cover-fabrication",
-        name: "Top / Bottom Cover",
-        sku: "SM-TOP",
-        summary: "Top and bottom cover fabrication for custom rack, case, and enclosure assemblies.",
-        availability: "Quote required",
-        leadTime: "Project-based timeline",
-        badge: "Top cover",
-        specifications: [
-          { label: "Part type", value: "Top or bottom cover" },
-          { label: "Use case", value: "Enclosures and custom bodies" },
-          { label: "Order mode", value: "Custom quote" },
-          { label: "Best for", value: "Fabrication-led projects" },
-        ],
-      },
-      {
-        id: "flat-panel-fabrication",
-        name: "Flat Panel Fabrication",
-        sku: "SM-PANEL",
-        summary: "Flat panel and front plate fabrication for project-based metal work.",
-        availability: "Quote required",
-        leadTime: "Project-based timeline",
-        badge: "Flat panel",
-        specifications: [
-          { label: "Part type", value: "Flat panel" },
-          { label: "Use case", value: "Front plates and structural panels" },
-          { label: "Order mode", value: "Custom quote" },
-          { label: "Best for", value: "Panel-led fabrication work" },
-        ],
-      },
-      {
-        id: "full-custom-fabrication",
-        name: "Full Custom Fabrication",
-        sku: "SM-CUSTOM",
-        summary: "Full custom fabrication request for projects that need a complete sheet metal set built to requirement.",
-        availability: "Quote required",
-        leadTime: "Project review",
-        badge: "Custom fabrication",
-        specifications: [
-          { label: "Part type", value: "Full custom fabrication set" },
-          { label: "Use case", value: "Design-to-build projects" },
-          { label: "Order mode", value: "Custom quote" },
-          { label: "Best for", value: "Projects using drawings and requirement review" },
-        ],
-      },
-    ],
-    filterTags: ["quote-only", "custom-build", "battery"],
-    featured: true,
-  },
-];
-
-const datasheetAssetBySlug: Record<string, ProductDatasheet["asset"]> = {
-  "vt-slot-profiles": {
-    label: "View profile spec reference",
-    href: "/products/aluminum/slots/profile-2020-spec.jpeg",
-  },
-  "battery-rack-mount-brackets": {
-    label: "View bracket reference",
-    href: "/products/battery/brackets/mount-panel-front.jpeg",
-  },
-  "barebone-battery-racks": {
-    label: "View rack drawing",
-    href: "/products/battery/racks/rack-4u-drawing.jpeg",
-  },
-  "battery-cases-3u-4u-5u": {
-    label: "View case CAD reference",
-    href: "/products/battery/cases/case-cad-front.jpeg",
-  },
-  "custom-sheet-metal-products": {
-    label: "View fabrication drawing",
-    href: "/products/sheet-metal/custom-drawing-1.jpeg",
-  },
-};
-
-const hydroponicsTowerRoi: ProductRoi = {
-  title: "Hydroponics ROI Planner",
-  summary:
-    "Use your own crop assumptions to compare monthly revenue potential, operating margin, and payback across the 25, 50, 75, and 100 plant tower sizes.",
-  inputs: [
-    {
-      id: "sellingPricePerPlant",
-      label: "Selling price per harvested plant",
-      helper: "Use your local selling price for one sale-ready plant, head, or crop unit.",
-      placeholder: "e.g. 250",
-      exampleValue: 250,
-      min: 1,
-      step: 10,
-      prefix: "PKR",
-    },
-    {
-      id: "cycleDays",
-      label: "Average grow cycle",
-      helper: "Enter the usual number of days from transplant to harvest for your crop.",
-      placeholder: "e.g. 30",
-      exampleValue: 30,
-      min: 1,
-      step: 1,
-      suffix: "days",
-    },
-    {
-      id: "successRate",
-      label: "Saleable harvest rate",
-      helper: "Estimate what percent of plant positions reach sale-ready quality.",
-      placeholder: "e.g. 85",
-      exampleValue: 85,
-      min: 1,
-      max: 100,
-      step: 1,
-      suffix: "%",
-    },
-    {
-      id: "monthlyOperatingCost",
-      label: "Monthly operating cost per tower",
-      helper: "Include nutrients, water, electricity, labor, and routine maintenance for one tower.",
-      placeholder: "e.g. 2500",
-      exampleValue: 2500,
-      min: 0,
-      step: 100,
-      prefix: "PKR",
-    },
-  ],
-  sampleLabel: "Use sample leafy-green assumptions",
-  sampleNote:
-    "Sample assumptions are for on-screen planning only. Replace them with your actual crop economics before you share a final ROI with a buyer.",
-  rows: [
-    {
-      variantId: "tower-25",
-      title: "25 Plants",
-      plantCount: 25,
-      value: "Starter validation tower",
-      note: "Best for home trials, proof-of-concept installs, and buyers who want to validate crop demand before scaling.",
-    },
-    {
-      variantId: "tower-50",
-      title: "50 Plants",
-      plantCount: 50,
-      value: "Balanced starter-commercial tower",
-      note: "Good for households, cafes, and schools that want a stronger output without jumping straight to project scale.",
-    },
-    {
-      variantId: "tower-75",
-      title: "75 Plants",
-      plantCount: 75,
-      value: "Scale-focused output tower",
-      note: "Works well when the grower already knows the crop mix, target selling channel, and routine maintenance plan.",
-    },
-    {
-      variantId: "tower-100",
-      title: "100 Plants",
-      plantCount: 100,
-      value: "Commercial display and output tower",
-      note: "Made for higher-capacity planning where buyers care about repeat harvest cycles, visual impact, and stronger monthly throughput.",
-    },
-  ],
-  notes: [
-    "The calculator uses four editable assumptions: selling price, crop cycle length, saleable harvest rate, and monthly operating cost.",
-    "Final ROI should still be confirmed against the actual crop type, local selling channel, labor model, and city-level operating conditions.",
-  ],
-};
-
-function buildDatasheetSections(product: StoreProduct): ProductDatasheetSection[] {
-  return [
-    {
-      title: "Product overview",
-      summary: "Core catalog details taken from the current storefront data.",
-      specifications: product.specifications,
-    },
-    ...product.variants.map((variant) => ({
-      title: variant.name,
-      summary: variant.summary,
+    variant: buildVariant({
+      id: "19-inch-battery-box-3u",
+      name: '19" Battery Box 3U',
+      sku: "BB-3U-19",
+      summary: "Compact 3U battery box for 19 inch case requirements.",
+      availability: "Available on inquiry",
+      leadTime: "3 to 7 working days",
+      badge: "Price on request",
+      priceStatus: "quote",
       specifications: [
-        { label: "Availability", value: variant.availability },
-        { label: "Lead time", value: variant.leadTime },
-        ...(variant.priceStatus === "pending"
-          ? [{ label: "Price status", value: "Pending confirmation" }]
-          : typeof variant.pricePkr === "number"
-            ? [{ label: "Price", value: variant.badge ?? `PKR ${variant.pricePkr.toLocaleString("en-PK")}` }]
-            : [{ label: "Price status", value: "Quote required" }]),
-        ...variant.specifications,
+        { label: "Format", value: '19 inch' },
+        { label: "Size", value: "3U" },
+        { label: "Use", value: "Battery enclosure work" },
       ],
-    })),
-  ];
-}
-
-function buildProductDatasheet(product: StoreProduct): ProductDatasheet {
-  const hasQuoteLedVariant = product.variants.some((variant) => typeof variant.pricePkr !== "number");
-
-  return {
-    summary: `Specification sheet for ${product.shortName} built from the live product catalog and verified client assets.`,
-    sections: buildDatasheetSections(product),
-    asset: datasheetAssetBySlug[product.slug],
-    notes: hasQuoteLedVariant
-      ? [
-          "Quote-led variants may need final stock, fabrication, or requirement confirmation before dispatch.",
-        ]
-      : [
-          "Fixed-price variants still require city and dispatch confirmation before order finalization.",
-        ],
-  };
-}
-
-export const storeProducts: StoreProduct[] = baseStoreProducts.map((product) => {
-  const variants = product.variants.map((variant) => ({
-    ...variant,
-    priceStatus: variant.priceStatus ?? (typeof variant.pricePkr === "number" ? "fixed" : "quote"),
-  }));
-
-  const enrichedProduct: StoreProduct = {
-    ...product,
-    variants,
-    datasheet: buildProductDatasheet({ ...product, variants }),
-    paymentInfo: product.paymentInfo ?? defaultPaymentInfo,
-    roi: product.slug === "vertical-plantation-towers" ? hydroponicsTowerRoi : product.roi,
-  };
-
-  return enrichedProduct;
-});
+    }),
+    filterTags: ["quote-only", "battery-case"],
+    featured: true,
+  }),
+  buildProduct({
+    slug: "19-inch-battery-box-4u",
+    categorySlug: "battery-cases",
+    name: '19" Battery Box 4U',
+    tag: "Price on request",
+    summary: '19" battery box in 4U size for standard battery cabinet and rack use.',
+    description:
+      '19" Battery Box 4U is designed for buyers who need a practical 4U battery case with clear size naming and simple inquiry support.',
+    image: "/products/battery/boxes/battery-box-2.jpeg",
+    gallery: [
+      "/products/battery/boxes/battery-box-2.jpeg",
+      "/products/battery/boxes/battery-box-1.jpeg",
+      "/products/battery/cases/case-angle.jpeg",
+      "/products/battery/cases/case-side.jpeg",
+    ],
+    features: [
+      '19" battery box format',
+      "4U size",
+      "Real product and workshop images",
+      "Simple quote request flow",
+    ],
+    benefits: [
+      "Clear product naming for faster shortlisting",
+      "Useful for battery box discussions on WhatsApp",
+      "Better fit for general cabinet planning",
+    ],
+    applications: ["Battery boxes", "Rack cabinet planning", "Backup systems"],
+    specifications: [
+      { label: "Product type", value: '19" Battery Box' },
+      { label: "Size", value: "4U" },
+      { label: "Price", value: "Price on request" },
+    ],
+    variant: buildVariant({
+      id: "19-inch-battery-box-4u",
+      name: '19" Battery Box 4U',
+      sku: "BB-4U-19",
+      summary: "4U battery box for 19 inch cabinet and enclosure requirements.",
+      availability: "Available on inquiry",
+      leadTime: "3 to 7 working days",
+      badge: "Price on request",
+      priceStatus: "quote",
+      specifications: [
+        { label: "Format", value: '19 inch' },
+        { label: "Size", value: "4U" },
+        { label: "Use", value: "Battery cabinet setups" },
+      ],
+    }),
+    filterTags: ["quote-only", "battery-case"],
+    featured: true,
+  }),
+  buildProduct({
+    slug: "19-inch-battery-box-5u",
+    categorySlug: "battery-cases",
+    name: '19" Battery Box 5U',
+    tag: "Price on request",
+    summary: '19" battery box in 5U size for larger cabinet and enclosure requirements.',
+    description:
+      '19" Battery Box 5U helps buyers who need more case height and want a simple way to ask about fit, size, and availability.',
+    image: "/products/battery/boxes/battery-box-3.jpeg",
+    gallery: [
+      "/products/battery/boxes/battery-box-3.jpeg",
+      "/products/battery/boxes/battery-box-4.jpeg",
+      "/products/battery/cases/case-front.jpeg",
+      "/products/battery/cases/case-open-top.jpeg",
+    ],
+    features: [
+      '19" battery box format',
+      "5U size",
+      "Workshop images available",
+      "WhatsApp inquiry support",
+    ],
+    benefits: [
+      "Clearer choice for larger battery case needs",
+      "Helps buyers ask about fit before ordering",
+      "Simple quote-first flow",
+    ],
+    applications: ["Battery cabinets", "Larger enclosure work", "Energy backup projects"],
+    specifications: [
+      { label: "Product type", value: '19" Battery Box' },
+      { label: "Size", value: "5U" },
+      { label: "Price", value: "Price on request" },
+    ],
+    variant: buildVariant({
+      id: "19-inch-battery-box-5u",
+      name: '19" Battery Box 5U',
+      sku: "BB-5U-19",
+      summary: "5U battery box for larger 19 inch enclosure requirements.",
+      availability: "Available on inquiry",
+      leadTime: "3 to 7 working days",
+      badge: "Price on request",
+      priceStatus: "quote",
+      specifications: [
+        { label: "Format", value: '19 inch' },
+        { label: "Size", value: "5U" },
+        { label: "Use", value: "Battery enclosure planning" },
+      ],
+    }),
+    filterTags: ["quote-only", "battery-case"],
+  }),
+  buildProduct({
+    slug: "19-inch-brackets-7u",
+    categorySlug: "battery-cases",
+    name: '19" Brackets 7U',
+    tag: "Price on request",
+    summary: '19" brackets in 7U size for battery box, rack, and mounting support.',
+    description:
+      '19" Brackets 7U is listed as a separate product so buyers can directly ask about bracket support for battery cases and rack-based installations.',
+    image: "/products/battery/brackets/mount-panel-front.jpeg",
+    gallery: batteryBracketGallery,
+    features: [
+      '19" bracket format',
+      "7U size",
+      "Real bracket images",
+      "Straight WhatsApp inquiry",
+    ],
+    benefits: [
+      "Makes bracket requirements easier to explain",
+      "Separates bracket requests from full battery boxes",
+      "Supports faster quote discussions",
+    ],
+    applications: ["Battery box support", "Rack mounting", "Technical installations"],
+    specifications: [
+      { label: "Product type", value: '19" Brackets' },
+      { label: "Size", value: "7U" },
+      { label: "Price", value: "Price on request" },
+    ],
+    variant: buildVariant({
+      id: "19-inch-brackets-7u",
+      name: '19" Brackets 7U',
+      sku: "BRKT-7U-19",
+      summary: "7U bracket support for 19 inch battery and rack requirements.",
+      availability: "Available on inquiry",
+      leadTime: "3 to 7 working days",
+      badge: "Price on request",
+      priceStatus: "quote",
+      specifications: [
+        { label: "Format", value: '19 inch' },
+        { label: "Size", value: "7U" },
+        { label: "Use", value: "Bracket and mounting support" },
+      ],
+    }),
+    filterTags: ["quote-only", "brackets"],
+  }),
+  buildProduct({
+    slug: "hydroponics-system-25-plants",
+    categorySlug: "hydroponics-systems",
+    name: "Hydroponics System (25 Plants)",
+    tag: "Rs. 25,000",
+    summary: "Hydroponics system for 25 plants in a compact tower format.",
+    description:
+      "Hydroponics System (25 Plants) is a simple starting option for buyers who need a compact setup for homes, schools, or smaller spaces.",
+    image: "/products/hydroponics/tower-main.jpeg",
+    gallery: hydroponicsGallery,
+    features: [
+      "25 plant capacity",
+      "Tower-based hydroponics format",
+      "Real product images",
+      "Fixed price shown clearly",
+    ],
+    benefits: [
+      "Easy to understand for first-time buyers",
+      "Good fit for smaller spaces",
+      "Direct WhatsApp inquiry with product name",
+    ],
+    applications: ["Homes", "Schools", "Small spaces"],
+    specifications: [
+      { label: "Product type", value: "Hydroponics System" },
+      { label: "Plant capacity", value: "25 plants" },
+      { label: "Price", value: "Rs. 25,000" },
+    ],
+    variant: buildVariant({
+      id: "hydroponics-system-25-plants",
+      name: "Hydroponics System (25 Plants)",
+      sku: "HYS-25",
+      summary: "25 plant hydroponics system for compact setups.",
+      availability: "Order ready",
+      leadTime: "3 to 5 working days",
+      pricePkr: 25000,
+      badge: "Rs. 25,000",
+      specifications: [
+        { label: "Plant capacity", value: "25 plants" },
+        { label: "Height", value: "24 inches" },
+        { label: "Best for", value: "Homes and starter installations" },
+      ],
+    }),
+    filterTags: ["fixed-price", "hydroponics"],
+    featured: true,
+  }),
+  buildProduct({
+    slug: "hydroponics-system-50-plants",
+    categorySlug: "hydroponics-systems",
+    name: "Hydroponics System (50 Plants)",
+    tag: "Rs. 40,000",
+    summary: "Hydroponics system for 50 plants for balanced home and business use.",
+    description:
+      "Hydroponics System (50 Plants) is a balanced option for buyers who need more capacity without moving into a larger custom setup.",
+    image: "/products/hydroponics/vertical-system-1.jpeg",
+    gallery: hydroponicsGallery,
+    features: [
+      "50 plant capacity",
+      "Tower-based hydroponics format",
+      "Fixed price shown clearly",
+      "Direct WhatsApp inquiry",
+    ],
+    benefits: [
+      "Good mid-size option for buyers comparing capacities",
+      "Simple product page with clear naming",
+      "Useful for homes, cafes, and schools",
+    ],
+    applications: ["Homes", "Cafes", "Schools"],
+    specifications: [
+      { label: "Product type", value: "Hydroponics System" },
+      { label: "Plant capacity", value: "50 plants" },
+      { label: "Price", value: "Rs. 40,000" },
+    ],
+    variant: buildVariant({
+      id: "hydroponics-system-50-plants",
+      name: "Hydroponics System (50 Plants)",
+      sku: "HYS-50",
+      summary: "50 plant hydroponics system for balanced capacity.",
+      availability: "Order ready",
+      leadTime: "3 to 5 working days",
+      pricePkr: 40000,
+      badge: "Rs. 40,000",
+      specifications: [
+        { label: "Plant capacity", value: "50 plants" },
+        { label: "Height", value: "48 inches" },
+        { label: "Best for", value: "Homes, cafes, and schools" },
+      ],
+    }),
+    filterTags: ["fixed-price", "hydroponics"],
+    featured: true,
+  }),
+  buildProduct({
+    slug: "hydroponics-system-75-plants",
+    categorySlug: "hydroponics-systems",
+    name: "Hydroponics System (75 Plants)",
+    tag: "Rs. 65,000",
+    summary: "Hydroponics system for 75 plants for larger growing capacity.",
+    description:
+      "Hydroponics System (75 Plants) is listed for buyers who need a larger plant count and want to confirm price and availability directly.",
+    image: "/products/hydroponics/vertical-system-2.jpeg",
+    gallery: hydroponicsGallery,
+    features: [
+      "75 plant capacity",
+      "Tower-based hydroponics format",
+      "Fixed price shown clearly",
+      "Real installation photos",
+    ],
+    benefits: [
+      "Clear larger-capacity option",
+      "Useful for stronger output planning",
+      "Simple path to WhatsApp inquiry",
+    ],
+    applications: ["Cafes", "Schools", "Small business growing projects"],
+    specifications: [
+      { label: "Product type", value: "Hydroponics System" },
+      { label: "Plant capacity", value: "75 plants" },
+      { label: "Price", value: "Rs. 65,000" },
+    ],
+    variant: buildVariant({
+      id: "hydroponics-system-75-plants",
+      name: "Hydroponics System (75 Plants)",
+      sku: "HYS-75",
+      summary: "75 plant hydroponics system for larger capacity needs.",
+      availability: "Order ready",
+      leadTime: "5 to 7 working days",
+      pricePkr: 65000,
+      badge: "Rs. 65,000",
+      specifications: [
+        { label: "Plant capacity", value: "75 plants" },
+        { label: "Height", value: "72 inches" },
+        { label: "Best for", value: "Larger growing setups" },
+      ],
+    }),
+    filterTags: ["fixed-price", "hydroponics"],
+  }),
+  buildProduct({
+    slug: "v-slot-2020",
+    categorySlug: "t-v-slots",
+    name: "V Slot 2020",
+    tag: "Rs. 1,200 / feet",
+    summary: "V Slot 2020 aluminum profile with price shown per feet.",
+    description:
+      "V Slot 2020 is listed as a separate product so buyers can directly ask for the exact profile size they need.",
+    image: "/products/aluminum/slots/profile-2020-spec.jpeg",
+    gallery: slotGallery,
+    features: [
+      "V Slot 2020 profile",
+      "Per-feet price shown clearly",
+      "Real profile reference images",
+      "Simple WhatsApp inquiry",
+    ],
+    benefits: [
+      "Easy to identify the correct profile size",
+      "Clear price display before inquiry",
+      "Useful for frame and structure planning",
+    ],
+    applications: ["Frames", "Light structures", "Aluminum accessories"],
+    specifications: [
+      { label: "Product type", value: "V Slot profile" },
+      { label: "Size", value: "2020" },
+      { label: "Price", value: "Rs. 1,200 per feet" },
+    ],
+    variant: buildVariant({
+      id: "v-slot-2020",
+      name: "V Slot 2020",
+      sku: "VSL-2020",
+      summary: "2020 aluminum V Slot profile.",
+      availability: "Available on inquiry",
+      leadTime: "2 to 5 working days",
+      pricePkr: 1200,
+      badge: "Rs. 1,200 / feet",
+      specifications: [
+        { label: "Profile size", value: "2020" },
+        { label: "Unit price", value: "Rs. 1,200 per feet" },
+        { label: "Use", value: "Frames and aluminum structures" },
+      ],
+    }),
+    filterTags: ["fixed-price", "aluminum"],
+    featured: true,
+  }),
+  buildProduct({
+    slug: "v-slot-2030",
+    categorySlug: "t-v-slots",
+    name: "V Slot 2030",
+    tag: "Rs. 1,300 / feet",
+    summary: "V Slot 2030 aluminum profile with price shown per feet.",
+    description:
+      "V Slot 2030 is useful for buyers who need a larger profile than 2020 and want clear pricing before they contact the business.",
+    image: "/products/aluminum/slots/profile-size-stack.jpeg",
+    gallery: slotGallery,
+    features: [
+      "V Slot 2030 profile",
+      "Per-feet price shown clearly",
+      "Real profile reference images",
+      "Direct WhatsApp inquiry",
+    ],
+    benefits: [
+      "Helps buyers choose the right profile size faster",
+      "Clear pricing direction for inquiry",
+      "Useful for stronger frame builds",
+    ],
+    applications: ["Frames", "Support structures", "Aluminum accessories"],
+    specifications: [
+      { label: "Product type", value: "V Slot profile" },
+      { label: "Size", value: "2030" },
+      { label: "Price", value: "Rs. 1,300 per feet" },
+    ],
+    variant: buildVariant({
+      id: "v-slot-2030",
+      name: "V Slot 2030",
+      sku: "VSL-2030",
+      summary: "2030 aluminum V Slot profile.",
+      availability: "Available on inquiry",
+      leadTime: "2 to 5 working days",
+      pricePkr: 1300,
+      badge: "Rs. 1,300 / feet",
+      specifications: [
+        { label: "Profile size", value: "2030" },
+        { label: "Unit price", value: "Rs. 1,300 per feet" },
+        { label: "Use", value: "Frames and modular builds" },
+      ],
+    }),
+    filterTags: ["fixed-price", "aluminum"],
+  }),
+  buildProduct({
+    slug: "v-slot-2040",
+    categorySlug: "t-v-slots",
+    name: "V Slot 2040",
+    tag: "Rs. 1,400 / feet",
+    summary: "V Slot 2040 aluminum profile with price shown per feet.",
+    description:
+      "V Slot 2040 is listed for buyers who need a wider profile size and want a simple product page before they ask on WhatsApp.",
+    image: "/products/aluminum/slots/profile-2040-spec.jpeg",
+    gallery: slotGallery,
+    features: [
+      "V Slot 2040 profile",
+      "Per-feet price shown clearly",
+      "Real profile images",
+      "Simple inquiry flow",
+    ],
+    benefits: [
+      "Easy to shortlist the right profile size",
+      "Clear price visibility",
+      "Good for medium-duty aluminum structures",
+    ],
+    applications: ["Frames", "Equipment stands", "Aluminum structures"],
+    specifications: [
+      { label: "Product type", value: "V Slot profile" },
+      { label: "Size", value: "2040" },
+      { label: "Price", value: "Rs. 1,400 per feet" },
+    ],
+    variant: buildVariant({
+      id: "v-slot-2040",
+      name: "V Slot 2040",
+      sku: "VSL-2040",
+      summary: "2040 aluminum V Slot profile.",
+      availability: "Available on inquiry",
+      leadTime: "2 to 5 working days",
+      pricePkr: 1400,
+      badge: "Rs. 1,400 / feet",
+      specifications: [
+        { label: "Profile size", value: "2040" },
+        { label: "Unit price", value: "Rs. 1,400 per feet" },
+        { label: "Use", value: "Stands and structural builds" },
+      ],
+    }),
+    filterTags: ["fixed-price", "aluminum"],
+  }),
+  buildProduct({
+    slug: "v-slot-4040",
+    categorySlug: "t-v-slots",
+    name: "V Slot 4040",
+    tag: "Rs. 1,500 / feet",
+    summary: "V Slot 4040 aluminum profile with price shown per feet.",
+    description:
+      "V Slot 4040 is the larger profile option in this section and helps buyers ask for the correct size with less confusion.",
+    image: "/products/aluminum/slots/profile-3030-4040.jpeg",
+    gallery: slotGallery,
+    features: [
+      "V Slot 4040 profile",
+      "Per-feet price shown clearly",
+      "Real profile images",
+      "Direct WhatsApp inquiry",
+    ],
+    benefits: [
+      "Clear larger-profile option",
+      "Easy price reference before inquiry",
+      "Useful for stronger aluminum structures",
+    ],
+    applications: ["Frames", "Heavier structures", "Industrial accessories"],
+    specifications: [
+      { label: "Product type", value: "V Slot profile" },
+      { label: "Size", value: "4040" },
+      { label: "Price", value: "Rs. 1,500 per feet" },
+    ],
+    variant: buildVariant({
+      id: "v-slot-4040",
+      name: "V Slot 4040",
+      sku: "VSL-4040",
+      summary: "4040 aluminum V Slot profile.",
+      availability: "Available on inquiry",
+      leadTime: "2 to 5 working days",
+      pricePkr: 1500,
+      badge: "Rs. 1,500 / feet",
+      specifications: [
+        { label: "Profile size", value: "4040" },
+        { label: "Unit price", value: "Rs. 1,500 per feet" },
+        { label: "Use", value: "Stronger aluminum frame builds" },
+      ],
+    }),
+    filterTags: ["fixed-price", "aluminum"],
+  }),
+  buildProduct({
+    slug: "triangle-connector",
+    categorySlug: "t-v-slots",
+    name: "Triangle Connector",
+    tag: "Rs. 350",
+    summary: "Triangle connector for aluminum profile joining and support.",
+    description:
+      "Triangle Connector is listed separately so buyers can directly ask for the connector they need without confusion.",
+    image: "/products/aluminum/connectors/triangle-bracket.jpeg",
+    gallery: connectorGallery,
+    features: [
+      "Triangle connector",
+      "Clear unit pricing",
+      "Real connector images",
+      "Simple WhatsApp inquiry",
+    ],
+    benefits: [
+      "Easy connector identification",
+      "Clear price before inquiry",
+      "Useful for aluminum profile assemblies",
+    ],
+    applications: ["Profile joins", "Frame support", "Aluminum assemblies"],
+    specifications: [
+      { label: "Product type", value: "Connector" },
+      { label: "Connector type", value: "Triangle" },
+      { label: "Price", value: "Rs. 350" },
+    ],
+    variant: buildVariant({
+      id: "triangle-connector",
+      name: "Triangle Connector",
+      sku: "CON-TRI",
+      summary: "Triangle connector for aluminum profile structures.",
+      availability: "Available on inquiry",
+      leadTime: "2 to 5 working days",
+      pricePkr: 350,
+      badge: "Rs. 350",
+      specifications: [
+        { label: "Connector type", value: "Triangle" },
+        { label: "Unit price", value: "Rs. 350" },
+        { label: "Use", value: "Profile and frame joining" },
+      ],
+    }),
+    filterTags: ["fixed-price", "connector"],
+    featured: true,
+  }),
+  buildProduct({
+    slug: "tee-connector",
+    categorySlug: "t-v-slots",
+    name: "Tee Connector",
+    tag: "Rs. 350",
+    summary: "Tee connector for aluminum profile joining and support.",
+    description:
+      "Tee Connector helps buyers ask for a clear connector type with the price already shown on the page.",
+    image: "/products/aluminum/connectors/connector-1.jpeg",
+    gallery: connectorGallery,
+    features: [
+      "Tee connector",
+      "Clear unit pricing",
+      "Real connector images",
+      "Simple inquiry flow",
+    ],
+    benefits: [
+      "Easy to understand product naming",
+      "Clear price visibility",
+      "Useful for profile connection points",
+    ],
+    applications: ["Profile joins", "Aluminum frames", "Support assemblies"],
+    specifications: [
+      { label: "Product type", value: "Connector" },
+      { label: "Connector type", value: "Tee" },
+      { label: "Price", value: "Rs. 350" },
+    ],
+    variant: buildVariant({
+      id: "tee-connector",
+      name: "Tee Connector",
+      sku: "CON-TEE",
+      summary: "Tee connector for aluminum profile structures.",
+      availability: "Available on inquiry",
+      leadTime: "2 to 5 working days",
+      pricePkr: 350,
+      badge: "Rs. 350",
+      specifications: [
+        { label: "Connector type", value: "Tee" },
+        { label: "Unit price", value: "Rs. 350" },
+        { label: "Use", value: "Profile and frame joining" },
+      ],
+    }),
+    filterTags: ["fixed-price", "connector"],
+  }),
+  buildProduct({
+    slug: "cross-connector",
+    categorySlug: "t-v-slots",
+    name: "Cross Connector",
+    tag: "Rs. 350",
+    summary: "Cross connector for aluminum profile joining and support.",
+    description:
+      "Cross Connector is shown as its own product so buyers can go straight to the correct connector and send a clear WhatsApp message.",
+    image: "/products/aluminum/connectors/connector-2.jpeg",
+    gallery: connectorGallery,
+    features: [
+      "Cross connector",
+      "Clear unit pricing",
+      "Real connector images",
+      "WhatsApp inquiry support",
+    ],
+    benefits: [
+      "Simple connector choice for buyers",
+      "Clear price before inquiry",
+      "Useful for profile connection layouts",
+    ],
+    applications: ["Profile joins", "Frame support", "Connector layouts"],
+    specifications: [
+      { label: "Product type", value: "Connector" },
+      { label: "Connector type", value: "Cross" },
+      { label: "Price", value: "Rs. 350" },
+    ],
+    variant: buildVariant({
+      id: "cross-connector",
+      name: "Cross Connector",
+      sku: "CON-CROSS",
+      summary: "Cross connector for aluminum profile structures.",
+      availability: "Available on inquiry",
+      leadTime: "2 to 5 working days",
+      pricePkr: 350,
+      badge: "Rs. 350",
+      specifications: [
+        { label: "Connector type", value: "Cross" },
+        { label: "Unit price", value: "Rs. 350" },
+        { label: "Use", value: "Profile and frame joining" },
+      ],
+    }),
+    filterTags: ["fixed-price", "connector"],
+  }),
+];

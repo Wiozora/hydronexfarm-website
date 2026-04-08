@@ -14,57 +14,57 @@ import {
 const reasons = [
   {
     icon: FaTruck,
-    title: "Focused product range",
-    desc: "The catalog now focuses on the real client range: plantation towers, pumps, aluminum slot systems, battery racks, and custom fabrication products.",
-    image: "/images/marketing/hydroponics-aisle-hero.webp",
-    imageAlt: "Indoor hydroponic growing aisle with bright cultivation lighting",
-    hoverLabel: "Clearer start",
-    hoverCopy: "A startup-friendly range built around real buyer questions instead of a cluttered catalog.",
+    title: "Clear product categories",
+    desc: "Buyers can quickly see whether they need battery cases, hydroponics systems, or T & V-Slot aluminum accessories.",
+    image: "/products/hydroponics/client/tower-greenhouse-corridor.jpeg",
+    imageAlt: "Hydroponics towers arranged in a greenhouse corridor",
+    hoverLabel: "Easy to follow",
+    hoverCopy: "A clear structure helps buyers understand the offer in seconds instead of scrolling through mixed content.",
   },
   {
     icon: FaTools,
-    title: "Useful product detail pages",
-    desc: "Key products are being organized with images, features, benefits, specifications, and use cases so buyers can shortlist faster.",
-    image: "/images/marketing/hydroponics-greenhouse-rows.webp",
-    imageAlt: "Commercial hydroponic growing rows inside a greenhouse",
-    hoverLabel: "Better detail",
-    hoverCopy: "Each product page explains what it does, where it fits, and what to ask before ordering.",
+    title: "Real product photos",
+    desc: "The site uses actual product and workshop images so buyers can see what is available before they contact the business.",
+    image: "/products/battery/cases/case-angle.jpeg",
+    imageAlt: "Battery case shown from an angled workshop view",
+    hoverLabel: "Real proof",
+    hoverCopy: "Real images make the catalog feel more trustworthy than generic marketing visuals or placeholders.",
   },
   {
     icon: FaHeadset,
-    title: "Direct buyer support",
-    desc: "Early buyers can contact us directly on WhatsApp for product questions, quote requests, and purchase guidance.",
-    image: "/images/marketing/technical-site-support.webp",
-    imageAlt: "Technician inspecting equipment during on-site support",
-    hoverLabel: "Human follow-up",
-    hoverCopy: "The focus is straightforward communication while the business is growing.",
+    title: "WhatsApp-first support",
+    desc: "Buyers can move directly from product pages into WhatsApp for pricing, stock checks, and guidance on the right option.",
+    image: "/products/hydroponics/client/tower-team-installation.jpeg",
+    imageAlt: "Team standing beside a hydroponics tower installation",
+    hoverLabel: "Direct contact",
+    hoverCopy: "This keeps the sales flow simple and personal without forcing a complex checkout system.",
   },
   {
     icon: FaChartLine,
-    title: "Practical use cases",
-    desc: "We focus on products that make sense for homes, schools, cafes, installers, and small commercial projects.",
-    image: "/images/marketing/office-team-consultation.webp",
-    imageAlt: "Project team discussing product planning in an office",
-    hoverLabel: "Use-case led",
-    hoverCopy: "Product pages now explain where each item fits before a buyer commits.",
+    title: "Useful product details",
+    desc: "Main products include product name, image, price or price note, and clear specifications so buyers can shortlist before they message.",
+    image: "/products/aluminum/slots/profile-2020-spec.jpeg",
+    imageAlt: "Aluminum profile specification reference image",
+    hoverLabel: "Helpful detail",
+    hoverCopy: "Simple product pages reduce confusion and lead to better quality inquiries.",
   },
   {
     icon: FaCertificate,
-    title: "Specification-led selection",
-    desc: "Dimensions, variant details, and application notes are being structured to make product selection easier for serious buyers.",
-    image: "/images/marketing/engineering-blueprints-desk.webp",
-    imageAlt: "Engineering drawings reviewed beside a laptop on a desk",
-    hoverLabel: "Clear specs",
-    hoverCopy: "Less guesswork, better shortlisting, and cleaner quote conversations.",
+    title: "Clear prices and notes",
+    desc: "Products with fixed prices show the price clearly, and products without fixed prices clearly say price on request.",
+    image: "/products/aluminum/connectors/triangle-bracket.jpeg",
+    imageAlt: "Triangle connector shown as an aluminum accessory",
+    hoverLabel: "Honest pricing",
+    hoverCopy: "This avoids confusion and makes it easier for buyers to ask about the exact product they need.",
   },
   {
     icon: FaShippingFast,
-    title: "Delivery and quote planning",
-    desc: "We can coordinate delivery planning and custom quote discussions for buyers in major cities and project-based locations.",
-    image: "/images/marketing/project-documents-review.webp",
-    imageAlt: "Project documents and laptop arranged for delivery planning",
-    hoverLabel: "Planning support",
-    hoverCopy: "Useful for a startup-stage operation where careful coordination matters more than inflated promises.",
+    title: "Delivery planning across Pakistan",
+    desc: "The website makes it clear that product selection comes first, then delivery and city-based coordination can be confirmed in conversation.",
+    image: "/products/battery/cases/case-front.jpeg",
+    imageAlt: "Battery case shown from the front in a workshop setting",
+    hoverLabel: "Practical support",
+    hoverCopy: "This sets realistic expectations while still showing buyers that coverage and follow-up are available.",
   },
 ];
 
@@ -77,10 +77,10 @@ export function TrustSection() {
         <div className="mx-auto max-w-4xl text-center">
           <p className="section-label inline-flex border-l-0 border-none pl-0 text-green-dark">Why I CAN ENERGIES</p>
           <h2 className="text-3xl font-black text-primary md:text-4xl">
-            A simpler startup storefront for buyers who want clearer product decisions
+            Why buyers choose I CAN ENERGIES
           </h2>
           <p className="mt-6 text-lg leading-8 text-text-muted">
-            The goal is straightforward: show the actual client products, explain their use, and make inquiry or quote discussions easier from day one.
+            Clear product groups, real images, and simple inquiry support make it easier to understand the business and move toward the right product.
           </p>
         </div>
 

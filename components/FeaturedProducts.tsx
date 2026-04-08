@@ -13,11 +13,11 @@ export function FeaturedProducts() {
               Featured products
             </p>
             <h2 className="mt-4 text-3xl font-black leading-tight text-[#183109] sm:text-4xl md:text-5xl">
-              Start with the products buyers ask about first
+              The main products buyers usually ask about first
             </h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-[#6f7988] sm:text-base sm:leading-8">
-            These featured entries help buyers compare the right options quickly, then move into the correct order, quote, or WhatsApp conversation.
+            These are the clearest starting points for new buyers who want to understand the range before sending a WhatsApp inquiry.
           </p>
         </div>
 

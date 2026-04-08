@@ -6,24 +6,34 @@ import { Minus, Plus } from "lucide-react";
 
 const faqs = [
   {
-    question: "Hydroponics plantation towers kis range mein available hain?",
+    question: "What products do you sell?",
     answer:
-      "Website par ab 25, 50, 75, aur 100 plant plantation tower variants diye gaye hain. Har variant ke saath price, height, aur diameter guidance bhi show hoti hai taake buyer seedha sahi option select kar sake.",
+      'We sell 19" Battery Boxes and 7U brackets, Hydroponics Systems for 25, 50, and 75 plants, and T & V-Slot aluminum accessories.',
   },
   {
-    question: "Kya PaniPani pump aur nutrient plans bhi available hain?",
+    question: "How do I choose the right product?",
     answer:
-      "Ji haan. Pump aur nutrient section ko alag category mein organize kiya gaya hai. Buyer plantation type, chemistry type, specification type, ya pump sizing requirement ke hisaab se inquiry bhej sakta hai.",
+      "Start with the product category, open the product page that matches your need, and review the images, variants, and use cases. If you are still unsure, send us a WhatsApp message and we will guide you.",
   },
   {
-    question: "Aluminum aur battery side par website mein kya-kya include hai?",
+    question: "Do you offer custom fabrication or project quotes?",
     answer:
-      "Aluminum category mein V/T slot profiles, connectors, wheels, aur frame enclosure builds hain. Battery category mein rack mount brackets, BareBone 4U / 5U / 6U racks, 3U / 4U / 5U battery cases, aur custom sheet metal products include kiye gaye hain.",
+      "Yes. If you need quantities, availability, or help choosing the right product, you can contact us directly on WhatsApp or request a quote.",
   },
   {
-    question: "Order ya quote ka process kya hai?",
+    question: "How do I place an order or request a quote?",
     answer:
-      "Fixed-price plantation towers cart mein add kiye ja sakte hain, jab ke pump, nutrient, aluminum, battery, aur sheet metal items quote flow ke through bheje ja sakte hain. Buyer variant select karke WhatsApp ya inquiry basket se clean request send kar sakta hai.",
+      "The website is built around inquiry. Open the product you need, review the details, then use WhatsApp or the quote form to send your requirement.",
+  },
+  {
+    question: "Do you support buyers outside Karachi?",
+    answer:
+      "Yes. Buyers from major cities across Pakistan can send their requirement first, and delivery or dispatch planning can be confirmed during the conversation.",
+  },
+  {
+    question: "What should I send on WhatsApp?",
+    answer:
+      "The best message includes the product name, quantity, city, and any size or project notes. This helps us reply faster with the right next step.",
   },
 ];
 
@@ -34,12 +44,12 @@ export function FAQSection() {
     <section id="faq" className="bg-white py-16 md:py-24">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 md:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:px-12">
         <div className="space-y-5">
-          <p className="section-label">Faq</p>
+          <p className="section-label">FAQ</p>
           <h2 className="text-4xl font-black leading-tight text-text-dark md:text-5xl">
-            Questions buyers usually ask before ordering
+            Simple answers to common buyer questions
           </h2>
           <p className="text-lg leading-8 text-text-muted">
-            Yeh woh common sawalat hain jo clients plantation towers, pumps, V/T slots, battery racks, aur custom fabrication ke hawale se poochte hain.
+            These are the questions most buyers ask before they send a WhatsApp message or request a quote.
           </p>
 
           <div className="rounded-[2rem] bg-bg-light p-6">
@@ -48,7 +58,7 @@ export function FAQSection() {
             </p>
             <p className="mt-4 text-3xl font-black text-text-dark">WhatsApp-first support</p>
             <p className="mt-3 text-sm leading-7 text-text-muted">
-              Agar aapko model selection, pump sizing, rack variant, ya custom sheet metal guidance chahiye ho to fastest reply WhatsApp ke zariye mil sakta hai.
+              If you already know the product you need, WhatsApp is usually the fastest way to ask about pricing, stock, and delivery.
             </p>
           </div>
         </div>

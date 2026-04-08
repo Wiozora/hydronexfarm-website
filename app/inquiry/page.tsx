@@ -4,9 +4,9 @@ import { SiteShell } from "@/components/layout/SiteShell";
 import { InquiryPageSections } from "@/components/sections/InquiryPageSections";
 
 export const metadata: Metadata = {
-  title: "Inquiry Basket | I CAN ENERGIES",
+  title: "Request Quote | I CAN ENERGIES",
   description:
-    "Review fixed-price plantation towers and quote-only pumps, aluminum, battery, and fabrication products before sending a structured inquiry.",
+    "Review selected products and send a structured WhatsApp quote request to I CAN ENERGIES.",
 };
 
 export default function InquiryPage() {
