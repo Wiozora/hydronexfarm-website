@@ -99,14 +99,6 @@ const hydroponicsGallery = [
   "/products/hydroponics/client/tower-greenhouse-row.jpeg",
 ];
 
-const batteryCaseGallery = [
-  "/products/battery/cases/case-front.jpeg",
-  "/products/battery/cases/case-angle.jpeg",
-  "/products/battery/cases/case-side.jpeg",
-  "/products/battery/cases/case-open-top.jpeg",
-  "/products/battery/cases/case-top-panel.jpeg",
-];
-
 const batteryBracketGallery = [
   "/products/battery/brackets/mount-panel-front.jpeg",
   "/products/battery/brackets/mount-bracket-front.jpeg",
@@ -122,7 +114,6 @@ const slotGallery = [
 
 const connectorGallery = [
   "/products/aluminum/connectors/triangle-bracket.jpeg",
-  "/products/aluminum/connectors/connector-1.jpeg",
   "/products/aluminum/connectors/connector-2.jpeg",
   "/products/aluminum/connectors/connector-3.jpeg",
 ];
@@ -135,7 +126,7 @@ export const storeCategories: StoreCategory[] = [
     tag: "19 inch range",
     description:
       '19" battery boxes and brackets for battery cabinet, rack, and enclosure work.',
-    image: "/products/battery/cases/case-front.jpeg",
+    image: "/products/battery/boxes/battery-box-1.jpeg",
     highlights: ["3U / 4U / 5U battery boxes", '19" Brackets 7U', "WhatsApp inquiry"],
   },
   {
@@ -169,8 +160,14 @@ export const storeProducts: StoreProduct[] = [
     summary: '19" battery box in 3U size for compact cabinet and enclosure setups.',
     description:
       '19" Battery Box 3U is a compact battery case for buyers who need a clean 19 inch enclosure format and want to confirm sizing before ordering.',
-    image: "/products/battery/cases/case-front.jpeg",
-    gallery: batteryCaseGallery,
+    image: "/products/battery/boxes/battery-box-1.jpeg",
+    gallery: [
+      "/products/battery/boxes/battery-box-1.jpeg",
+      "/products/battery/boxes/battery-box-2.jpeg",
+      "/products/battery/cases/case-angle.jpeg",
+      "/products/battery/cases/case-side.jpeg",
+      "/products/battery/cases/case-open-top.jpeg",
+    ],
     features: [
       '19" battery box format',
       "Compact 3U size",
@@ -713,8 +710,12 @@ export const storeProducts: StoreProduct[] = [
     summary: "Tee connector for aluminum profile joining and support.",
     description:
       "Tee Connector helps buyers ask for a clear connector type with the price already shown on the page.",
-    image: "/products/aluminum/connectors/connector-1.jpeg",
-    gallery: connectorGallery,
+    image: "/products/aluminum/connectors/connector-2.jpeg",
+    gallery: [
+      "/products/aluminum/connectors/connector-2.jpeg",
+      "/products/aluminum/connectors/triangle-bracket.jpeg",
+      "/products/aluminum/connectors/connector-3.jpeg",
+    ],
     features: [
       "Tee connector",
       "Clear unit pricing",
@@ -757,8 +758,12 @@ export const storeProducts: StoreProduct[] = [
     summary: "Cross connector for aluminum profile joining and support.",
     description:
       "Cross Connector is shown as its own product so buyers can go straight to the correct connector and send a clear WhatsApp message.",
-    image: "/products/aluminum/connectors/connector-2.jpeg",
-    gallery: connectorGallery,
+    image: "/products/aluminum/connectors/connector-3.jpeg",
+    gallery: [
+      "/products/aluminum/connectors/connector-3.jpeg",
+      "/products/aluminum/connectors/connector-2.jpeg",
+      "/products/aluminum/connectors/triangle-bracket.jpeg",
+    ],
     features: [
       "Cross connector",
       "Clear unit pricing",
