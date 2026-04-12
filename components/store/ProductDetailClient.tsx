@@ -4,35 +4,36 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FaCheckCircle, FaWhatsapp } from "react-icons/fa";
 
+import { Testimonials } from "@/components/Testimonials";
 import { ProductCard } from "@/components/store/ProductCard";
+import { ProductFaqSection } from "@/components/store/ProductFaqSection";
 import { ProductGallery } from "@/components/store/ProductGallery";
+import { ProductTrustHighlights } from "@/components/store/ProductTrustHighlights";
 import {
   PaymentInfoPanel,
   ProductDatasheetPanel,
   ProductRoiPanel,
 } from "@/components/store/SupportPanels";
 import { useStore } from "@/components/store/StoreProvider";
-import { hasPublicWhatsApp } from "@/lib/site-config";
+import { defaultPaymentInfo, hasPublicWhatsApp } from "@/lib/site-config";
 import { getProductWhatsAppLink } from "@/lib/whatsapp";
 import {
-  getCategoryBySlug,
   getDefaultVariant,
   getPriceLabel,
+  getProductFaqs,
+  getProductTrustHighlights,
   getRelatedProducts,
   getVariantMode,
 } from "@/lib/store";
 import type { StoreProduct } from "@/types";
 
 export function ProductDetailClient({ product }: { product: StoreProduct }) {
-  const category = getCategoryBySlug(product.categorySlug);
   const defaultVariant = getDefaultVariant(product);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
   const requestedVariantId = searchParams.get("variant");
   const { addItem } = useStore();
-  const quantity = 1;
-
   const selectedVariantId =
     product.variants.find((variant) => variant.id === requestedVariantId)?.id ?? defaultVariant.id;
   const selectedVariant =
@@ -41,6 +42,12 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
   const relatedProducts = getRelatedProducts(product);
   const hasMultipleVariants = product.variants.length > 1;
   const whatsappVisible = hasPublicWhatsApp();
+  const productFaqs = getProductFaqs(product);
+  const trustHighlights = getProductTrustHighlights(product);
+  const primaryActionLabel = selectedMode === "cart" ? "Checkout" : "Request Quote";
+  const primaryHeading =
+    selectedMode === "cart" ? "Move this item into checkout" : "Send a clear quote request";
+  const whatsappMessage = getProductWhatsAppLink(product.name);
 
   const selectedSpecifications = [
     ...product.specifications,
@@ -48,7 +55,6 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
     { label: "Lead time", value: selectedVariant.leadTime },
     ...selectedVariant.specifications,
   ];
-  const whatsappMessage = getProductWhatsAppLink(product.name);
 
   function handleVariantChange(nextVariantId: string) {
     const params = new URLSearchParams(searchParams.toString());
@@ -56,15 +62,15 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
 
-  function handleAdd() {
+  function handlePrimaryAction() {
     addItem({
       productSlug: product.slug,
       variantId: selectedVariant.id,
-      quantity,
+      quantity: 1,
       mode: selectedMode,
     });
 
-    router.push("/inquiry");
+    router.push(selectedMode === "cart" ? "/checkout" : "/inquiry");
   }
 
   return (
@@ -76,15 +82,13 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
 
             <div className="min-w-0 rounded-[2rem] border border-white/10 bg-white/8 p-5 shadow-[0_22px_50px_rgba(8,18,12,0.22)] backdrop-blur-md md:p-8 lg:sticky lg:top-28">
               <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#86f556]">
-                Product details
+                {selectedMode === "cart" ? "Checkout-ready product" : "Quote-led product"}
               </p>
               <h2 className="mt-3 text-[1.9rem] font-black leading-tight text-white md:mt-4 md:text-[2.5rem]">
-                Simple product information before you contact us
+                {primaryHeading}
               </h2>
               <p className="mt-4 text-sm leading-7 text-white/78 md:mt-5 md:text-lg md:leading-8">
-                {category
-                  ? `${category.shortName} buyers can review the product name, image, price, and specifications here before they send a WhatsApp inquiry.`
-                  : product.description}
+                {product.description}
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">
@@ -140,10 +144,10 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <button
                   type="button"
-                  onClick={handleAdd}
+                  onClick={handlePrimaryAction}
                   className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#86f556] px-6 py-4 text-sm font-bold text-[#132117] transition hover:bg-[#73e543] sm:w-auto"
                 >
-                  Request Quote
+                  {primaryActionLabel}
                 </button>
                 {whatsappVisible ? (
                   <a
@@ -161,10 +165,12 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
                     className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/16 px-6 py-4 text-sm font-bold text-white transition hover:border-[#86f556] hover:text-[#86f556] sm:w-auto"
                   >
                     <FaWhatsapp />
-                    Request Quote
+                    Contact Team
                   </Link>
                 )}
               </div>
+
+              <ProductTrustHighlights highlights={trustHighlights} variant="compact" />
             </div>
           </div>
         </div>
@@ -177,7 +183,8 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
                 Product overview
               </p>
-              <p className="mt-5 text-base leading-8 text-[#6f7988] md:text-lg">{product.summary}</p>
+              <p className="mt-5 text-lg leading-8 text-[#183109]">{product.summary}</p>
+              <p className="mt-4 text-base leading-8 text-[#6f7988] md:text-lg">{product.description}</p>
 
               <div className="mt-8 grid gap-8 md:grid-cols-2">
                 <div>
@@ -206,12 +213,12 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
             </div>
 
             <div className="rounded-[2rem] border border-[#e6ebde] bg-white p-7 shadow-[0_18px_45px_rgba(16,23,18,0.05)] md:p-8">
-                  <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-                    Specifications
-                  </p>
-                  <p className="mt-4 text-sm leading-7 text-[#6f7988]">
-                Basic specifications are shown clearly so buyers can understand the product before they contact the business.
-                  </p>
+              <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
+                Specifications and fit
+              </p>
+              <p className="mt-4 text-sm leading-7 text-[#6f7988]">
+                Buyers can review the main configuration, current availability, and fit notes before continuing to checkout or inquiry.
+              </p>
 
               <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-[#e6ebde]">
                 {selectedSpecifications.map((specification, index) => (
@@ -228,13 +235,36 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
                   </div>
                 ))}
               </div>
+
+              {product.dimensions?.length ? (
+                <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-[#e6ebde]">
+                  <div className="border-b border-[#edf2e7] bg-[#f7f8f1] px-5 py-4">
+                    <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#183109]">
+                      Dimensions and compatibility
+                    </p>
+                  </div>
+                  {product.dimensions.map((dimension, index) => (
+                    <div
+                      key={`${dimension.label}-${index}`}
+                      className="flex items-start justify-between gap-4 border-b border-[#edf2e7] px-5 py-4 last:border-b-0"
+                    >
+                      <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[#6f7988]">
+                        {dimension.label}
+                      </span>
+                      <span className="max-w-[58%] text-right text-sm font-semibold text-[#183109]">
+                        {dimension.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="rounded-[2rem] border border-[#e6ebde] bg-white p-7 shadow-[0_18px_45px_rgba(16,23,18,0.05)] md:p-8">
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-                {hasMultipleVariants ? "Selected variant" : "Price and availability"}
+                {selectedMode === "cart" ? "Ready to order" : "Ready to quote"}
               </p>
               <h2 className="mt-4 text-3xl font-black text-[#183109]">{selectedVariant.name}</h2>
               <p className="mt-4 text-base leading-8 text-[#6f7988]">{selectedVariant.summary}</p>
@@ -279,9 +309,29 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
             <ProductRoiPanel product={product} roi={product.roi} selectedVariant={selectedVariant} />
           ) : null}
 
-          {product.paymentInfo ? <PaymentInfoPanel paymentInfo={product.paymentInfo} /> : null}
+          {product.paymentInfo ? (
+            <PaymentInfoPanel paymentInfo={product.paymentInfo} />
+          ) : selectedMode === "cart" ? (
+            <PaymentInfoPanel
+              paymentInfo={defaultPaymentInfo}
+              title="Payment and verification before checkout"
+              description="Fixed-price products can move into checkout, but payment still goes through manual verification using JazzCash or bank transfer references."
+            />
+          ) : null}
         </div>
       </section>
+
+      {product.testimonialIds?.length ? (
+        <Testimonials
+          ids={product.testimonialIds}
+          eyebrow="Buyer proof"
+          intro="Relevant buyer feedback helps new customers see what felt clear and trustworthy before they moved forward."
+          title="Feedback connected to this product range"
+          variant="compact"
+        />
+      ) : null}
+
+      {productFaqs.length > 0 ? <ProductFaqSection faqs={productFaqs} /> : null}
 
       {relatedProducts.length > 0 ? (
         <section className="bg-white py-18 md:py-22 lg:py-24">
@@ -296,7 +346,7 @@ export function ProductDetailClient({ product }: { product: StoreProduct }) {
                 </h2>
               </div>
               <p className="max-w-xl text-base leading-8 text-[#6f7988]">
-                Explore related products in the same category to shortlist alternatives before sending your final inquiry.
+                Explore related products in the same category to shortlist alternatives before you send your final inquiry or continue to checkout.
               </p>
             </div>
 

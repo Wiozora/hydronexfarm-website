@@ -194,7 +194,7 @@ export function Navbar() {
             </nav>
 
             <div className="hidden shrink-0 items-center justify-end gap-2.5 min-[1200px]:flex min-[1700px]:gap-3">
-              <BasketButton label="Request Quote" responsiveLabel />
+              <BasketButton responsiveLabel />
               {quickActionExternal ? (
                 <a
                   href={quickActionHref}

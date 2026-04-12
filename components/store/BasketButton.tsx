@@ -4,24 +4,24 @@ import Link from "next/link";
 import { FaClipboardList } from "react-icons/fa";
 
 import { useStore } from "@/components/store/StoreProvider";
+import { getBasketDestination } from "@/lib/store";
 
 type BasketButtonProps = {
   compact?: boolean;
-  label?: string;
   responsiveLabel?: boolean;
 };
 
 export function BasketButton({
   compact = false,
-  label = "Request Quote",
   responsiveLabel = false,
 }: BasketButtonProps) {
-  const { isReady, totalItems } = useStore();
+  const { isReady, items, totalItems } = useStore();
+  const destination = getBasketDestination(items);
 
   return (
     <Link
-      href="/inquiry"
-      aria-label="Request Quote"
+      href={destination.href}
+      aria-label={destination.label}
       className={`inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[#d6dfcb] text-sm font-bold text-[#183109] transition hover:border-[#86f556] hover:text-[#5c953f] ${
         compact
           ? "px-3 py-2.5"
@@ -29,7 +29,11 @@ export function BasketButton({
       }`}
     >
       <FaClipboardList />
-      {compact ? null : <span className={responsiveLabel ? "hidden min-[1500px]:inline" : undefined}>{label}</span>}
+      {compact ? null : (
+        <span className={responsiveLabel ? "hidden min-[1500px]:inline" : undefined}>
+          {destination.label}
+        </span>
+      )}
       <span className="inline-flex min-w-7 items-center justify-center rounded-full bg-[#eff8e7] px-2 py-1 text-xs font-black text-[#5c953f]">
         {isReady ? totalItems : 0}
       </span>

@@ -14,17 +14,17 @@ import {
 const reasons = [
   {
     icon: FaTruck,
-    title: "Clear product categories",
-    desc: "Buyers can quickly see whether they need battery cases, hydroponics systems, or T & V-Slot aluminum accessories.",
+    title: "Clear buying paths",
+    desc: "Buyers can immediately see which products are checkout ready and which items still need a manual quote conversation.",
     image: "/products/hydroponics/client/tower-greenhouse-corridor.jpeg",
     imageAlt: "Hydroponics towers arranged in a greenhouse corridor",
-    hoverLabel: "Easy to follow",
-    hoverCopy: "A clear structure helps buyers understand the offer in seconds instead of scrolling through mixed content.",
+    hoverLabel: "Fewer wrong clicks",
+    hoverCopy: "Separating checkout-ready and quote-led products helps buyers take the right next step without guessing.",
   },
   {
     icon: FaTools,
     title: "Real product photos",
-    desc: "The site uses actual product and workshop images so buyers can see what is available before they contact the business.",
+    desc: "Actual product and workshop images help buyers inspect the offer before they place an order or request a quote.",
     image: "/products/battery/cases/case-angle.jpeg",
     imageAlt: "Battery case shown from an angled workshop view",
     hoverLabel: "Real proof",
@@ -32,35 +32,35 @@ const reasons = [
   },
   {
     icon: FaHeadset,
-    title: "WhatsApp-first support",
-    desc: "Buyers can move directly from product pages into WhatsApp for pricing, stock checks, and guidance on the right option.",
+    title: "Manual support stays available",
+    desc: "Checkout does not remove support. Buyers can still move into WhatsApp for custom requirements, sizing questions, or project discussion.",
     image: "/products/hydroponics/client/tower-team-installation.jpeg",
     imageAlt: "Team standing beside a hydroponics tower installation",
     hoverLabel: "Direct contact",
-    hoverCopy: "This keeps the sales flow simple and personal without forcing a complex checkout system.",
+    hoverCopy: "The hybrid flow keeps personal support available without forcing every buyer through the same path.",
   },
   {
     icon: FaChartLine,
     title: "Useful product details",
-    desc: "Main products include product name, image, price or price note, and clear specifications so buyers can shortlist before they message.",
+    desc: "Product pages now keep price, fit notes, lead time, trust points, and FAQs visible near the main CTA.",
     image: "/products/aluminum/slots/profile-2020-spec.jpeg",
     imageAlt: "Aluminum profile specification reference image",
     hoverLabel: "Helpful detail",
-    hoverCopy: "Simple product pages reduce confusion and lead to better quality inquiries.",
+    hoverCopy: "Clear specifications and FAQs reduce hesitation and lead to cleaner orders and quote requests.",
   },
   {
     icon: FaCertificate,
-    title: "Clear prices and notes",
-    desc: "Products with fixed prices show the price clearly, and products without fixed prices clearly say price on request.",
+    title: "Payment and policy visibility",
+    desc: "Payment methods, refund guidance, and manual verification steps are surfaced earlier so buyers know what happens next.",
     image: "/products/aluminum/connectors/triangle-bracket.jpeg",
     imageAlt: "Triangle connector shown as an aluminum accessory",
-    hoverLabel: "Honest pricing",
-    hoverCopy: "This avoids confusion and makes it easier for buyers to ask about the exact product they need.",
+    hoverLabel: "Less uncertainty",
+    hoverCopy: "Clear policies and payment notes remove friction that usually appears right before conversion.",
   },
   {
     icon: FaShippingFast,
     title: "Delivery planning across Pakistan",
-    desc: "The website makes it clear that product selection comes first, then delivery and city-based coordination can be confirmed in conversation.",
+    desc: "City, address, and project notes are captured early so the team can confirm delivery planning with better context.",
     image: "/products/battery/cases/case-front.jpeg",
     imageAlt: "Battery case shown from the front in a workshop setting",
     hoverLabel: "Practical support",
@@ -77,10 +77,10 @@ export function TrustSection() {
         <div className="mx-auto max-w-4xl text-center">
           <p className="section-label inline-flex border-l-0 border-none pl-0 text-green-dark">Why I CAN ENERGIES</p>
           <h2 className="text-3xl font-black text-primary md:text-4xl">
-            Why buyers choose I CAN ENERGIES
+            Trust points buyers look for before they continue
           </h2>
           <p className="mt-6 text-lg leading-8 text-text-muted">
-            Clear product groups, real images, and simple inquiry support make it easier to understand the business and move toward the right product.
+            Clear proof, practical payment guidance, and product-specific decision support make it easier to move from browsing into checkout or inquiry.
           </p>
         </div>
 

@@ -14,7 +14,7 @@ export function ShopPageSections({ products }: ShopPageSectionsProps) {
       <StoreCatalogClient
         products={products}
         title="Filter the full catalog"
-        intro="Choose the right product group, open the product page, and continue the conversation on WhatsApp."
+        intro="Choose the right product group, then continue into checkout for fixed-price items or request a quote for manual-pricing products."
       />
     </>
   );

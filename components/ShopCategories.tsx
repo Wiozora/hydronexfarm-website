@@ -6,7 +6,11 @@ import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 
 import { storeCategories } from "@/data/store-catalog";
-import { getCategoryPath, getCategoryProductCount } from "@/lib/store";
+import {
+  getCategoryCommerceSummary,
+  getCategoryPath,
+  getCategoryProductCount,
+} from "@/lib/store";
 
 export function ShopCategories() {
   return (
@@ -28,7 +32,7 @@ export function ShopCategories() {
 
         <div className="mt-10 grid gap-5 sm:mt-12 sm:gap-6 md:grid-cols-2">
           {storeCategories.map((category, index) => (
-            <motion.div
+            <motion.article
               key={category.slug}
               initial={{ opacity: 0, y: 34 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -47,18 +51,32 @@ export function ShopCategories() {
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,20,16,0.18)_0%,rgba(12,20,16,0.42)_46%,rgba(12,20,16,0.85)_100%)]" />
 
               <div className="relative z-10 flex h-full flex-col justify-end p-5 sm:p-6 md:p-7">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="inline-flex w-fit rounded-full bg-[#86f556] px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[#132117]">
-                    {category.tag}
-                  </span>
-                  <span className="inline-flex rounded-full border border-white/20 bg-white/8 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-white">
-                    {getCategoryProductCount(category.slug)} products
-                  </span>
-                </div>
-                <h3 className="mt-4 text-2xl font-black text-white sm:text-3xl">{category.name}</h3>
-                <p className="mt-3 max-w-lg text-sm leading-6 text-white/80 sm:leading-7 md:text-base">
-                  {category.description}
-                </p>
+                {(() => {
+                  const commerceSummary = getCategoryCommerceSummary(category.slug);
+
+                  return (
+                    <>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span className="inline-flex w-fit rounded-full bg-[#86f556] px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[#132117]">
+                          {category.tag}
+                        </span>
+                        <span className="inline-flex rounded-full border border-white/20 bg-white/8 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-white">
+                          {getCategoryProductCount(category.slug)} products
+                        </span>
+                        <span className="inline-flex rounded-full border border-white/16 bg-black/18 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-white">
+                          {commerceSummary.badge}
+                        </span>
+                      </div>
+                      <h3 className="mt-4 text-2xl font-black text-white sm:text-3xl">{category.name}</h3>
+                      <p className="mt-3 max-w-lg text-sm leading-6 text-white/80 sm:leading-7 md:text-base">
+                        {category.description}
+                      </p>
+                      <p className="mt-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#b8ff95]">
+                        {commerceSummary.detail}
+                      </p>
+                    </>
+                  );
+                })()}
                 <div className="mt-5 flex flex-wrap gap-2">
                   {category.highlights.map((highlight) => (
                     <span
@@ -73,11 +91,11 @@ export function ShopCategories() {
                   href={getCategoryPath(category)}
                   className="mt-6 inline-flex items-center gap-3 text-sm font-bold uppercase tracking-[0.2em] text-[#86f556]"
                 >
-                  View Details
+                  Browse category
                   <FaArrowRight className="transition group-hover:translate-x-1" />
                 </Link>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

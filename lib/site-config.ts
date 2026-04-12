@@ -77,7 +77,7 @@ export const siteConfig = {
   legalName,
   siteUrl: readPublicEnv("NEXT_PUBLIC_SITE_URL", "https://hydronexfarm.com"),
   description:
-    'Pakistan supplier of 19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories.',
+    'Pakistan supplier of 19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories with checkout and quote support.',
   email: readPublicEnv("NEXT_PUBLIC_CONTACT_EMAIL", ""),
   whatsappNumber: readPublicEnv("NEXT_PUBLIC_WHATSAPP_NUMBER", "923251508970"),
   displayPhone: readPublicEnv("NEXT_PUBLIC_DISPLAY_PHONE", "0325 1508970"),

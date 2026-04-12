@@ -7,13 +7,13 @@ const steps = [
     icon: FaSearch,
   },
   {
-    title: "Request Quote",
-    copy: "Shortlist the product, note the quantity or size you need, and keep the request clear before you contact the team.",
+    title: "Choose Checkout or Quote",
+    copy: "Fixed-price items can continue to checkout, while manual-pricing items stay in the quote request flow with their details preserved.",
     icon: FaLayerGroup,
   },
   {
-    title: "WhatsApp Now",
-    copy: "Send your inquiry on WhatsApp and continue the conversation with product, pricing, and delivery guidance.",
+    title: "Verification or Support",
+    copy: "Submit payment references for checkout orders, or continue to WhatsApp for quote-led support, delivery, and product guidance.",
     icon: FaClipboardList,
   },
 ];
@@ -28,11 +28,11 @@ export function StoreProcess() {
               Inquiry flow
             </p>
             <h2 className="mt-4 text-3xl font-black leading-tight text-[#183109] sm:text-4xl md:text-5xl">
-              A simple path from product to conversation
+              A simple path from product to the right buying flow
             </h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-[#6f7988] sm:text-base sm:leading-8">
-            The goal is simple: help the buyer understand the product first, then move into a clean WhatsApp inquiry without extra steps.
+            The goal is simple: help the buyer understand the product first, then move them into checkout or quote request without unnecessary friction.
           </p>
         </div>
 

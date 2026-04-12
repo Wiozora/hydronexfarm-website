@@ -6,11 +6,28 @@ export type StoreCategory = {
   description: string;
   image: string;
   highlights: string[];
+  faqs?: ProductFaq[];
+  trustHighlights?: ProductTrustHighlight[];
+  testimonialIds?: string[];
+  seoTitle?: string;
+  seoDescription?: string;
 };
 
 export type ProductSpecification = {
   label: string;
   value: string;
+};
+
+export type ProductFaq = {
+  question: string;
+  answer: string;
+};
+
+export type ProductTrustHighlight = {
+  title: string;
+  detail: string;
+  href?: string;
+  linkLabel?: string;
 };
 
 export type ProductAssetLink = {
@@ -103,6 +120,12 @@ export type StoreProduct = {
   benefits: string[];
   applications: string[];
   specifications: ProductSpecification[];
+  dimensions?: ProductSpecification[];
+  faqs?: ProductFaq[];
+  trustHighlights?: ProductTrustHighlight[];
+  testimonialIds?: string[];
+  seoTitle?: string;
+  seoDescription?: string;
   variants: StoreVariant[];
   datasheet?: ProductDatasheet;
   paymentInfo?: PaymentInfo;

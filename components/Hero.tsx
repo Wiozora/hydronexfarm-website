@@ -193,7 +193,7 @@ export function Hero() {
                 className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#86f556] px-5 py-3 text-sm font-bold text-[#132117] transition hover:bg-[#73e543] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
                 <FaShoppingBag />
-                View Details
+                Browse Products
               </Link>
 
               <a

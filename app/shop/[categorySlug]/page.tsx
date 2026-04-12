@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { StructuredDataScript } from "@/components/StructuredDataScript";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { CategoryPageSections } from "@/components/sections/CategoryPageSections";
 import { storeCategories } from "@/data/store-catalog";
-import { siteConfig } from "@/lib/site-config";
+import { buildMetadata } from "@/lib/metadata";
+import { buildCategoryPageStructuredData } from "@/lib/structured-data";
 import { getCategoryBySlug, getProductsByCategorySlug } from "@/lib/store";
 
 export function generateStaticParams() {
@@ -23,10 +25,12 @@ export async function generateMetadata({
     return {};
   }
 
-  return {
-    title: `${category.name} | ${siteConfig.storeName}`,
-    description: category.description,
-  };
+  return buildMetadata({
+    title: category.seoTitle ?? `${category.name} | I CAN ENERGIES`,
+    description: category.seoDescription ?? category.description,
+    path: `/shop/${category.slug}`,
+    image: category.image,
+  });
 }
 
 export default async function CategoryPage({
@@ -45,6 +49,7 @@ export default async function CategoryPage({
 
   return (
     <SiteShell>
+      <StructuredDataScript items={buildCategoryPageStructuredData(category)} />
       <CategoryPageSections category={category} products={products} />
     </SiteShell>
   );

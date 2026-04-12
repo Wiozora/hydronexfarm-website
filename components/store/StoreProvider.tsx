@@ -16,6 +16,7 @@ type StoreContextValue = {
   removeItem: (item: Pick<BasketItem, "productSlug" | "variantId" | "mode">) => void;
   updateQuantity: (item: Pick<BasketItem, "productSlug" | "variantId" | "mode">, quantity: number) => void;
   clearBasket: () => void;
+  clearItemsByMode: (mode: BasketItem["mode"]) => void;
 };
 
 const StoreContext = createContext<StoreContextValue | undefined>(undefined);
@@ -103,6 +104,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setItems([]);
   }
 
+  function clearItemsByMode(mode: BasketItem["mode"]) {
+    setItems((current) => current.filter((item) => item.mode !== mode));
+  }
+
   return (
     <StoreContext.Provider
       value={{
@@ -113,6 +118,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         removeItem,
         updateQuantity,
         clearBasket,
+        clearItemsByMode,
       }}
     >
       {children}

@@ -1,31 +1,91 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { FaArrowRight, FaTrash, FaWhatsapp } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import {
+  FaArrowRight,
+  FaCheckCircle,
+  FaTrash,
+  FaUniversity,
+  FaWallet,
+} from "react-icons/fa";
 
 import { PaymentInfoPanel } from "@/components/store/SupportPanels";
 import { useStore } from "@/components/store/StoreProvider";
-import { captureLead } from "@/lib/lead-client";
-import { defaultPaymentInfo, hasPublicWhatsApp } from "@/lib/site-config";
-import {
-  buildStoreInquiryMessage,
-  getBasketSubtotal,
-  hydrateBasketItems,
-} from "@/lib/store";
-import { trackEvent, trackLeadSubmission } from "@/lib/tracking";
+import { captureOrder } from "@/lib/order-client";
+import { defaultPaymentInfo } from "@/lib/site-config";
+import { getBasketSubtotal, hydrateBasketItems } from "@/lib/store";
+import { trackEvent } from "@/lib/tracking";
 import { formatPkr } from "@/lib/utils";
-import { createWhatsAppLink } from "@/lib/whatsapp";
-import type { InquiryCustomer } from "@/types";
+import type { OrderPaymentMethod } from "@/types/order";
 
-type InquiryValues = InquiryCustomer;
+type CheckoutValues = {
+  name: string;
+  phone: string;
+  email: string;
+  city: string;
+  address: string;
+  paymentMethod: OrderPaymentMethod;
+  reference: string;
+  notes: string;
+};
 
-export function InquiryPageClient() {
+const paymentOptions = [
+  {
+    id: "jazzcash" as const,
+    title: "JazzCash",
+    description: "Mobile wallet payment",
+    detail:
+      "Submit your JazzCash transaction reference so the order can move into manual verification.",
+    icon: FaWallet,
+  },
+  {
+    id: "bank-transfer" as const,
+    title: "Bank Transfer",
+    description: "Company account transfer",
+    detail:
+      "Use the listed bank details, then submit the bank transfer reference used for this order.",
+    icon: FaUniversity,
+  },
+];
+
+function buildOrderSummary(
+  lines: ReturnType<typeof hydrateBasketItems>,
+  values: CheckoutValues,
+  subtotal: number,
+) {
+  return [
+    "New checkout request from I CAN ENERGIES website.",
+    "",
+    `Name: ${values.name}`,
+    `Phone / WhatsApp: ${values.phone}`,
+    `Email: ${values.email}`,
+    `City: ${values.city}`,
+    `Address: ${values.address}`,
+    `Payment method: ${values.paymentMethod === "jazzcash" ? "JazzCash" : "Bank transfer"}`,
+    `Transaction / reference: ${values.reference}`,
+    "",
+    "Order items:",
+    ...lines.map(
+      (line, index) =>
+        `${index + 1}. ${line.product.name} - ${line.variant.name} x ${line.quantity} - ${formatPkr(
+          line.lineTotalPkr ?? 0,
+        )}`,
+    ),
+    `Subtotal: ${formatPkr(subtotal)}`,
+    ...(values.notes.trim().length > 0 ? ["", `Order notes: ${values.notes}`] : []),
+    "",
+    "Status: Pending payment verification before dispatch confirmation.",
+  ].join("\n");
+}
+
+export function CheckoutPageClient() {
   const [submitted, setSubmitted] = useState(false);
-  const [saveMode, setSaveMode] = useState<"browser-queue" | "local-file" | "webhook" | null>(null);
-  const { items, isReady, updateQuantity, removeItem, clearBasket, clearItemsByMode } = useStore();
-  const whatsappVisible = hasPublicWhatsApp();
+  const [saveMode, setSaveMode] = useState<"local-file" | "webhook" | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const trackedCheckout = useRef(false);
+  const { items, isReady, updateQuantity, removeItem, clearItemsByMode } = useStore();
   const lines = hydrateBasketItems(items);
   const cartLines = lines.filter((line) => line.mode === "cart");
   const quoteLines = lines.filter((line) => line.mode === "quote");
@@ -35,80 +95,110 @@ export function InquiryPageClient() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors, isSubmitting },
-  } = useForm<InquiryValues>();
+  } = useForm<CheckoutValues>({
+    defaultValues: {
+      paymentMethod: "jazzcash",
+    },
+  });
+  const paymentMethod = useWatch({
+    control,
+    name: "paymentMethod",
+  });
 
-  async function onSubmit(values: InquiryValues) {
-    if (quoteLines.length === 0) {
+  useEffect(() => {
+    if (!isReady || trackedCheckout.current || cartLines.length === 0) {
       return;
     }
 
-    const message = buildStoreInquiryMessage(quoteLines, values);
-    const whatsappWindow = whatsappVisible ? window.open("", "_blank") : null;
-
-    trackEvent("generate_quote_request", {
+    trackEvent("begin_checkout", {
+      cart_items: cartLines.length,
       quote_items: quoteLines.length,
-      checkout_items: cartLines.length,
+      subtotal_pkr: subtotal,
+    });
+    trackedCheckout.current = true;
+  }, [cartLines.length, isReady, quoteLines.length, subtotal]);
+
+  async function onSubmit(values: CheckoutValues) {
+    if (cartLines.length === 0) {
+      return;
+    }
+
+    setSubmitError(null);
+
+    trackEvent("add_payment_info", {
+      cart_items: cartLines.length,
+      payment_method: values.paymentMethod,
+      subtotal_pkr: subtotal,
     });
 
-    const leadResult = await captureLead({
-      source: "inquiry-basket",
-      summary: message,
+    const result = await captureOrder({
+      source: "checkout",
+      summary: buildOrderSummary(cartLines, values, subtotal),
       customer: {
         name: values.name,
         phone: values.phone,
         email: values.email,
         city: values.city,
+        address: values.address,
         notes: values.notes,
       },
-      items: quoteLines.map((line) => ({
+      items: cartLines.map((line) => ({
         product: line.product.name,
         variant: line.variant.name,
         quantity: line.quantity,
-        mode: line.mode,
         href: line.href,
-        unitPricePkr: line.unitPricePkr,
-        lineTotalPkr: line.lineTotalPkr,
+        unitPricePkr: line.unitPricePkr ?? 0,
+        lineTotalPkr: line.lineTotalPkr ?? 0,
       })),
+      payment: {
+        method: values.paymentMethod,
+        reference: values.reference,
+        subtotalPkr: subtotal,
+      },
       metadata: {
         page: window.location.pathname,
-        subtotalPkr: subtotal,
         cartItems: cartLines.length,
-        quoteItems: quoteLines.length,
       },
     });
 
-    setSaveMode(leadResult.stored);
-    trackLeadSubmission("inquiry-basket", {
-      quote_items: quoteLines.length,
-      storage_mode: leadResult.stored,
-    });
-
-    const whatsappUrl = createWhatsAppLink(message);
-
-    if (whatsappVisible && whatsappWindow) {
-      whatsappWindow.location.href = whatsappUrl;
-    } else if (whatsappVisible) {
-      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    if (!result.ok) {
+      setSubmitError(result.error ?? "We could not submit the order right now.");
+      return;
     }
 
-    clearItemsByMode("quote");
-    reset();
+    setSaveMode(result.stored ?? null);
+    trackEvent("purchase_intent", {
+      cart_items: cartLines.length,
+      payment_method: values.paymentMethod,
+      subtotal_pkr: subtotal,
+      order_status: result.status,
+      storage_mode: result.stored,
+    });
+
+    clearItemsByMode("cart");
+    reset({
+      paymentMethod: "jazzcash",
+    });
     setSubmitted(true);
     window.setTimeout(() => {
       setSubmitted(false);
       setSaveMode(null);
-    }, 4000);
+    }, 4500);
   }
 
-  if (isReady && quoteLines.length === 0 && cartLines.length === 0) {
+  const referenceLabel =
+    paymentMethod === "bank-transfer" ? "Bank Transfer Reference" : "JazzCash Reference";
+
+  if (isReady && cartLines.length === 0 && quoteLines.length === 0) {
     return (
       <section className="bg-[#f7f8f1] py-14 sm:py-16 md:py-22 lg:py-24">
         <div className="mx-auto max-w-5xl px-4 md:px-8 lg:px-12">
-          <div className="rounded-[1.7rem] border border-dashed border-[#cfd9c2] bg-white p-8 text-center shadow-[0_18px_45px_rgba(16,23,18,0.05)] sm:rounded-[2rem] sm:p-10">
-            <h3 className="text-2xl font-black text-[#183109]">No products selected yet</h3>
-            <p className="mt-4 text-sm leading-7 text-[#6f7988] sm:text-base sm:leading-8">
-              Add products from the shop so you can continue to checkout for fixed-price items or request a quote for custom-pricing products.
+          <div className="rounded-[2rem] border border-dashed border-[#cfd9c2] bg-white p-10 text-center shadow-[0_18px_45px_rgba(16,23,18,0.05)]">
+            <h2 className="text-3xl font-black text-[#183109]">No checkout-ready items yet</h2>
+            <p className="mt-4 text-base leading-8 text-[#6f7988]">
+              Add fixed-price products from the shop to start checkout, or use the quote path for manual-pricing items.
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
@@ -118,10 +208,10 @@ export function InquiryPageClient() {
                 Browse Shop
               </Link>
               <Link
-                href="/checkout"
+                href="/inquiry"
                 className="inline-flex items-center justify-center gap-3 rounded-full border border-[#d6dfcb] px-6 py-3 font-bold text-[#183109] transition hover:border-[#86f556] hover:text-[#5c953f]"
               >
-                Checkout
+                Request Quote
               </Link>
             </div>
           </div>
@@ -130,24 +220,24 @@ export function InquiryPageClient() {
     );
   }
 
-  if (isReady && quoteLines.length === 0 && cartLines.length > 0) {
+  if (isReady && cartLines.length === 0 && quoteLines.length > 0) {
     return (
       <section className="bg-[#f7f8f1] py-14 sm:py-16 md:py-22 lg:py-24">
         <div className="mx-auto max-w-5xl px-4 md:px-8 lg:px-12">
-          <div className="rounded-[1.7rem] border border-[#e6ebde] bg-white p-8 shadow-[0_18px_45px_rgba(16,23,18,0.05)]">
+          <div className="rounded-[2rem] border border-[#e6ebde] bg-white p-8 shadow-[0_18px_45px_rgba(16,23,18,0.05)]">
             <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-              Checkout-ready basket
+              Quote-led basket
             </p>
-            <h3 className="mt-4 text-3xl font-black text-[#183109]">These items can go straight to checkout</h3>
-            <p className="mt-4 text-sm leading-7 text-[#6f7988] sm:text-base sm:leading-8">
-              Your current basket contains fixed-price items only, so there is no quote form needed here. Continue to checkout to submit payment and delivery details.
+            <h2 className="mt-4 text-3xl font-black text-[#183109]">These items need a quote, not checkout</h2>
+            <p className="mt-4 text-base leading-8 text-[#6f7988]">
+              Your current selection contains manual-pricing items. Continue to the quote request page so the team can review your size, quantity, and project notes.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/checkout"
+                href="/inquiry"
                 className="inline-flex items-center justify-center gap-3 rounded-full bg-[#86f556] px-6 py-3 font-bold text-[#132117] transition hover:bg-[#73e543]"
               >
-                Checkout
+                Request Quote
               </Link>
               <Link
                 href="/shop"
@@ -172,20 +262,20 @@ export function InquiryPageClient() {
               Mixed basket detected
             </p>
             <h2 className="mt-4 text-2xl font-black text-[#183109] sm:text-3xl">
-              Quote items stay here, priced items move to checkout
+              Checkout can continue, and quote items stay separate
             </h2>
             <p className="mt-4 text-base leading-8 text-[#6f7988]">
-              You have {cartLines.length} fixed-price item{cartLines.length === 1 ? "" : "s"} with a reference subtotal of {formatPkr(subtotal)}. Those items stay ready for checkout while you send the quote request below for manual-pricing products.
+              You have {quoteLines.length} manual-pricing item{quoteLines.length === 1 ? "" : "s"} that still need a quote request. Fixed-price items can continue through checkout without losing the quote basket.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/checkout"
+                href="/inquiry?mode=mixed"
                 className="inline-flex items-center justify-center gap-3 rounded-full border border-[#d6dfcb] px-6 py-3 font-bold text-[#183109] transition hover:border-[#86f556] hover:text-[#5c953f]"
               >
-                Checkout Priced Items
+                Request Quote for Remaining Items
               </Link>
               <div className="inline-flex items-center rounded-full bg-[#eff8e7] px-4 py-3 text-sm font-semibold text-[#183109]">
-                Quote request below will only submit the manual-pricing products.
+                Checkout handles priced items; inquiry handles custom pricing.
               </div>
             </div>
           </div>
@@ -197,10 +287,10 @@ export function InquiryPageClient() {
               <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <div>
                   <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-                    Request quote
+                    Checkout
                   </p>
                   <h2 className="mt-4 text-3xl font-black leading-tight text-[#183109] sm:text-4xl md:text-5xl">
-                    Review quote-led items before WhatsApp
+                    Review fixed-price items before payment confirmation
                   </h2>
                 </div>
                 <Link
@@ -213,32 +303,32 @@ export function InquiryPageClient() {
               </div>
 
               <p className="mt-6 text-sm leading-7 text-[#6f7988] sm:text-base sm:leading-8">
-                Keep manual-pricing products in one place, then send a clear WhatsApp request with quantity, city, and project notes.
+                Submit delivery details, choose a payment method, and share the transaction reference so the order can move into manual verification.
               </p>
             </div>
 
             {!isReady ? (
               <div className="rounded-[1.7rem] border border-[#e6ebde] bg-white p-8 text-[#6f7988] shadow-[0_18px_45px_rgba(16,23,18,0.05)] sm:rounded-[2rem]">
-                Loading your selected items...
+                Loading your checkout items...
               </div>
             ) : null}
 
-            {quoteLines.length > 0 ? (
+            {cartLines.length > 0 ? (
               <div className="rounded-[1.7rem] border border-[#e6ebde] bg-white p-5 shadow-[0_18px_45px_rgba(16,23,18,0.05)] sm:rounded-[2rem] sm:p-7 md:p-8">
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
-                      Quote-led products
+                      Checkout items
                     </p>
-                    <h3 className="mt-3 text-2xl font-black text-[#183109]">Pricing will be confirmed by the team</h3>
+                    <h3 className="mt-3 text-2xl font-black text-[#183109]">Fixed-price products ready to order</h3>
                   </div>
                   <span className="rounded-full bg-[#eff8e7] px-4 py-2 text-sm font-bold text-[#183109]">
-                    {quoteLines.length} item{quoteLines.length === 1 ? "" : "s"}
+                    {formatPkr(subtotal)}
                   </span>
                 </div>
 
                 <div className="mt-6 space-y-4">
-                  {quoteLines.map((line) => (
+                  {cartLines.map((line) => (
                     <article
                       key={line.key}
                       className="rounded-[1.5rem] border border-[#e6ebde] bg-[#f7f8f1] p-5"
@@ -307,9 +397,10 @@ export function InquiryPageClient() {
                             +
                           </button>
                         </div>
-                        <span className="rounded-full bg-white px-4 py-2 text-sm font-bold text-[#183109]">
-                          Quote required
-                        </span>
+                        <div className="text-left sm:text-right">
+                          <p className="text-sm text-[#6f7988]">Line total</p>
+                          <p className="text-lg font-black text-[#183109]">{formatPkr(line.lineTotalPkr ?? 0)}</p>
+                        </div>
                       </div>
                     </article>
                   ))}
@@ -322,20 +413,24 @@ export function InquiryPageClient() {
             <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#84dd58]">
               Buyer details
             </p>
-            <h2 className="mt-4 text-2xl font-black text-[#183109] sm:text-3xl">Send your quote request on WhatsApp</h2>
+            <h2 className="mt-4 text-2xl font-black text-[#183109] sm:text-3xl">
+              Submit order for verification
+            </h2>
             <p className="mt-5 text-sm leading-7 text-[#6f7988] sm:text-base sm:leading-8">
-              Share your contact details once, and the message will include the quote-led items in one clean inquiry.
+              Payment is confirmed manually after you submit the order and share the transaction reference.
             </p>
 
             {submitted ? (
               <div className="mt-6 rounded-2xl bg-[#eff8e7] px-5 py-4 text-sm font-medium text-[#183109]">
-                {saveMode === "browser-queue"
-                  ? whatsappVisible
-                    ? "Your quote request is ready in WhatsApp, and the selected details are safely saved on this device until you send the message."
-                    : "Your selected details are safely saved on this device and ready for follow-up."
-                  : whatsappVisible
-                    ? "Your request details were received, and the WhatsApp message is ready to send."
-                    : "Your request details were received successfully."}
+                {saveMode === "local-file"
+                  ? "Your order request was saved locally for development and is now pending payment verification."
+                  : "Your order request was received and is now pending payment verification."}
+              </div>
+            ) : null}
+
+            {submitError ? (
+              <div className="mt-6 rounded-2xl bg-[#fff0ef] px-5 py-4 text-sm font-medium text-[#a03328]">
+                {submitError}
               </div>
             ) : null}
 
@@ -350,17 +445,16 @@ export function InquiryPageClient() {
                 {errors.name ? <p className="mt-2 text-sm text-red-500">{errors.name.message}</p> : null}
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium text-primary">Phone / WhatsApp</label>
-                <input
-                  {...register("phone", { required: "Phone number is required" })}
-                  type="tel"
-                  className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 outline-none transition focus:border-sky"
-                />
-                {errors.phone ? <p className="mt-2 text-sm text-red-500">{errors.phone.message}</p> : null}
-              </div>
-
               <div className="grid gap-5 md:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-primary">Phone / WhatsApp</label>
+                  <input
+                    {...register("phone", { required: "Phone number is required" })}
+                    type="tel"
+                    className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 outline-none transition focus:border-sky"
+                  />
+                  {errors.phone ? <p className="mt-2 text-sm text-red-500">{errors.phone.message}</p> : null}
+                </div>
                 <div>
                   <label className="mb-2 block text-sm font-medium text-primary">Email Address</label>
                   <input
@@ -370,6 +464,9 @@ export function InquiryPageClient() {
                   />
                   {errors.email ? <p className="mt-2 text-sm text-red-500">{errors.email.message}</p> : null}
                 </div>
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2">
                 <div>
                   <label className="mb-2 block text-sm font-medium text-primary">City</label>
                   <input
@@ -379,75 +476,124 @@ export function InquiryPageClient() {
                   />
                   {errors.city ? <p className="mt-2 text-sm text-red-500">{errors.city.message}</p> : null}
                 </div>
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-primary">Address</label>
+                  <input
+                    {...register("address", { required: "Delivery address is required" })}
+                    type="text"
+                    className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 outline-none transition focus:border-sky"
+                  />
+                  {errors.address ? <p className="mt-2 text-sm text-red-500">{errors.address.message}</p> : null}
+                </div>
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-primary">Project Notes</label>
+                <label className="mb-3 block text-sm font-medium text-primary">Payment Method</label>
+                <div className="grid gap-3">
+                  {paymentOptions.map((option) => {
+                    const isActive = paymentMethod === option.id;
+                    return (
+                      <label
+                        key={option.id}
+                        className={`flex cursor-pointer items-start gap-4 rounded-[1.4rem] border px-4 py-4 transition ${
+                          isActive
+                            ? "border-[#86f556] bg-[#eff8e7]"
+                            : "border-[#e6ebde] bg-[#f7f8f1]"
+                        }`}
+                      >
+                        <input
+                          {...register("paymentMethod", { required: "Please choose a payment method" })}
+                          type="radio"
+                          value={option.id}
+                          className="mt-1"
+                        />
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3">
+                            <option.icon className="text-[#5c953f]" />
+                            <p className="font-black text-[#183109]">{option.title}</p>
+                          </div>
+                          <p className="mt-2 text-sm font-semibold text-[#183109]">{option.description}</p>
+                          <p className="mt-1 text-sm leading-6 text-[#6f7988]">{option.detail}</p>
+                        </div>
+                      </label>
+                    );
+                  })}
+                </div>
+                {errors.paymentMethod ? (
+                  <p className="mt-2 text-sm text-red-500">{errors.paymentMethod.message}</p>
+                ) : null}
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-primary">{referenceLabel}</label>
+                <input
+                  {...register("reference", {
+                    required: "Transaction or payment reference is required",
+                  })}
+                  type="text"
+                  className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 outline-none transition focus:border-sky"
+                  placeholder={
+                    paymentMethod === "bank-transfer"
+                      ? "Enter the bank transfer reference"
+                      : "Enter the JazzCash transaction ID"
+                  }
+                />
+                {errors.reference ? <p className="mt-2 text-sm text-red-500">{errors.reference.message}</p> : null}
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-primary">Order Notes</label>
                 <textarea
                   {...register("notes")}
-                  rows={5}
+                  rows={4}
                   className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 outline-none transition focus:border-sky"
-                  placeholder="Share installation needs, quantities, delivery notes, or custom design requirements."
+                  placeholder="Share delivery timing, installation notes, or anything the team should confirm before dispatch."
                 />
               </div>
 
               <button
                 type="submit"
-                disabled={isSubmitting || quoteLines.length === 0}
+                disabled={isSubmitting || cartLines.length === 0}
                 className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#86f556] px-6 py-4 font-bold text-[#132117] transition hover:bg-[#73e543] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                <FaWhatsapp />
-                {isSubmitting
-                  ? "Saving request..."
-                  : whatsappVisible
-                    ? "WhatsApp Quote Request"
-                    : "Request Quote"}
+                <FaCheckCircle />
+                {isSubmitting ? "Submitting order..." : "Place Order for Verification"}
               </button>
             </form>
 
             <div className="mt-8 rounded-[1.5rem] bg-[#f7f8f1] p-5">
-              <h3 className="text-lg font-black text-[#183109]">Summary</h3>
+              <h3 className="text-lg font-black text-[#183109]">Checkout summary</h3>
               <div className="mt-4 space-y-3 text-sm text-[#6f7988]">
                 <div className="flex items-center justify-between gap-3">
-                  <span>Quote items</span>
-                  <span className="font-semibold text-[#183109]">{quoteLines.length}</span>
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <span>Checkout items ready</span>
+                  <span>Checkout items</span>
                   <span className="font-semibold text-[#183109]">{cartLines.length}</span>
                 </div>
+                <div className="flex items-center justify-between gap-3">
+                  <span>Quote items still pending</span>
+                  <span className="font-semibold text-[#183109]">{quoteLines.length}</span>
+                </div>
                 <div className="flex items-center justify-between gap-3 border-t border-[#dbe6cf] pt-3">
-                  <span>Checkout reference subtotal</span>
+                  <span>Reference subtotal</span>
                   <span className="font-black text-[#183109]">{formatPkr(subtotal)}</span>
                 </div>
               </div>
 
-              <div className="mt-5 flex flex-col gap-3">
-                {cartLines.length > 0 ? (
-                  <Link
-                    href="/checkout"
-                    className="inline-flex items-center justify-center gap-3 rounded-full border border-[#d6dfcb] px-5 py-3 text-sm font-bold text-[#183109] transition hover:border-[#86f556] hover:text-[#5c953f]"
-                  >
-                    Checkout Fixed-Price Items
-                  </Link>
-                ) : null}
-                <button
-                  type="button"
-                  onClick={clearBasket}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#6f7988] transition hover:text-[#183109]"
-                >
-                  <FaTrash />
-                  Clear all selected items
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => clearItemsByMode("cart")}
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#6f7988] transition hover:text-[#183109]"
+              >
+                <FaTrash />
+                Clear checkout items
+              </button>
             </div>
           </div>
         </div>
 
         <PaymentInfoPanel
           paymentInfo={defaultPaymentInfo}
-          title="Manual payment details"
-          description="Payment options stay informational here so buyers can review COD, JazzCash, and company account guidance before final WhatsApp confirmation."
+          title="Accepted payment methods"
+          description="Checkout uses manual payment verification. Submit the correct reference after paying by JazzCash or bank transfer so the team can confirm dispatch."
         />
       </div>
     </section>

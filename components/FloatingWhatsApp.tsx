@@ -5,30 +5,52 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { ClipboardList, MessageCircle, ShoppingBag } from "lucide-react";
 
+import { useStore } from "@/components/store/StoreProvider";
 import { hasPublicWhatsApp } from "@/lib/site-config";
+import { getBasketDestination } from "@/lib/store";
 import { getPageAwareWhatsAppMessage, getWhatsAppEntryLink } from "@/lib/whatsapp";
 
 export function FloatingWhatsApp() {
   const pathname = usePathname();
+  const { items } = useStore();
   const whatsappVisible = hasPublicWhatsApp();
   const href = getWhatsAppEntryLink(getPageAwareWhatsAppMessage(pathname));
-  const mobileSecondaryAction = pathname.startsWith("/shop")
-    ? {
-        href: "/inquiry",
-        label: "Request Quote",
-        icon: ClipboardList,
-      }
-    : pathname === "/inquiry"
+  const basketDestination = getBasketDestination(items);
+  const mobileSecondaryAction = pathname === "/checkout"
+    ? basketDestination.hasQuote
       ? {
-          href: "/shop",
-          label: "View Details",
-          icon: ShoppingBag,
+          href: "/inquiry?mode=mixed",
+          label: "Request Quote",
+          icon: ClipboardList,
         }
       : {
           href: "/shop",
           label: "View Details",
           icon: ShoppingBag,
-        };
+        }
+    : pathname === "/inquiry"
+      ? basketDestination.hasCart
+        ? {
+            href: "/checkout",
+            label: "Checkout",
+            icon: ShoppingBag,
+          }
+        : {
+            href: "/shop",
+            label: "View Details",
+            icon: ShoppingBag,
+          }
+      : basketDestination.label !== "Browse Shop"
+        ? {
+            href: basketDestination.href,
+            label: basketDestination.label,
+            icon: basketDestination.label === "Checkout" ? ShoppingBag : ClipboardList,
+          }
+        : {
+            href: "/shop",
+            label: "View Details",
+            icon: ShoppingBag,
+          };
   const sharedProps = {
     className:
       "group fixed bottom-4 right-4 z-[115] hidden items-center justify-center rounded-full bg-[#25D366] p-3.5 text-white shadow-[0_18px_40px_rgba(37,211,102,0.36)] transition hover:bg-[#1da851] sm:bottom-6 sm:right-6 sm:flex sm:p-4",

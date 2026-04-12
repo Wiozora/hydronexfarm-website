@@ -106,6 +106,7 @@ export function Footer() {
             <h3 className="text-xl font-black">Support</h3>
             <div className="mt-5 space-y-4 text-white/76">
               {[
+                { label: "Checkout", href: "/checkout" },
                 { label: "Request Quote", href: "/inquiry" },
                 { label: "Privacy Policy", href: "/privacy-policy" },
                 { label: "Terms & Conditions", href: "/terms-and-conditions" },

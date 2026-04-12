@@ -3,7 +3,12 @@ import { FaArrowRight, FaClipboardList } from "react-icons/fa";
 
 import { PageHero } from "@/components/PageHero";
 import { ProductDetailClient } from "@/components/store/ProductDetailClient";
-import { getCategoryPath, getProductPath } from "@/lib/store";
+import {
+  getCategoryPath,
+  getDefaultVariant,
+  getProductPath,
+  getVariantMode,
+} from "@/lib/store";
 import type { StoreCategory, StoreProduct } from "@/types";
 
 type ProductPageSectionsProps = {
@@ -15,12 +20,14 @@ export function ProductPageSections({
   product,
   category,
 }: ProductPageSectionsProps) {
+  const defaultMode = getVariantMode(getDefaultVariant(product));
+
   return (
     <>
       <PageHero
         eyebrow={category?.tag ?? product.tag}
         title={product.name}
-        description={product.summary}
+        description={product.description}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Shop", href: "/shop" },
@@ -31,12 +38,12 @@ export function ProductPageSections({
         backgroundContext={`${product.categorySlug} ${product.name}`}
         quickActions={[
           {
-            label: "Request Quote",
-            href: "/inquiry",
-            icon: FaClipboardList,
+            label: defaultMode === "cart" ? "Go to Checkout" : "Request Quote",
+            href: defaultMode === "cart" ? "/checkout" : "/inquiry",
+            icon: defaultMode === "cart" ? FaArrowRight : FaClipboardList,
           },
           {
-            label: "View Details",
+            label: category ? `More ${category.shortName}` : "View Shop",
             href: category ? getCategoryPath(category) : "/shop",
             icon: FaArrowRight,
             variant: "secondary",

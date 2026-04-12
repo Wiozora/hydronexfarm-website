@@ -31,7 +31,7 @@ const schema = {
   "@type": "Store",
   name: siteConfig.storeName,
   description:
-    '19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories',
+    '19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories with checkout and quote support',
   url: siteConfig.siteUrl,
   ...(hasPublicPhone() ? { telephone: siteConfig.phone } : {}),
   address: {
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: "I CAN ENERGIES | Battery Cases, Hydroponics Systems, and T & V-Slots",
   description:
-    'Browse 19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories with WhatsApp inquiry support.',
+    'Browse 19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories with checkout and quote support.',
   keywords: [
     '19" battery box Pakistan',
     '19" battery brackets Pakistan',
@@ -89,7 +89,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "I CAN ENERGIES | Battery Cases, Hydroponics Systems, and T & V-Slots",
     description:
-      'Browse 19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories.',
+      'Browse 19" battery cases, hydroponics systems, and T & V-Slot aluminum accessories with checkout and quote support.',
     type: "website",
     url: siteConfig.siteUrl,
     siteName: siteConfig.storeName,

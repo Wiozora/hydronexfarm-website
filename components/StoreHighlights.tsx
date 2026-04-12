@@ -20,11 +20,11 @@ const highlights = [
     hoverCopy: "Open a category, compare the main options, and move straight into the product page that matches your requirement.",
   },
   {
-    title: "Move straight to WhatsApp",
+    title: "Choose checkout or quote",
     icon: FaTruck,
     image: "/products/battery/cases/case-front.jpeg",
-    label: "Simple inquiry",
-    hoverCopy: "This keeps the journey focused on one goal: product details first, then a clean WhatsApp conversation.",
+    label: "Hybrid flow",
+    hoverCopy: "Fixed-price items can now continue to checkout, while custom or quote-led items still move into a clean WhatsApp conversation.",
   },
 ];
 

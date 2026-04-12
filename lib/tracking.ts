@@ -34,6 +34,9 @@ export function trackEvent(
     case "begin_checkout":
       window.fbq("track", "InitiateCheckout", cleanPayload);
       break;
+    case "add_payment_info":
+      window.fbq("track", "AddPaymentInfo", cleanPayload);
+      break;
     default:
       window.fbq("trackCustom", eventName, cleanPayload);
       break;

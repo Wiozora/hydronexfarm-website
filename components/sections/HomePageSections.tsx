@@ -6,6 +6,7 @@ import { ProjectsShowcase } from "@/components/ProjectsShowcase";
 import { ServiceAreaSection } from "@/components/ServiceAreaSection";
 import { ShopCategories } from "@/components/ShopCategories";
 import { StoreHighlights } from "@/components/StoreHighlights";
+import { Testimonials } from "@/components/Testimonials";
 import { TrustSection } from "@/components/TrustSection";
 import { StoreProcess } from "@/components/store/StoreProcess";
 
@@ -17,6 +18,7 @@ export function HomePageSections() {
       <ShopCategories />
       <FeaturedProducts />
       <TrustSection />
+      <Testimonials />
       <ProjectsShowcase />
       <ServiceAreaSection />
       <StoreProcess />

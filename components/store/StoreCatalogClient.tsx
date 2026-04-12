@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { ProductCard } from "@/components/store/ProductCard";
 import { storeCategories } from "@/data/store-catalog";
+import { getDefaultVariant, getVariantMode } from "@/lib/store";
 import type { StoreProduct } from "@/types";
 
 export function StoreCatalogClient({
@@ -25,6 +26,10 @@ export function StoreCatalogClient({
     (product) =>
       !showCategoryFilters || activeCategory === "all" || product.categorySlug === activeCategory,
   );
+  const readyPriceCount = filteredProducts.filter(
+    (product) => getVariantMode(getDefaultVariant(product)) === "cart",
+  ).length;
+  const quoteOnlyCount = filteredProducts.length - readyPriceCount;
 
   return (
     <section id="products" className="bg-[#f7f8f1] py-18 md:py-22 lg:py-24">
@@ -77,9 +82,17 @@ export function StoreCatalogClient({
             </div>
           ) : null}
 
-          <p className="text-sm font-semibold text-[#6f7988]">
-            Showing {filteredProducts.length} product{filteredProducts.length === 1 ? "" : "s"}
-          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="text-sm font-semibold text-[#6f7988]">
+              Showing {filteredProducts.length} product{filteredProducts.length === 1 ? "" : "s"}
+            </p>
+            <span className="rounded-full bg-[#eff8e7] px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] text-[#5c953f]">
+              {readyPriceCount} checkout ready
+            </span>
+            <span className="rounded-full border border-[#dbe6cf] px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] text-[#183109]">
+              {quoteOnlyCount} quote led
+            </span>
+          </div>
         </div>
 
         {filteredProducts.length > 0 ? (

@@ -1,4 +1,5 @@
 import { storeCategories, storeProducts } from "@/data/store-catalog";
+import { testimonials, type Testimonial } from "@/data/testimonials";
 import { formatPkr } from "@/lib/utils";
 import type {
   BasketItem,
@@ -19,6 +20,15 @@ export type HydratedBasketLine = {
   href: string;
   unitPricePkr?: number;
   lineTotalPkr?: number;
+};
+
+export type BasketDestination = {
+  href: string;
+  label: string;
+  cartCount: number;
+  quoteCount: number;
+  hasCart: boolean;
+  hasQuote: boolean;
 };
 
 export function getStoreCategories() {
@@ -50,6 +60,33 @@ export function getRelatedProducts(product: StoreProduct) {
     (candidate) =>
       candidate.categorySlug === product.categorySlug && candidate.slug !== product.slug,
   );
+}
+
+export function getTestimonialsByIds(ids: string[] = []) {
+  return ids
+    .map((id) => testimonials.find((testimonial) => testimonial.id === id))
+    .filter((testimonial): testimonial is Testimonial => Boolean(testimonial));
+}
+
+export function getTestimonialsForCategory(categorySlug: string) {
+  const category = getCategoryBySlug(categorySlug);
+
+  if (category?.testimonialIds?.length) {
+    return getTestimonialsByIds(category.testimonialIds);
+  }
+
+  return testimonials.filter((testimonial) => testimonial.categorySlugs.includes(categorySlug));
+}
+
+export function getTestimonialsForProduct(product: StoreProduct) {
+  if (product.testimonialIds?.length) {
+    return getTestimonialsByIds(product.testimonialIds);
+  }
+
+  return testimonials.filter((testimonial) => {
+    const matchesProduct = testimonial.productSlugs?.includes(product.slug) ?? false;
+    return matchesProduct || testimonial.categorySlugs.includes(product.categorySlug);
+  });
 }
 
 export function getCategoryPath(category: Pick<StoreCategory, "slug">) {
@@ -128,16 +165,42 @@ export function getPriceLabel(product: StoreProduct, variant?: StoreVariant) {
 }
 
 export function getModeLabel(mode: BasketMode) {
-  void mode;
-  return "Request Quote";
+  return mode === "cart" ? "Checkout" : "Request Quote";
 }
 
 export function getModeSummary(mode: BasketMode) {
-  return mode === "cart" ? "Ready-price product" : "Quote-based product";
+  return mode === "cart" ? "Fixed-price item" : "Manual quote item";
 }
 
 export function getCategoryProductCount(categorySlug: string) {
   return getProductsByCategorySlug(categorySlug).length;
+}
+
+export function getCategoryCommerceSummary(categorySlug: string) {
+  const modes = new Set(
+    getProductsByCategorySlug(categorySlug).flatMap((product) => getProductModes(product)),
+  );
+  const hasCart = modes.has("cart");
+  const hasQuote = modes.has("quote");
+
+  if (hasCart && hasQuote) {
+    return {
+      badge: "Mixed paths",
+      detail: "Checkout-ready products plus quote-led support",
+    };
+  }
+
+  if (hasCart) {
+    return {
+      badge: "Checkout ready",
+      detail: "Fixed-price ordering available",
+    };
+  }
+
+  return {
+    badge: "Quote-led",
+    detail: "Manual pricing and support",
+  };
 }
 
 export function hydrateBasketItems(items: BasketItem[]): HydratedBasketLine[] {
@@ -181,6 +244,85 @@ export function getBasketCount(items: BasketItem[]) {
   return items.reduce((total, item) => total + item.quantity, 0);
 }
 
+export function getBasketModeCounts(items: BasketItem[]) {
+  return items.reduce(
+    (summary, item) => {
+      if (item.mode === "cart") {
+        summary.cartCount += item.quantity;
+      } else {
+        summary.quoteCount += item.quantity;
+      }
+
+      return summary;
+    },
+    { cartCount: 0, quoteCount: 0 },
+  );
+}
+
+export function getBasketDestination(items: BasketItem[]): BasketDestination {
+  const { cartCount, quoteCount } = getBasketModeCounts(items);
+  const hasCart = cartCount > 0;
+  const hasQuote = quoteCount > 0;
+
+  if (hasCart && hasQuote) {
+    return {
+      href: "/inquiry?mode=mixed",
+      label: "Review Basket",
+      cartCount,
+      quoteCount,
+      hasCart,
+      hasQuote,
+    };
+  }
+
+  if (hasCart) {
+    return {
+      href: "/checkout",
+      label: "Checkout",
+      cartCount,
+      quoteCount,
+      hasCart,
+      hasQuote,
+    };
+  }
+
+  if (hasQuote) {
+    return {
+      href: "/inquiry",
+      label: "Request Quote",
+      cartCount,
+      quoteCount,
+      hasCart,
+      hasQuote,
+    };
+  }
+
+  return {
+    href: "/shop",
+    label: "Browse Shop",
+    cartCount,
+    quoteCount,
+    hasCart,
+    hasQuote,
+  };
+}
+
+export function getProductTrustHighlights(product: StoreProduct) {
+  if (product.trustHighlights?.length) {
+    return product.trustHighlights;
+  }
+
+  return getCategoryBySlug(product.categorySlug)?.trustHighlights ?? [];
+}
+
+export function getProductFaqs(product: StoreProduct) {
+  if (product.faqs?.length) {
+    return product.faqs;
+  }
+
+  return getCategoryBySlug(product.categorySlug)?.faqs ?? [];
+}
+
 export function getProductSelectOptions() {
   return storeProducts.map((product) => ({
     value: product.slug,
@@ -211,30 +353,12 @@ export function buildStoreInquiryMessage(
   lines: HydratedBasketLine[],
   customer: InquiryCustomer,
 ) {
-  const cartLines = lines.filter((line) => line.mode === "cart");
   const quoteLines = lines.filter((line) => line.mode === "quote");
-  const hasCart = cartLines.length > 0;
   const hasQuote = quoteLines.length > 0;
 
-  const opening = hasCart && hasQuote
-    ? "Hi! I'm contacting I CAN ENERGIES from the website. I want pricing and guidance for the selected products."
-    : hasCart
-      ? "Hi! I'm contacting I CAN ENERGIES from the website. I want pricing and product guidance."
-      : "Hi! I'm contacting I CAN ENERGIES from the website. I want to request a quote.";
-
-  const cartSection = hasCart
-    ? [
-        "",
-        "Products with listed pricing:",
-        ...cartLines.map(
-          (line, index) =>
-            `${index + 1}. ${line.product.name} - ${line.variant.name} x ${line.quantity} - ${formatPkr(
-              line.lineTotalPkr ?? 0,
-            )}`,
-        ),
-        `Reference subtotal: ${formatPkr(getBasketSubtotal(cartLines))}`,
-      ]
-    : [];
+  const opening = hasQuote
+    ? "Hi! I'm contacting I CAN ENERGIES from the website. I want a quote for the selected items."
+    : "Hi! I'm contacting I CAN ENERGIES from the website. I want help with my product requirement.";
 
   const quoteSection = hasQuote
     ? [
@@ -256,7 +380,6 @@ export function buildStoreInquiryMessage(
     `Phone / WhatsApp: ${customer.phone}`,
     `Email: ${customer.email}`,
     `City: ${customer.city}`,
-    ...cartSection,
     ...quoteSection,
     ...notesSection,
     "",

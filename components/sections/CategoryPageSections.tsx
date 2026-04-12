@@ -2,6 +2,7 @@ import { FaArrowRight, FaClipboardList } from "react-icons/fa";
 
 import { PageHero } from "@/components/PageHero";
 import { StoreCatalogClient } from "@/components/store/StoreCatalogClient";
+import { getCategoryCommerceSummary } from "@/lib/store";
 import type { StoreCategory, StoreProduct } from "@/types";
 
 type CategoryPageSectionsProps = {
@@ -13,6 +14,8 @@ export function CategoryPageSections({
   category,
   products,
 }: CategoryPageSectionsProps) {
+  const commerceSummary = getCategoryCommerceSummary(category.slug);
+
   return (
     <>
       <PageHero
@@ -28,12 +31,15 @@ export function CategoryPageSections({
         backgroundContext={category.slug}
         quickActions={[
           {
-            label: "Request Quote",
-            href: "/inquiry",
-            icon: FaClipboardList,
+            label:
+              commerceSummary.badge === "Quote-led"
+                ? "Request Quote"
+                : "Browse Ready-Price Items",
+            href: commerceSummary.badge === "Quote-led" ? "/inquiry" : "#products",
+            icon: commerceSummary.badge === "Quote-led" ? FaClipboardList : FaArrowRight,
           },
           {
-            label: "View Details",
+            label: "View Shop",
             href: "/shop",
             icon: FaArrowRight,
             variant: "secondary",
@@ -44,7 +50,7 @@ export function CategoryPageSections({
       <StoreCatalogClient
         products={products}
         title={`Explore ${category.shortName}`}
-        intro="Products stay grouped inside this category so buyers can compare the right options before they request pricing or support."
+        intro="Products stay grouped inside this category so buyers can compare the right options before they continue to checkout or request pricing support."
         defaultCategory={category.slug}
         showCategoryFilters={false}
       />
