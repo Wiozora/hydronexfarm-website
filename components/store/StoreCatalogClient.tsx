@@ -83,9 +83,9 @@ export function StoreCatalogClient({
         </div>
 
         {filteredProducts.length > 0 ? (
-          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.slug} product={product} />
+              <ProductCard key={product.slug} product={product} variant="catalog" />
             ))}
           </div>
         ) : (

@@ -141,9 +141,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-6 text-center text-sm text-white/72 md:flex-row md:text-left">
-          <p>All rights reserved (c) 2026 {siteConfig.storeName}</p>
-          {visibleSocialLinks.length > 0 ? (
+        {visibleSocialLinks.length > 0 ? (
+          <div className="mt-8 flex justify-center md:justify-end">
             <div className="flex items-center gap-4">
               {visibleSocialLinks.map((item) => (
                 <a
@@ -158,14 +157,9 @@ export function Footer() {
                 </a>
               ))}
             </div>
-          ) : (
-            <p className="text-center text-xs font-bold uppercase tracking-[0.18em] text-white/46 md:text-right">
-              Social links can be published later
-            </p>
-          )}
-        </div>
+          </div>
+        ) : null}
       </div>
     </footer>
   );
 }
-

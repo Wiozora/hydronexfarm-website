@@ -7,7 +7,6 @@ import { FaBoxOpen, FaCubes, FaTruck } from "react-icons/fa";
 const highlights = [
   {
     title: "Know what we sell quickly",
-    copy: "The homepage now leads buyers into clear product groups instead of making them guess what the business offers.",
     icon: FaBoxOpen,
     image: "/products/hydroponics/client/tower-greenhouse-row.jpeg",
     label: "Clear offer",
@@ -15,7 +14,6 @@ const highlights = [
   },
   {
     title: "Choose the right product faster",
-    copy: "Each category leads to real products, real images, and useful details so buyers can shortlist with more confidence.",
     icon: FaCubes,
     image: "/products/aluminum/frames/frame-workstation.jpeg",
     label: "Better structure",
@@ -23,7 +21,6 @@ const highlights = [
   },
   {
     title: "Move straight to WhatsApp",
-    copy: "The flow is built around inquiry, so buyers can ask about the right product, quantity, city, or custom requirement without extra steps.",
     icon: FaTruck,
     image: "/products/battery/cases/case-front.jpeg",
     label: "Simple inquiry",
@@ -77,9 +74,6 @@ export function StoreHighlights() {
                 <h2 className="text-lg font-black text-[#183109] transition duration-500 group-hover:-translate-y-2 group-hover:text-white group-focus-within:-translate-y-2 group-focus-within:text-white sm:text-xl">
                   {item.title}
                 </h2>
-                <p className="mt-3 text-sm leading-6 text-[#6f7988] transition duration-500 group-hover:-translate-y-2 group-hover:text-white/88 group-focus-within:-translate-y-2 group-focus-within:text-white/88 sm:leading-7 md:text-base">
-                  {item.copy}
-                </p>
 
                 <div className="overflow-hidden pt-4">
                   <p className="translate-y-6 text-sm font-semibold leading-6 text-white/88 opacity-0 transition duration-500 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">

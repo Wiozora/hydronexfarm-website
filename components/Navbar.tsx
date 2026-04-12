@@ -38,6 +38,7 @@ const navLinks = [
   { label: "Hydroponics", href: "/shop/hydroponics-systems" },
   { label: "T & V-Slots", href: "/shop/t-v-slots" },
 ];
+const mobileNavLinks = navLinks.filter((link) => link.href === "/" || link.href === "/shop");
 
 const socialLinkDefs = [
   { label: "Facebook", href: siteConfig.socials.facebook, icon: FaFacebookF },
@@ -55,8 +56,6 @@ export function Navbar() {
   const quickActionHref = getWhatsAppEntryLink(getPageAwareWhatsAppMessage(pathname));
   const quickActionExternal = shouldOpenWhatsAppInNewTab();
   const visibleSocialLinks = socialLinkDefs.filter((item) => hasPublicSocialLink(item.href));
-  const mobileSocialLinks = (visibleSocialLinks.length > 0 ? visibleSocialLinks : socialLinkDefs).slice(0, 4);
-
   useEffect(() => {
     const onScroll = () => {
       setIsScrolled(window.scrollY > 80);
@@ -101,15 +100,7 @@ export function Navbar() {
                 <FaEnvelope className="text-[#86f556]" />
                 {siteConfig.email}
               </a>
-            ) : (
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-3 transition hover:text-[#86f556]"
-              >
-                <FaEnvelope className="text-[#86f556]" />
-                Email shared on inquiry
-              </Link>
-            )}
+            ) : null}
             {directPhoneVisible ? (
               <a
                 href={getPublicPhoneHref()}
@@ -234,7 +225,7 @@ export function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={whatsappVisible ? "WhatsApp Now" : "Request Quote"}
-                  className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#86f556] text-[#132117] sm:inline-flex sm:h-11 sm:w-11"
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#86f556] text-[#132117] sm:h-11 sm:w-11"
                 >
                   <FaWhatsapp />
                 </a>
@@ -242,14 +233,11 @@ export function Navbar() {
                 <Link
                   href={quickActionHref}
                   aria-label="Request Quote"
-                  className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#86f556] text-[#132117] sm:inline-flex sm:h-11 sm:w-11"
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#86f556] text-[#132117] sm:h-11 sm:w-11"
                 >
                   <FaWhatsapp />
                 </Link>
               )}
-              <div className="hidden sm:block">
-                <BasketButton compact />
-              </div>
               <button
                 type="button"
                 onClick={() => setIsOpen((current) => !current)}
@@ -270,7 +258,7 @@ export function Navbar() {
                 className={mobilePanelClasses}
               >
                 <div className="flex flex-col gap-2 px-4 py-4 sm:px-5">
-                  {navLinks.map((link) => (
+                  {mobileNavLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
@@ -284,73 +272,6 @@ export function Navbar() {
                       {link.label}
                     </Link>
                   ))}
-
-                  <div className="mt-2 rounded-[1.4rem] bg-[#f7f8f1] p-4 text-sm text-[#58636f]">
-                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#79d84a]">
-                      Buyer support
-                    </p>
-                    <p className="mt-3 leading-7">
-                      Share the product name, quantity, and city to start a clear WhatsApp inquiry.
-                    </p>
-                  </div>
-
-                  <div className="mt-2 rounded-[1.4rem] border border-white/45 bg-white/45 p-4 backdrop-blur-xl">
-                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#79d84a]">
-                      Social links
-                    </p>
-                    <div className="mt-3 flex flex-wrap gap-2.5">
-                      {mobileSocialLinks.map((item) => {
-                        const isLive = hasPublicSocialLink(item.href);
-
-                        return isLive ? (
-                          <a
-                            key={`mobile-panel-${item.label}`}
-                            href={item.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={item.label}
-                            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/50 bg-white/60 text-[#132117] transition hover:border-[#86f556] hover:text-[#79d84a]"
-                          >
-                            <item.icon />
-                          </a>
-                        ) : (
-                          <Link
-                            key={`mobile-panel-${item.label}`}
-                            href="/contact"
-                            aria-label={item.label}
-                            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/50 bg-white/60 text-[#132117] transition hover:border-[#86f556] hover:text-[#79d84a]"
-                          >
-                            <item.icon />
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <div className="pt-2" onClick={() => setIsOpen(false)}>
-                    <BasketButton />
-                  </div>
-
-                  {quickActionExternal ? (
-                    <a
-                      href={quickActionHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 inline-flex items-center justify-center gap-3 rounded-full bg-[#86f556] px-6 py-3 font-bold text-[#132117] transition hover:bg-[#73e543]"
-                    >
-                      <FaWhatsapp />
-                      {whatsappVisible ? "WhatsApp Now" : "Request Quote"}
-                    </a>
-                  ) : (
-                    <Link
-                      href={quickActionHref}
-                      onClick={() => setIsOpen(false)}
-                      className="mt-2 inline-flex items-center justify-center gap-3 rounded-full bg-[#86f556] px-6 py-3 font-bold text-[#132117] transition hover:bg-[#73e543]"
-                    >
-                      <FaWhatsapp />
-                      Request Quote
-                    </Link>
-                  )}
                 </div>
               </motion.div>
             ) : null}

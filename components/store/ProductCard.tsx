@@ -15,12 +15,55 @@ import type { StoreProduct } from "@/types";
 export function ProductCard({
   product,
   showCategory = true,
+  variant = "default",
 }: {
   product: StoreProduct;
   showCategory?: boolean;
+  variant?: "default" | "catalog";
 }) {
   const category = getCategoryBySlug(product.categorySlug);
   const whatsappHref = getProductWhatsAppLink(product.name);
+  const isCatalogVariant = variant === "catalog";
+
+  if (isCatalogVariant) {
+    return (
+      <article className="flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-[#e6ebde] bg-white transition-colors duration-300 hover:border-[#c6d9b9]">
+        <Link href={getProductPath(product)} className="block">
+          <div className="relative aspect-square w-full">
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, 50vw"
+              quality={95}
+              className="object-cover"
+            />
+          </div>
+        </Link>
+
+        <div className="flex flex-1 flex-col gap-4 p-4 sm:p-5">
+          <div className="space-y-3">
+            <h3 className="text-base font-black leading-snug text-[#183109] sm:text-lg">
+              <Link href={getProductPath(product)}>{product.name}</Link>
+            </h3>
+            <span className="inline-flex w-fit rounded-full bg-[#eff8e7] px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] text-[#5c953f]">
+              {getPriceLabel(product)}
+            </span>
+          </div>
+
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-auto inline-flex w-full items-center justify-center gap-3 rounded-full border border-[#d6dfcb] px-4 py-3 text-sm font-bold text-[#183109] transition-colors hover:border-[#86f556] hover:text-[#5c953f]"
+          >
+            <FaWhatsapp />
+            WhatsApp Now
+          </a>
+        </div>
+      </article>
+    );
+  }
 
   return (
     <article className="overflow-hidden rounded-[1.7rem] border border-[#e6ebde] bg-white shadow-[0_22px_55px_rgba(16,23,18,0.06)] transition hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(16,23,18,0.12)] sm:rounded-[2rem]">
