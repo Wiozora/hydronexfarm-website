@@ -32,7 +32,10 @@ export function StoreCatalogClient({
   const quoteOnlyCount = filteredProducts.length - readyPriceCount;
 
   return (
-    <section id="products" className="bg-[#f7f8f1] py-18 md:py-22 lg:py-24">
+    <section
+      id="products"
+      className="bg-[#f7f8f1] pb-18 pt-28 md:pb-22 md:pt-32 lg:pb-24 lg:pt-36"
+    >
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">

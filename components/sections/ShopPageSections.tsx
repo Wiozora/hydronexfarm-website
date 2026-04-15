@@ -1,4 +1,3 @@
-import { ShopCategories } from "@/components/ShopCategories";
 import { StoreCatalogClient } from "@/components/store/StoreCatalogClient";
 import type { StoreProduct } from "@/types";
 
@@ -9,8 +8,6 @@ type ShopPageSectionsProps = {
 export function ShopPageSections({ products }: ShopPageSectionsProps) {
   return (
     <>
-      <ShopCategories />
-
       <StoreCatalogClient
         products={products}
         title="Filter the full catalog"

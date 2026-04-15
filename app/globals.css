@@ -164,3 +164,23 @@
   background: #7fe64c !important;
   box-shadow: 0 0 0 6px rgba(126, 240, 77, 0.18) !important;
 }
+
+.testimonials-pagination {
+  position: static !important;
+}
+
+.testimonials-pagination .swiper-pagination-bullet {
+  width: 0.8rem !important;
+  height: 0.8rem !important;
+  margin: 0 !important;
+  border-radius: 9999px !important;
+  background: #bdd7ad !important;
+  opacity: 1 !important;
+  transition: all 200ms ease !important;
+}
+
+.testimonials-pagination .swiper-pagination-bullet-active {
+  width: 2.6rem !important;
+  background: #7fe64c !important;
+  box-shadow: 0 0 0 6px rgba(126, 240, 77, 0.16) !important;
+}

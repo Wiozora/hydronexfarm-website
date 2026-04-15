@@ -5,10 +5,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaArrowRight, FaTrash, FaWhatsapp } from "react-icons/fa";
 
-import { PaymentInfoPanel } from "@/components/store/SupportPanels";
 import { useStore } from "@/components/store/StoreProvider";
 import { captureLead } from "@/lib/lead-client";
-import { defaultPaymentInfo, hasPublicWhatsApp } from "@/lib/site-config";
+import { hasPublicWhatsApp } from "@/lib/site-config";
 import {
   buildStoreInquiryMessage,
   getBasketSubtotal,
@@ -444,11 +443,6 @@ export function InquiryPageClient() {
           </div>
         </div>
 
-        <PaymentInfoPanel
-          paymentInfo={defaultPaymentInfo}
-          title="Manual payment details"
-          description="Payment options stay informational here so buyers can review COD, JazzCash, and company account guidance before final WhatsApp confirmation."
-        />
       </div>
     </section>
   );

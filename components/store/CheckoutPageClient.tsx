@@ -14,10 +14,10 @@ import {
 import { PaymentInfoPanel } from "@/components/store/SupportPanels";
 import { useStore } from "@/components/store/StoreProvider";
 import { captureOrder } from "@/lib/order-client";
-import { defaultPaymentInfo } from "@/lib/site-config";
 import { getBasketSubtotal, hydrateBasketItems } from "@/lib/store";
 import { trackEvent } from "@/lib/tracking";
 import { formatPkr } from "@/lib/utils";
+import type { PaymentInfo } from "@/types";
 import type { OrderPaymentMethod } from "@/types/order";
 
 type CheckoutValues = {
@@ -45,10 +45,31 @@ const paymentOptions = [
     title: "Bank Transfer",
     description: "Company account transfer",
     detail:
-      "Use the listed bank details, then submit the bank transfer reference used for this order.",
+      "Submit the bank transfer reference used for this order so the team can confirm payment manually.",
     icon: FaUniversity,
   },
 ];
+
+const checkoutPaymentInfo: PaymentInfo = {
+  methods: [
+    {
+      id: "jazzcash",
+      title: "JazzCash",
+      description:
+        "Use JazzCash for confirmed checkout orders, then submit the same transaction reference in this form.",
+    },
+    {
+      id: "bank-transfer",
+      title: "Bank Transfer",
+      description:
+        "Use bank transfer for approved checkout orders, then submit the transfer reference for manual verification.",
+    },
+  ],
+  notes: [
+    "Exact payment instructions are confirmed during the order review process.",
+    "Use the same transaction or transfer reference here that you used during payment.",
+  ],
+};
 
 function buildOrderSummary(
   lines: ReturnType<typeof hydrateBasketItems>,
@@ -591,7 +612,7 @@ export function CheckoutPageClient() {
         </div>
 
         <PaymentInfoPanel
-          paymentInfo={defaultPaymentInfo}
+          paymentInfo={checkoutPaymentInfo}
           title="Accepted payment methods"
           description="Checkout uses manual payment verification. Submit the correct reference after paying by JazzCash or bank transfer so the team can confirm dispatch."
         />

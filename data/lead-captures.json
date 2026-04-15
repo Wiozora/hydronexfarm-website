@@ -26,5 +26,33 @@
     },
     "id": "9c850616-c589-446e-9f8b-c27cccaadef1",
     "submittedAt": "2026-03-27T21:03:09.709Z"
+  },
+  {
+    "source": "inquiry-basket",
+    "summary": "Hi! I'm contacting I CAN ENERGIES from the website. I want a quote for the selected items.\n\nName: Muhammad Abdullah Mubin\nPhone / WhatsApp: 03272591778\nEmail: abdullah1aa3063358@gmail.com\nCity: 700\n\nQuote request items:\n1. 19\" Battery Box 4U - 19\" Battery Box 4U x 1\n\nPlease confirm pricing, availability, delivery to my city, and the best next step.",
+    "customer": {
+      "name": "Muhammad Abdullah Mubin",
+      "phone": "03272591778",
+      "email": "abdullah1aa3063358@gmail.com",
+      "city": "700",
+      "notes": ""
+    },
+    "items": [
+      {
+        "product": "19\" Battery Box 4U",
+        "variant": "19\" Battery Box 4U",
+        "quantity": 1,
+        "mode": "quote",
+        "href": "/shop/battery-cases/19-inch-battery-box-4u"
+      }
+    ],
+    "metadata": {
+      "page": "/inquiry",
+      "subtotalPkr": 1200,
+      "cartItems": 1,
+      "quoteItems": 1
+    },
+    "id": "8751498b-2ff8-4d3a-9b04-e699a44383d9",
+    "submittedAt": "2026-04-15T00:48:40.891Z"
   }
 ]

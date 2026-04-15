@@ -193,6 +193,11 @@ export function PaymentInfoPanel({
   title?: string;
   description?: string;
 }) {
+  const bankDetails = paymentInfo.bankDetails ?? [];
+  const notes = paymentInfo.notes ?? [];
+  const hasBankDetails = bankDetails.length > 0;
+  const hasNotes = notes.length > 0;
+
   return (
     <section className="rounded-[2rem] border border-white/10 bg-[#102412] p-6 text-white shadow-[0_22px_50px_rgba(8,18,12,0.22)] sm:p-8">
       <SectionHeading eyebrow="Payments" title={title} description={description} />
@@ -214,35 +219,41 @@ export function PaymentInfoPanel({
         ))}
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="rounded-[1.5rem] border border-white/10 bg-black/14 p-5">
-          <h3 className="text-lg font-black text-white">{paymentInfo.heading ?? "Company account"}</h3>
-          <div className="mt-4 space-y-3">
-            {(paymentInfo.bankDetails ?? []).map((detail) => (
-              <div
-                key={detail.label}
-                className="flex items-start justify-between gap-4 rounded-[1rem] border border-white/10 bg-white/4 px-4 py-3"
-              >
-                <span className="text-xs font-bold uppercase tracking-[0.12em] text-white/55">
-                  {detail.label}
-                </span>
-                <span className="max-w-[62%] text-right text-sm font-semibold text-white">
-                  {detail.value}
-                </span>
+      {hasBankDetails || hasNotes ? (
+        <div className={`mt-8 grid gap-6 ${hasBankDetails && hasNotes ? "lg:grid-cols-[0.95fr_1.05fr]" : ""}`}>
+          {hasBankDetails ? (
+            <div className="rounded-[1.5rem] border border-white/10 bg-black/14 p-5">
+              <h3 className="text-lg font-black text-white">{paymentInfo.heading ?? "Company account"}</h3>
+              <div className="mt-4 space-y-3">
+                {bankDetails.map((detail) => (
+                  <div
+                    key={detail.label}
+                    className="flex items-start justify-between gap-4 rounded-[1rem] border border-white/10 bg-white/4 px-4 py-3"
+                  >
+                    <span className="text-xs font-bold uppercase tracking-[0.12em] text-white/55">
+                      {detail.label}
+                    </span>
+                    <span className="max-w-[62%] text-right text-sm font-semibold text-white">
+                      {detail.value}
+                    </span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          ) : null}
 
-        <div className="rounded-[1.5rem] border border-white/10 bg-white/4 p-5">
-          <h3 className="text-lg font-black text-white">Notes before confirmation</h3>
-          <div className="mt-4 space-y-3 text-sm leading-7 text-white/70">
-            {(paymentInfo.notes ?? []).map((note) => (
-              <p key={note}>{note}</p>
-            ))}
-          </div>
+          {hasNotes ? (
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/4 p-5">
+              <h3 className="text-lg font-black text-white">Notes before confirmation</h3>
+              <div className="mt-4 space-y-3 text-sm leading-7 text-white/70">
+                {notes.map((note) => (
+                  <p key={note}>{note}</p>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
-      </div>
+      ) : null}
     </section>
   );
 }
