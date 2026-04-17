@@ -5,10 +5,10 @@ import Image from "next/image";
 import { FaCheckCircle } from "react-icons/fa";
 
 const points = [
-  "Hydroponics plantation towers with 25 to 100 plant options",
-  "PaniPani pumps and nutrient planning support for hydroponics buyers",
-  "Aluminum V/T slots, connectors, frame stands, and enclosure builds",
-  "Battery racks, battery cases, and custom sheet metal fabrication support",
+  '19" battery boxes and brackets with cabinet-fit guidance',
+  "Hydroponics towers with fixed-price and quote-led buying paths",
+  "V Slot profiles and connectors for fabrication and frame planning",
+  "One cleaner flow for delivery notes, pricing support, and checkout",
 ];
 
 const mainImage = "/products/hydroponics/client/tower-greenhouse-wide.jpeg";
@@ -66,26 +66,21 @@ export function AboutSection() {
         >
           <div className="inline-flex items-center gap-3 text-sm font-bold uppercase tracking-[0.22em] text-[#b8da53]">
             <span className="h-6 w-[3px] rounded-full bg-[#b8da53]" />
-            About Us
+            Why I CAN ENERGIES
           </div>
 
-          <h2 className="mt-5 text-4xl font-black leading-[1.08] text-[#10203a] md:text-5xl lg:text-[4rem]">
-            I CAN ENERGIES
-            <br />
-            organizes practical
-            <br />
-            renewable products
-            <br />
-            into one cleaner
-            <br />
-            buying flow
+          <h2 className="mt-5 max-w-[11ch] text-4xl font-black leading-[1.08] text-[#10203a] md:max-w-none md:text-5xl lg:text-[3.6rem]">
+            One supplier for battery cases, hydroponics systems, and aluminum structure hardware
           </h2>
 
           <p className="mt-8 text-lg leading-8 text-[#6e7d94]">
-            The website now follows the actual client product list instead of generic demo items.
+            Whether you{"'"}re fitting battery enclosures for a power project, setting up a
+            hydroponic grow system, or sourcing aluminum profiles for fabrication, you get
+            real product photos, transparent pricing, and direct support from a Karachi-based team.
           </p>
           <p className="mt-4 text-lg leading-8 text-[#6e7d94]">
-            From plantation towers and PaniPani pumps to aluminum slot systems, battery racks, and custom sheet metal products, the goal is to make inquiry and ordering more direct.
+            Fixed-price items move straight into checkout. Quote-led products get manual pricing
+            through WhatsApp. Either way, delivery planning and product guidance are included.
           </p>
 
           <div className="mt-10 grid gap-x-10 gap-y-5 md:grid-cols-2">
@@ -101,7 +96,7 @@ export function AboutSection() {
             href="#contact"
             className="mt-12 inline-flex items-center justify-center rounded-full bg-[#86f556] px-10 py-4 text-lg font-bold text-[#132117] transition hover:bg-[#73e543]"
           >
-            Request project support
+            Start your inquiry
           </a>
         </motion.div>
       </div>

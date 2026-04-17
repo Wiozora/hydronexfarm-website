@@ -36,13 +36,15 @@ export function ContactForm() {
   } = useForm<ContactValues>();
 
   async function onSubmit(data: ContactValues) {
+    const inquiryType = data.inquiryType.trim() || "product inquiry";
+    const product = data.product.trim() || "general requirement";
     const text = buildWhatsAppMessage({
       source: "contact form",
-      subject: `${data.inquiryType.toLowerCase()} for ${data.product}`,
+      subject: `${inquiryType.toLowerCase()} for ${product}`,
       details: [
         `Name: ${data.name}`,
         `Phone / WhatsApp: ${data.phone}`,
-        `Email: ${data.email}`,
+        ...(data.email.trim().length > 0 ? [`Email: ${data.email}`] : []),
         `Requirement: ${data.message}`,
       ],
       closing: "Please share pricing, availability, and the right next step for my requirement.",
@@ -58,8 +60,8 @@ export function ContactForm() {
         name: data.name,
         phone: data.phone,
         email: data.email,
-        inquiryType: data.inquiryType,
-        product: data.product,
+        inquiryType,
+        product,
         message: data.message,
       },
       metadata: {
@@ -69,8 +71,8 @@ export function ContactForm() {
 
     setSaveMode(leadResult.stored);
     trackLeadSubmission("contact-form", {
-      inquiry_type: data.inquiryType,
-      product_interest: data.product,
+      inquiry_type: inquiryType,
+      product_interest: product,
       storage_mode: leadResult.stored,
     });
 
@@ -82,10 +84,6 @@ export function ContactForm() {
 
     setSubmitted(true);
     reset();
-    window.setTimeout(() => {
-      setSubmitted(false);
-      setSaveMode(null);
-    }, 4000);
   }
 
   return (
@@ -94,14 +92,15 @@ export function ContactForm() {
         <div className="grid gap-8 md:gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[1.7rem] bg-bg-light p-5 shadow-sm sm:p-8 md:rounded-[2rem] md:p-10">
             <p className="section-label">Contact & WhatsApp</p>
-            <h2 className="section-title">Ready to ask about a product?</h2>
+            <h2 className="section-title">Get pricing or product guidance</h2>
             <p className="mt-5 text-base leading-7 text-text-muted md:text-lg md:leading-8">
-              Send one clear request for product pricing, availability, or project support. WhatsApp is the fastest path, and this form helps keep the inquiry clear.
+              Share your product name, quantity, and city so the team can respond with pricing,
+              availability, and delivery guidance.
             </p>
 
             <div className="mt-6 rounded-[1.35rem] bg-white p-4 shadow-sm sm:rounded-[1.5rem] sm:p-5">
               <p className="text-sm font-semibold text-primary">
-                Share the product name, quantity, city, and any size or project notes. That is usually enough for the team to guide you to the right next step.
+                Include the product name, quantity, city, and any size or project notes for the fastest response.
               </p>
               <Link href="/inquiry" className="btn-green mt-4 justify-center">
                 Request Quote
@@ -110,13 +109,28 @@ export function ContactForm() {
 
             {submitted ? (
               <div className="mt-6 rounded-2xl bg-green/10 px-5 py-4 text-sm font-medium text-green-dark">
-                {saveMode === "browser-queue"
-                  ? whatsappVisible
-                    ? "Your inquiry is saved on this device, and the WhatsApp message is ready to send."
-                    : "Your inquiry is queued on this device and ready for follow-up."
-                  : whatsappVisible
-                    ? "Your inquiry details were captured, and the WhatsApp message is ready to send."
-                    : "Your inquiry details were captured successfully."}
+                <p>
+                  {saveMode === "browser-queue"
+                    ? whatsappVisible
+                      ? "Your inquiry is saved. WhatsApp message is ready to send."
+                      : "Your inquiry is queued and ready for follow-up."
+                    : whatsappVisible
+                      ? "Your inquiry was captured. WhatsApp message is ready to send."
+                      : "Your inquiry was captured successfully. The team can follow up soon."}
+                </p>
+                {whatsappVisible ? (
+                  <p className="mt-2 text-xs text-green-dark/70">
+                    If WhatsApp did not open automatically,{" "}
+                    <a
+                      href={createWhatsAppLink("Hi, I just submitted an inquiry on your website. Please follow up.")}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-green-dark"
+                    >
+                      tap here to send manually
+                    </a>
+                  </p>
+                ) : null}
               </div>
             ) : null}
 
@@ -144,11 +158,11 @@ export function ContactForm() {
                 <div>
                   <label className="mb-2 block text-sm font-medium text-primary">Email Address</label>
                   <input
-                    {...register("email", { required: "Email address is required" })}
+                    {...register("email")}
                     type="email"
                     className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 outline-none transition focus:border-sky"
+                    placeholder="Optional"
                   />
-                  {errors.email ? <p className="mt-2 text-sm text-red-500">{errors.email.message}</p> : null}
                 </div>
               </div>
 
@@ -156,12 +170,12 @@ export function ContactForm() {
                 <div>
                   <label className="mb-2 block text-sm font-medium text-primary">Inquiry Type</label>
                   <select
-                    {...register("inquiryType", { required: "Please select an inquiry type" })}
+                    {...register("inquiryType")}
                     defaultValue=""
                     className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 outline-none transition focus:border-sky"
                   >
-                    <option value="" disabled>
-                      Select inquiry type
+                    <option value="">
+                      Select inquiry type if needed
                     </option>
                     <option>General product inquiry</option>
                     <option>Request a quote</option>
@@ -169,17 +183,16 @@ export function ContactForm() {
                     <option>Stock and availability check</option>
                     <option>Custom design requirement</option>
                   </select>
-                  {errors.inquiryType ? <p className="mt-2 text-sm text-red-500">{errors.inquiryType.message}</p> : null}
                 </div>
                 <div>
                   <label className="mb-2 block text-sm font-medium text-primary">Interested In</label>
                   <select
-                    {...register("product", { required: "Please select a product" })}
+                    {...register("product")}
                     defaultValue=""
                     className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 outline-none transition focus:border-sky"
                   >
-                    <option value="" disabled>
-                      Select a product or category
+                    <option value="">
+                      Select a product or category if needed
                     </option>
                     {productOptions.map((option) => (
                       <option key={option.value} value={option.label}>
@@ -188,7 +201,6 @@ export function ContactForm() {
                     ))}
                     <option>General inquiry</option>
                   </select>
-                  {errors.product ? <p className="mt-2 text-sm text-red-500">{errors.product.message}</p> : null}
                 </div>
               </div>
 
@@ -215,6 +227,12 @@ export function ContactForm() {
                     ? "WhatsApp Now"
                     : "Request Quote"}
               </button>
+              <p className="mt-3 text-center text-xs text-text-muted">
+                Your details stay private and are used only to respond to your inquiry.
+              </p>
+              <p className="mt-1 text-center text-xs text-text-muted">
+                Business-hour follow-up is available Monday to Saturday, 10 AM to 7 PM PKT.
+              </p>
             </form>
           </div>
 
@@ -232,7 +250,8 @@ export function ContactForm() {
                 </div>
               </div>
               <p className="mt-4 text-sm leading-7 text-white/82">
-                Share your product, quantity, city, and requirement. The team can then confirm pricing, availability, and the best next step.
+                Tap below to open WhatsApp with your inquiry details ready. Share the product,
+                quantity, city, and any project notes for a clearer response.
               </p>
             </div>
 
@@ -270,7 +289,7 @@ export function ContactForm() {
                   </div>
                   <div>
                     <p className="text-sm uppercase tracking-[0.2em] text-white/70">Direct Contact</p>
-                    <p className="mt-1 text-lg font-bold sm:text-xl">Shared after inquiry review</p>
+                    <p className="mt-1 text-lg font-bold sm:text-xl">Email shared after inquiry review</p>
                   </div>
                 </div>
               </div>
@@ -293,4 +312,3 @@ export function ContactForm() {
     </section>
   );
 }
-

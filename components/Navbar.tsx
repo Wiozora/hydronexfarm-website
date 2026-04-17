@@ -37,8 +37,8 @@ const navLinks = [
   { label: "Battery Cases", href: "/shop/battery-cases" },
   { label: "Hydroponics", href: "/shop/hydroponics-systems" },
   { label: "T & V-Slots", href: "/shop/t-v-slots" },
+  { label: "Contact", href: "/contact" },
 ];
-const mobileNavLinks = navLinks.filter((link) => link.href === "/" || link.href === "/shop");
 
 const socialLinkDefs = [
   { label: "Facebook", href: siteConfig.socials.facebook, icon: FaFacebookF },
@@ -120,11 +120,9 @@ export function Navbar() {
             )}
           </div>
 
-          <div className="flex items-center gap-3">
-            {(visibleSocialLinks.length > 0 ? visibleSocialLinks : socialLinkDefs).map((item) => {
-              const isLive = hasPublicSocialLink(item.href);
-
-              return isLive ? (
+          {visibleSocialLinks.length > 0 ? (
+            <div className="flex items-center gap-3">
+              {visibleSocialLinks.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
@@ -135,18 +133,9 @@ export function Navbar() {
                 >
                   <item.icon />
                 </a>
-              ) : (
-                <Link
-                  key={item.label}
-                  href="/contact"
-                  aria-label={item.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#86f556] text-[#132117] transition hover:-translate-y-0.5 hover:bg-white"
-                >
-                  <item.icon />
-                </Link>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
 
@@ -219,25 +208,7 @@ export function Navbar() {
             </div>
 
             <div className="ml-auto flex items-center gap-2 min-[1200px]:hidden">
-              {quickActionExternal ? (
-                <a
-                  href={quickActionHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={whatsappVisible ? "WhatsApp Now" : "Request Quote"}
-                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#86f556] text-[#132117] sm:h-11 sm:w-11"
-                >
-                  <FaWhatsapp />
-                </a>
-              ) : (
-                <Link
-                  href={quickActionHref}
-                  aria-label="Request Quote"
-                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#86f556] text-[#132117] sm:h-11 sm:w-11"
-                >
-                  <FaWhatsapp />
-                </Link>
-              )}
+              <BasketButton compact />
               <button
                 type="button"
                 onClick={() => setIsOpen((current) => !current)}
@@ -258,7 +229,30 @@ export function Navbar() {
                 className={mobilePanelClasses}
               >
                 <div className="flex flex-col gap-2 px-4 py-4 sm:px-5">
-                  {mobileNavLinks.map((link) => (
+                  <div className="grid gap-2 pb-2">
+                    {quickActionExternal ? (
+                      <a
+                        href={quickActionHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-3 rounded-2xl bg-[#86f556] px-4 py-3 text-sm font-bold text-[#132117]"
+                      >
+                        <FaWhatsapp />
+                        <span>{whatsappVisible ? "WhatsApp Now" : "Request Quote"}</span>
+                      </a>
+                    ) : (
+                      <Link
+                        href={quickActionHref}
+                        onClick={() => setIsOpen(false)}
+                        className="inline-flex items-center justify-center gap-3 rounded-2xl bg-[#86f556] px-4 py-3 text-sm font-bold text-[#132117]"
+                      >
+                        <FaWhatsapp />
+                        <span>{whatsappVisible ? "WhatsApp Now" : "Request Quote"}</span>
+                      </Link>
+                    )}
+                  </div>
+
+                  {navLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}

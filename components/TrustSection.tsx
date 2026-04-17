@@ -74,10 +74,11 @@ export function TrustSection() {
         <div className="mx-auto max-w-4xl text-center">
           <p className="section-label inline-flex border-l-0 border-none pl-0 text-green-dark">Why I CAN ENERGIES</p>
           <h2 className="text-3xl font-black text-primary md:text-4xl">
-            Trust points buyers look for before they continue
+            Why buyers choose I CAN ENERGIES
           </h2>
           <p className="mt-6 text-lg leading-8 text-text-muted">
-            Clear proof, practical payment guidance, and product-specific decision support make it easier to move from browsing into checkout or inquiry.
+            Real product photos, clearer pricing paths, published company details, and direct
+            support from a Karachi-based team help buyers move forward with less guesswork.
           </p>
         </div>
 

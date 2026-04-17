@@ -27,7 +27,7 @@ export function Testimonials({
   ids,
   intro = "Proof from recent buyers helps new customers understand what felt clear, trustworthy, and easy during the purchase journey.",
   items,
-  title = "Buyer feedback snapshots",
+  title = "What our customers say",
   variant = "default",
 }: TestimonialsProps) {
   const resolvedItems = items ?? (ids?.length ? getTestimonialsByIds(ids) : testimonials);

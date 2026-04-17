@@ -6,13 +6,11 @@ import { useRef } from "react";
 import {
   FaArrowRight,
   FaChevronDown,
-  FaClipboardList,
   FaMapMarkerAlt,
   FaShoppingBag,
-  FaWhatsapp,
 } from "react-icons/fa";
 
-import { createWhatsAppLink, buildWhatsAppMessage } from "@/lib/whatsapp";
+import { getStoreCategories, getStoreProducts } from "@/lib/store";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -26,9 +24,10 @@ const fadeUp = {
 const heroImage = "/products/hydroponics/client/tower-greenhouse-wide.jpeg";
 
 const quickTags = [
-  "Real product photos",
-  "WhatsApp support",
-  "Clear prices and notes",
+  "Registered Pakistani company",
+  "Real workshop photos",
+  "Direct WhatsApp support",
+  "COD available",
 ];
 
 const topPicks = [
@@ -50,13 +49,13 @@ const topPicks = [
 ];
 
 const proofPoints = [
-  { value: "3", label: "product categories" },
-  { value: "10", label: "listed products" },
-  { value: "Real", label: "product images" },
+  { value: `${getStoreCategories().length}`, label: "product categories" },
+  { value: `${getStoreProducts().length}+`, label: "listed products" },
+  { value: "PK", label: "Pakistan-wide delivery" },
 ];
 
 const heroTagline =
-  "I CAN ENERGIES | Battery Cases, Hydroponics Systems, and T & V-Slots";
+  "Karachi-based supplier - delivering across Pakistan";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -101,22 +100,11 @@ export function Hero() {
     [0, 1],
     prefersReducedMotion ? [0, 0] : [0, -24],
   );
-  const heroWhatsAppHref = createWhatsAppLink(
-    buildWhatsAppMessage({
-      source: "homepage hero",
-      subject: "the right product for my requirement",
-      details: [
-        'I am interested in battery cases, hydroponics systems, or T & V-Slots.',
-      ],
-      closing: "Please guide me on pricing, availability, and the best next step.",
-    }),
-  );
-
   return (
     <section
       ref={sectionRef}
       id="home"
-      className="relative isolate min-h-[100svh] overflow-hidden bg-[#102412] text-white"
+      className="relative isolate overflow-hidden bg-[#102412] text-white"
     >
       <motion.div
         aria-hidden="true"
@@ -145,7 +133,7 @@ export function Hero() {
 
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl items-start px-4 pb-12 pt-24 sm:pb-20 sm:pt-32 md:items-center md:px-8 md:pb-28 md:pt-36 lg:px-12 lg:pt-44"
+        className="relative z-10 mx-auto flex min-h-[auto] max-w-7xl items-start px-4 pb-14 pt-28 sm:pb-18 sm:pt-32 md:min-h-[100svh] md:items-center md:px-8 md:pb-28 md:pt-36 lg:px-12 lg:pt-44"
       >
         <div className="grid w-full gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
           <div className="max-w-3xl">
@@ -166,9 +154,9 @@ export function Hero() {
               custom={1}
               className="mt-4 max-w-[14ch] text-[clamp(2.35rem,11vw,5.2rem)] font-black leading-[0.9] tracking-[-0.05em] text-white sm:mt-7 sm:max-w-[16ch] md:max-w-5xl"
             >
-              Battery cases, hydroponics systems, and
-              {" "}
-              <span className="text-[#86f556]">T & V-Slots from one supplier</span>
+              Pakistan{"'"}s trusted supplier for battery enclosures, hydroponics towers,{" "}
+              and{" "}
+              <span className="text-[#86f556]">aluminum profiles</span>
             </motion.h1>
 
             <motion.p
@@ -178,7 +166,8 @@ export function Hero() {
               custom={2}
               className="mt-4 max-w-xl text-[0.92rem] leading-6 text-white/84 sm:mt-8 sm:max-w-2xl sm:text-base sm:leading-8 md:text-lg"
             >
-              See the exact products clearly, open the right product page, and move straight to WhatsApp for details, pricing, and availability.
+              See real product photos, compare pricing, and move into checkout or WhatsApp
+              quotes with delivery support across Pakistan from our Karachi workshop.
             </motion.p>
 
             <motion.div
@@ -189,29 +178,19 @@ export function Hero() {
               className="mt-6 flex flex-col gap-3 sm:mt-12 sm:flex-row sm:gap-4"
             >
               <Link
-                href="/shop"
+                href="#categories"
                 className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#86f556] px-5 py-3 text-sm font-bold text-[#132117] transition hover:bg-[#73e543] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
                 <FaShoppingBag />
-                Browse Products
+                View Products & Pricing
               </Link>
 
-              <a
-                href={heroWhatsAppHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-3 rounded-full border-2 border-[#86f556] px-5 py-3 text-sm font-bold text-[#86f556] transition hover:bg-[#86f556] hover:text-[#132117] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
-              >
-                <FaWhatsapp />
-                WhatsApp Now
-              </a>
-
               <Link
-                href="/inquiry"
+                href="/contact"
                 className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/18 px-5 py-3 text-sm font-bold text-white transition hover:border-[#86f556] hover:text-[#86f556] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
-                <FaClipboardList />
-                Request Quote
+                <FaArrowRight />
+                Get a Free Quote
               </Link>
             </motion.div>
 
@@ -310,7 +289,8 @@ export function Hero() {
                 Fastest next step
               </p>
               <p className="mt-3 text-sm leading-7 text-white/74">
-                Open the right product, review the details, then start the conversation on WhatsApp.
+                Start with the right category, review the matching product page, then send one
+                cleaner inquiry with quantity, city, and project notes.
               </p>
             </div>
           </motion.aside>
@@ -338,6 +318,3 @@ export function Hero() {
     </section>
   );
 }
-
-
-

@@ -56,7 +56,7 @@ export function FAQSection() {
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-text-muted">
               Fast answer
             </p>
-            <p className="mt-4 text-3xl font-black text-text-dark">Checkout plus WhatsApp support</p>
+            <p className="mt-4 text-3xl font-black text-text-dark">Checkout online or get quotes via WhatsApp</p>
             <p className="mt-3 text-sm leading-7 text-text-muted">
               Fixed-price items can continue to checkout, and WhatsApp is still available whenever the buyer needs custom pricing, stock checks, or product guidance.
             </p>

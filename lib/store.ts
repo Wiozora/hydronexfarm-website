@@ -299,7 +299,7 @@ export function getBasketDestination(items: BasketItem[]): BasketDestination {
 
   return {
     href: "/shop",
-    label: "Browse Shop",
+    label: "My List",
     cartCount,
     quoteCount,
     hasCart,

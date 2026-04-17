@@ -283,7 +283,7 @@ export const storeCategories: StoreCategory[] = [
     tag: "19 inch range",
     description:
       '19" battery boxes and brackets with clear sizing, real workshop imagery, and manual quote support for cabinet and enclosure work.',
-    image: "/products/battery/boxes/battery-box-1.jpeg",
+    image: "/products/battery/boxes/battery-box-1-new.png",
     highlights: ["3U / 4U / 5U battery boxes", '19" Brackets 7U', "Quote-led support"],
     faqs: batteryFaqs,
     trustHighlights: batteryTrustHighlights,
@@ -335,9 +335,9 @@ export const storeProducts: StoreProduct[] = [
     summary: '19" battery box in 3U size for compact cabinet and enclosure setups.',
     description:
       '19" Battery Box 3U helps buyers confirm compact rack-fit requirements quickly, so cabinet planning and quote discussion can start with the right size from the first message.',
-    image: "/products/battery/boxes/battery-box-1.jpeg",
+    image: "/products/battery/boxes/battery-box-1-new.png",
     gallery: [
-      "/products/battery/boxes/battery-box-1.jpeg",
+      "/products/battery/boxes/battery-box-1-new.png",
       "/products/battery/boxes/battery-box-2.jpeg",
       "/products/battery/cases/case-angle.jpeg",
       "/products/battery/cases/case-side.jpeg",
@@ -390,7 +390,7 @@ export const storeProducts: StoreProduct[] = [
     image: "/products/battery/boxes/battery-box-2.jpeg",
     gallery: [
       "/products/battery/boxes/battery-box-2.jpeg",
-      "/products/battery/boxes/battery-box-1.jpeg",
+      "/products/battery/boxes/battery-box-1-new.png",
       "/products/battery/cases/case-angle.jpeg",
       "/products/battery/cases/case-side.jpeg",
     ],

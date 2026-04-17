@@ -160,6 +160,11 @@ export function Footer() {
             </div>
           </div>
         ) : null}
+
+        <div className="mt-8 border-t border-white/10 pt-6 text-center text-sm text-white/50">
+          <p>&copy; {new Date().getFullYear()} {siteConfig.legalName}. All rights reserved.</p>
+          <p className="mt-1 text-xs text-white/35">Registered in Pakistan &middot; Karachi</p>
+        </div>
       </div>
     </footer>
   );
