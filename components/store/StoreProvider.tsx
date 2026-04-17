@@ -1,8 +1,9 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
+import { CartDrawer } from "@/components/store/CartDrawer";
 import { storageKeys } from "@/lib/site-config";
 import { getBasketCount, getProductBySlug } from "@/lib/store";
 import { trackEvent } from "@/lib/tracking";
@@ -12,6 +13,10 @@ type StoreContextValue = {
   items: BasketItem[];
   totalItems: number;
   isReady: boolean;
+  isCartOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
+  toggleCart: () => void;
   addItem: (item: BasketItem) => void;
   removeItem: (item: Pick<BasketItem, "productSlug" | "variantId" | "mode">) => void;
   updateQuantity: (item: Pick<BasketItem, "productSlug" | "variantId" | "mode">, quantity: number) => void;
@@ -32,6 +37,11 @@ function isSameItem(current: BasketItem, next: Pick<BasketItem, "productSlug" | 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<BasketItem[]>([]);
   const [isReady, setIsReady] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const openCart = useCallback(() => setIsCartOpen(true), []);
+  const closeCart = useCallback(() => setIsCartOpen(false), []);
+  const toggleCart = useCallback(() => setIsCartOpen((prev) => !prev), []);
 
   useEffect(() => {
     try {
@@ -56,6 +66,19 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     window.localStorage.setItem(storageKeys.storeBasket, JSON.stringify(items));
   }, [items, isReady]);
 
+  // Lock body scroll when cart is open
+  useEffect(() => {
+    if (isCartOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isCartOpen]);
+
   function addItem(item: BasketItem) {
     setItems((current) => {
       const index = current.findIndex((candidate) => isSameItem(candidate, item));
@@ -72,12 +95,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     });
 
     const product = getProductBySlug(item.productSlug);
-    toast.success(`${product?.shortName ?? "Item"} saved for follow-up.`);
+    toast.success(`${product?.shortName ?? "Item"} added to cart!`);
     trackEvent("add_to_cart", {
       item_name: product?.shortName ?? item.productSlug,
       quantity: item.quantity,
       purchase_flow: item.mode,
     });
+
+    // Auto-open cart drawer when item is added
+    setIsCartOpen(true);
   }
 
   function removeItem(item: Pick<BasketItem, "productSlug" | "variantId" | "mode">) {
@@ -114,6 +140,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         items,
         totalItems: getBasketCount(items),
         isReady,
+        isCartOpen,
+        openCart,
+        closeCart,
+        toggleCart,
         addItem,
         removeItem,
         updateQuantity,
@@ -122,6 +152,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
+      <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
     </StoreContext.Provider>
   );
 }

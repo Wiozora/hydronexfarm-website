@@ -109,31 +109,31 @@ function buildProduct({
 }
 
 const hydroponicsGallery = [
-  "/products/hydroponics/tower-main.jpeg",
+  "/products/hydroponics/tower-main-new.png",
   "/products/hydroponics/tower-side.jpeg",
-  "/products/hydroponics/vertical-system-1.jpeg",
-  "/products/hydroponics/vertical-system-2.jpeg",
+  "/products/hydroponics/vertical-system-1-new.png",
+  "/products/hydroponics/vertical-system-2-new.png",
   "/products/hydroponics/client/tower-greenhouse-wide.jpeg",
   "/products/hydroponics/client/tower-greenhouse-row.jpeg",
 ];
 
 const batteryBracketGallery = [
-  "/products/battery/brackets/mount-panel-front.jpeg",
+  "/products/battery/brackets/mount-panel-front-new.png",
   "/products/battery/brackets/mount-bracket-front.jpeg",
   "/products/battery/brackets/mount-bracket-angle.jpeg",
 ];
 
 const slotGallery = [
   "/products/aluminum/slots/profile-series.jpeg",
-  "/products/aluminum/slots/profile-size-stack.jpeg",
+  "/products/aluminum/slots/profile-2030-new.png",
   "/products/aluminum/slots/profile-color-options.jpeg",
   "/products/aluminum/slots/v-slot-vs-t-slot.jpeg",
 ];
 
 const connectorGallery = [
-  "/products/aluminum/connectors/triangle-bracket.jpeg",
-  "/products/aluminum/connectors/connector-2.jpeg",
-  "/products/aluminum/connectors/connector-3.jpeg",
+  "/products/aluminum/connectors/triangle-bracket-new.png",
+  "/products/aluminum/connectors/connector-2-new.png",
+  "/products/aluminum/connectors/connector-3-new.png",
 ];
 
 const categoryTestimonialIds: Record<string, string[]> = {
@@ -338,7 +338,7 @@ export const storeProducts: StoreProduct[] = [
     image: "/products/battery/boxes/battery-box-1-new.png",
     gallery: [
       "/products/battery/boxes/battery-box-1-new.png",
-      "/products/battery/boxes/battery-box-2.jpeg",
+      "/products/battery/boxes/battery-box-2-new.png",
       "/products/battery/cases/case-angle.jpeg",
       "/products/battery/cases/case-side.jpeg",
       "/products/battery/cases/case-open-top.jpeg",
@@ -387,9 +387,9 @@ export const storeProducts: StoreProduct[] = [
     summary: '19" battery box in 4U size for standard battery cabinet and rack use.',
     description:
       '19" Battery Box 4U gives buyers a clear mid-range enclosure option for standard cabinet work, making it easier to compare size, availability, and fit before final quotation.',
-    image: "/products/battery/boxes/battery-box-2.jpeg",
+    image: "/products/battery/boxes/battery-box-2-new.png",
     gallery: [
-      "/products/battery/boxes/battery-box-2.jpeg",
+      "/products/battery/boxes/battery-box-2-new.png",
       "/products/battery/boxes/battery-box-1-new.png",
       "/products/battery/cases/case-angle.jpeg",
       "/products/battery/cases/case-side.jpeg",
@@ -438,9 +438,9 @@ export const storeProducts: StoreProduct[] = [
     summary: '19" battery box in 5U size for larger cabinet and enclosure requirements.',
     description:
       '19" Battery Box 5U gives larger projects more enclosure height, so buyers can move into a quote conversation with clearer expectations around cabinet fit and lead time.',
-    image: "/products/battery/boxes/battery-box-3.jpeg",
+    image: "/products/battery/boxes/battery-box-3-new.png",
     gallery: [
-      "/products/battery/boxes/battery-box-3.jpeg",
+      "/products/battery/boxes/battery-box-3-new.png",
       "/products/battery/boxes/battery-box-4.jpeg",
       "/products/battery/cases/case-front.jpeg",
       "/products/battery/cases/case-open-top.jpeg",
@@ -488,7 +488,7 @@ export const storeProducts: StoreProduct[] = [
     summary: '19" brackets in 7U size for battery box, rack, and mounting support.',
     description:
       '19" Brackets 7U keeps mounting support separate from full battery boxes, helping buyers request the exact rack accessory they need without slowing down the quotation process.',
-    image: "/products/battery/brackets/mount-panel-front.jpeg",
+    image: "/products/battery/brackets/mount-panel-front-new.png",
     gallery: batteryBracketGallery,
     features: [
       '19" bracket format',
@@ -533,7 +533,7 @@ export const storeProducts: StoreProduct[] = [
     summary: "Hydroponics system for 25 plants in a compact tower format.",
     description:
       "Hydroponics System (25 Plants) is the easiest entry point for compact spaces, giving first-time buyers a clear price, manageable capacity, and a straightforward checkout path.",
-    image: "/products/hydroponics/tower-main.jpeg",
+    image: "/products/hydroponics/tower-main-new.png",
     gallery: hydroponicsGallery,
     features: [
       "25 plant capacity",
@@ -579,7 +579,7 @@ export const storeProducts: StoreProduct[] = [
     summary: "Hydroponics system for 50 plants for balanced home and business use.",
     description:
       "Hydroponics System (50 Plants) balances price and output for buyers who want more growing capacity without stepping into a larger custom installation.",
-    image: "/products/hydroponics/vertical-system-1.jpeg",
+    image: "/products/hydroponics/vertical-system-1-new.png",
     gallery: hydroponicsGallery,
     features: [
       "50 plant capacity",
@@ -625,7 +625,7 @@ export const storeProducts: StoreProduct[] = [
     summary: "Hydroponics system for 75 plants for larger growing capacity.",
     description:
       "Hydroponics System (75 Plants) is built for buyers who want a larger, higher-output tower with fixed pricing and a cleaner path from product review to checkout.",
-    image: "/products/hydroponics/vertical-system-2.jpeg",
+    image: "/products/hydroponics/vertical-system-2-new.png",
     gallery: hydroponicsGallery,
     features: [
       "75 plant capacity",
@@ -670,7 +670,7 @@ export const storeProducts: StoreProduct[] = [
     summary: "V Slot 2020 aluminum profile with price shown per feet.",
     description:
       "V Slot 2020 gives smaller frame builds a clear fixed-price starting point, helping buyers choose the right profile size before they move to checkout.",
-    image: "/products/aluminum/slots/profile-2020-spec.jpeg",
+    image: "/products/aluminum/slots/profile-2020-new.png",
     gallery: slotGallery,
     features: [
       "V Slot 2020 profile",
@@ -716,7 +716,7 @@ export const storeProducts: StoreProduct[] = [
     summary: "V Slot 2030 aluminum profile with price shown per feet.",
     description:
       "V Slot 2030 gives buyers a stronger profile option with visible pricing, making frame selection and order planning faster.",
-    image: "/products/aluminum/slots/profile-size-stack.jpeg",
+    image: "/products/aluminum/slots/profile-2030-new.png",
     gallery: slotGallery,
     features: [
       "V Slot 2030 profile",
@@ -761,7 +761,7 @@ export const storeProducts: StoreProduct[] = [
     summary: "V Slot 2040 aluminum profile with price shown per feet.",
     description:
       "V Slot 2040 helps buyers move into stronger frame builds with a wider profile size, visible pricing, and a cleaner checkout-ready decision path.",
-    image: "/products/aluminum/slots/profile-2040-spec.jpeg",
+    image: "/products/aluminum/slots/profile-2040-new.png",
     gallery: slotGallery,
     features: [
       "V Slot 2040 profile",
@@ -806,7 +806,7 @@ export const storeProducts: StoreProduct[] = [
     summary: "V Slot 4040 aluminum profile with price shown per feet.",
     description:
       "V Slot 4040 is the larger fixed-price profile in the range, helping buyers plan heavier structures with less confusion before they check out.",
-    image: "/products/aluminum/slots/profile-3030-4040.jpeg",
+    image: "/products/aluminum/slots/profile-4040-new.png",
     gallery: slotGallery,
     features: [
       "V Slot 4040 profile",
@@ -851,7 +851,7 @@ export const storeProducts: StoreProduct[] = [
     summary: "Triangle connector for aluminum profile joining and support.",
     description:
       "Triangle Connector gives aluminum buyers a clear fixed-price joining part, so they can confirm the right connector visually before checkout.",
-    image: "/products/aluminum/connectors/triangle-bracket.jpeg",
+    image: "/products/aluminum/connectors/triangle-bracket-new.png",
     gallery: connectorGallery,
     features: [
       "Triangle connector",
@@ -897,11 +897,11 @@ export const storeProducts: StoreProduct[] = [
     summary: "Tee connector for aluminum profile joining and support.",
     description:
       "Tee Connector makes it easier to select the right joining part with price visibility already in place, reducing hesitation before checkout.",
-    image: "/products/aluminum/connectors/connector-2.jpeg",
+    image: "/products/aluminum/connectors/connector-2-new.png",
     gallery: [
-      "/products/aluminum/connectors/connector-2.jpeg",
-      "/products/aluminum/connectors/triangle-bracket.jpeg",
-      "/products/aluminum/connectors/connector-3.jpeg",
+      "/products/aluminum/connectors/connector-2-new.png",
+      "/products/aluminum/connectors/triangle-bracket-new.png",
+      "/products/aluminum/connectors/connector-3-new.png",
     ],
     features: [
       "Tee connector",
@@ -946,11 +946,11 @@ export const storeProducts: StoreProduct[] = [
     summary: "Cross connector for aluminum profile joining and support.",
     description:
       "Cross Connector helps buyers choose the correct four-way joining option quickly, with real imagery and fixed pricing visible before checkout.",
-    image: "/products/aluminum/connectors/connector-3.jpeg",
+    image: "/products/aluminum/connectors/connector-3-new.png",
     gallery: [
-      "/products/aluminum/connectors/connector-3.jpeg",
-      "/products/aluminum/connectors/connector-2.jpeg",
-      "/products/aluminum/connectors/triangle-bracket.jpeg",
+      "/products/aluminum/connectors/connector-3-new.png",
+      "/products/aluminum/connectors/connector-2-new.png",
+      "/products/aluminum/connectors/triangle-bracket-new.png",
     ],
     features: [
       "Cross connector",

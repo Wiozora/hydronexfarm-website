@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { FaArrowRight, FaWhatsapp } from "react-icons/fa";
 
 import { useStore } from "@/components/store/StoreProvider";
@@ -28,7 +27,6 @@ export function ProductCard({
   variant?: "default" | "catalog";
 }) {
   const category = getCategoryBySlug(product.categorySlug);
-  const router = useRouter();
   const { addItem } = useStore();
   const defaultVariant = getDefaultVariant(product);
   const mode = getVariantMode(defaultVariant);
@@ -44,8 +42,6 @@ export function ProductCard({
       quantity: 1,
       mode,
     });
-
-    router.push(mode === "cart" ? "/checkout" : "/inquiry");
   }
 
   if (isCatalogVariant) {
